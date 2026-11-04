@@ -1,48 +1,96 @@
 /**
- * GEMM-FP32 conformance probe for the Nosana network.
+ * GEMM-FP32 GPU conformance probe for the Nosana network.
  *
- * Runs a 1024×1024 single-precision matrix multiply (seed 42) in a Docker
- * container and emits a ProbeReceipt with:
- *   - correctness: SHA-256 of a deterministic fingerprint (sum, norm, corners)
- *   - performance: measured TFLOPS vs the gpu_class reference table
+ * Runs a 1024×1024 single-precision matrix multiply (torch seed 42) on a CUDA
+ * GPU inside the container. The probe HARD-FAILS if no CUDA device is visible —
+ * running on CPU gives meaningless TFLOPS and must not be accepted as a GPU result.
  *
- * TIMING VALUES ARE NEVER HASHED. The result_hash and correctness.expected_hash
- * cover only the numeric output of the computation.
+ * Container output includes:
+ *   - device_name, cuda_version, driver_version, compute_capability
+ *   - correctness fingerprint values (sum, norm, corners) for tolerance check
+ *   - measured_tflops from GPU-timed execution
+ *
+ * TIMING VALUES ARE NEVER IN THE CORRECTNESS CHECK.
+ * The correctness pass/fail is tolerance-based (not hash-based), because FP32
+ * GPU results may differ by 1–2 ULPs across GPU families due to FMA ordering.
+ *
+ * IMAGE: pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime
+ *   - PyTorch pre-installed; no pip install needed
+ *   - CUDA 12.1 runtime; cuda.is_available() must return True
+ *   - numpy also available in this image
+ *
+ * RNG NOTE: torch.manual_seed(42) ≠ np.random.seed(42).
+ * The reference values in gemm-known-answer.ts must come from a torch/GPU run,
+ * not from numpy/CPU. The CPU-numpy hash in commit 5825e3c is NOT valid here.
  */
 
-import { createHash } from 'crypto';
-import type { CorrectnessCheck, PerformanceCheck } from '../types/receipt.js';
-import { GEMM_BENCHMARK_ID, GEMM_EXPECTED_HASH } from './gemm-known-answer.js';
+import type { CorrectnessCheck, PerformanceCheck, DeviceInfo } from '../types/receipt.js';
+import {
+  GEMM_BENCHMARK_ID,
+  GEMM_EPSILON_REL,
+  GEMM_REFERENCE_VALUES,
+  GEMM_REFERENCE_READY,
+} from './gemm-known-answer.js';
 import { lookupReferenceTflops } from './gpu-reference-tflops.js';
 
-// Python script — uses only double-quoted strings so it can be safely
-// wrapped in single quotes inside a /bin/sh -c command string.
+// Python probe script using torch on GPU.
+// All strings use double quotes — safe to wrap in single quotes for /bin/sh -c.
 const GEMM_PYTHON = [
-  'import numpy as np, json, hashlib, time',
-  'np.random.seed(42)',
-  'A = np.random.rand(1024, 1024).astype(np.float32)',
-  'B = np.random.rand(1024, 1024).astype(np.float32)',
+  'import torch, json, time, sys',
+  // Hard-fail if no CUDA device — running on CPU is not a valid GPU probe result
+  'if not torch.cuda.is_available():',
+  '    sys.exit("FATAL: no CUDA device visible — aborting GPU conformance probe")',
+  'device = torch.device("cuda:0")',
+  'props = torch.cuda.get_device_properties(device)',
+  'device_name = torch.cuda.get_device_name(0)',
+  'cuda_version = str(torch.version.cuda)',
+  // driver_version available via ctypes on linux; fall back gracefully
+  'try:',
+  '    import ctypes',
+  '    libcuda = ctypes.cdll.LoadLibrary("libcuda.so.1")',
+  '    ver = ctypes.c_int(0)',
+  '    libcuda.cuDriverGetVersion(ctypes.byref(ver))',
+  '    dv = ver.value',
+  '    driver_version = f"{dv // 1000}.{(dv % 1000) // 10}"',
+  'except Exception:',
+  '    driver_version = "unknown"',
+  // Warm-up pass to avoid cold-start JIT latency in TFLOPS measurement
+  'torch.manual_seed(42)',
+  'A = torch.rand(1024, 1024, dtype=torch.float32, device=device)',
+  'B = torch.rand(1024, 1024, dtype=torch.float32, device=device)',
+  '_ = A @ B',
+  'torch.cuda.synchronize()',
+  // Timed run
   't0 = time.perf_counter()',
   'C = A @ B',
+  'torch.cuda.synchronize()',
   't1 = time.perf_counter()',
   'elapsed = t1 - t0',
   'ops = 2 * (1024 ** 3)',
   'tflops = ops / elapsed / 1e12',
-  // Correctness fingerprint — timing is excluded
-  'fp = {"shape": [1024, 1024],'
-    + ' "sum": round(float(C.sum()), 4),'
-    + ' "norm": round(float(np.linalg.norm(C)), 4),'
-    + ' "corner": [round(float(C[0,0]),6), round(float(C[0,-1]),6),'
-    + '             round(float(C[-1,0]),6), round(float(C[-1,-1]),6)]}',
-  'h = hashlib.sha256(json.dumps(fp, sort_keys=True).encode()).hexdigest()',
-  // Output — measured_tflops is performance data, never hashed
-  'print(json.dumps({"benchmark_id": "gemm-fp32-1024-seed42",'
-    + ' "result_hash": h,'
-    + ' "measured_tflops": round(tflops, 4),'
-    + ' "elapsed_s": round(elapsed, 6)}))',
+  // Correctness fingerprint — move to CPU for stable float values, then round
+  'import numpy as np',
+  'Ccpu = C.cpu().numpy()',
+  'fp_sum     = round(float(Ccpu.sum()), 4)',
+  'fp_norm    = round(float(np.linalg.norm(Ccpu)), 4)',
+  'fp_corners = [round(float(Ccpu[0,0]),6), round(float(Ccpu[0,-1]),6),',
+  '              round(float(Ccpu[-1,0]),6), round(float(Ccpu[-1,-1]),6)]',
+  // Output JSON — timing only in measured_tflops/elapsed_s, never in correctness
+  'print(json.dumps({',
+  '    "benchmark_id":       "gemm-fp32-1024-seed42-torch",',
+  '    "device_name":        device_name,',
+  '    "cuda_version":       cuda_version,',
+  '    "driver_version":     driver_version,',
+  '    "compute_capability": f"{props.major}.{props.minor}",',
+  '    "fp_sum":             fp_sum,',
+  '    "fp_norm":            fp_norm,',
+  '    "fp_corners":         fp_corners,',
+  '    "measured_tflops":    round(tflops, 4),',
+  '    "elapsed_s":          round(elapsed, 6)',
+  '}))',
 ].join('\n');
 
-/** Nosana job definition for the GEMM probe container. */
+/** Nosana job definition for the GPU GEMM probe. */
 export const GEMM_PROBE_JOB_DEF = {
   version: '0.1',
   type: 'container',
@@ -52,21 +100,26 @@ export const GEMM_PROBE_JOB_DEF = {
       type: 'container/run',
       id: 'gemm-probe',
       args: {
-        image: 'python:3.11-slim',
-        // pip install numpy at runtime; python:3.11-slim has no numpy pre-installed.
-        // cmd[0] = interpreter, cmd[1] = flag, cmd[2] = script avoids entrypoint override.
-        // The Python script uses only double-quoted strings — safe to embed in single quotes.
-        cmd: ['/bin/sh', '-c', `pip install numpy -q 2>&1 | tail -1 && python3 -c '${GEMM_PYTHON}'`],
+        // PyTorch with CUDA 12.1 pre-installed; no pip needed.
+        // GPU resource is provided by the Nosana RTX 4090 market.
+        image: 'pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime',
+        cmd: ['/bin/sh', '-c', `python3 -c '${GEMM_PYTHON}'`],
       },
     },
   ],
 };
 
 export interface GemmProbeOutput {
-  benchmark_id: string;
-  result_hash: string;
-  measured_tflops: number;
-  elapsed_s: number;
+  benchmark_id:       string;
+  device_name:        string;
+  cuda_version:       string;
+  driver_version:     string;
+  compute_capability: string;
+  fp_sum:             number;
+  fp_norm:            number;
+  fp_corners:         [number, number, number, number];
+  measured_tflops:    number;
+  elapsed_s:          number;
 }
 
 /** Parse the JSON stdout from a completed GEMM probe job. */
@@ -74,22 +127,60 @@ export function parseGemmOutput(stdout: string): GemmProbeOutput {
   const lines = stdout.trim().split('\n');
   const last = lines[lines.length - 1];
   const parsed = JSON.parse(last) as GemmProbeOutput;
-  if (!parsed.result_hash || !parsed.measured_tflops) {
+  if (!parsed.device_name || !parsed.fp_sum || !parsed.measured_tflops) {
     throw new Error(`Unexpected GEMM probe output: ${last}`);
   }
   return parsed;
 }
 
-/** Build a CorrectnessCheck from parsed probe output. */
-export function buildCorrectnessCheck(output: GemmProbeOutput): CorrectnessCheck {
-  const measured_hash = output.result_hash;
-  const expected_hash = GEMM_EXPECTED_HASH;
-  const pass = measured_hash === expected_hash;
+/** Extract DeviceInfo from parsed probe output. */
+export function buildDeviceInfo(output: GemmProbeOutput): DeviceInfo {
   return {
-    benchmark_id: GEMM_BENCHMARK_ID,
-    expected_hash,
-    measured_hash,
-    pass,
+    device_name:        output.device_name,
+    cuda_version:       output.cuda_version,
+    driver_version:     output.driver_version,
+    compute_capability: output.compute_capability,
+  };
+}
+
+/**
+ * Build a CorrectnessCheck using tolerance comparison against GEMM_REFERENCE_VALUES.
+ *
+ * pass = null when GEMM_REFERENCE_READY is false (pending first GPU run).
+ * pass = true/false once reference is established.
+ */
+export function buildCorrectnessCheck(output: GemmProbeOutput): CorrectnessCheck {
+  const measured: CorrectnessCheck = {
+    benchmark_id:       GEMM_BENCHMARK_ID,
+    reference_sum:      GEMM_REFERENCE_VALUES.sum,
+    reference_norm:     GEMM_REFERENCE_VALUES.norm,
+    reference_corners:  GEMM_REFERENCE_VALUES.corners,
+    epsilon_rel:        GEMM_EPSILON_REL,
+    measured_sum:       output.fp_sum,
+    measured_norm:      output.fp_norm,
+    measured_corners:   output.fp_corners,
+    max_rel_error:      null,
+    pass:               null,
+  };
+
+  if (!GEMM_REFERENCE_READY) return measured;
+
+  // Compute max relative error across sum, norm, and all 4 corners
+  const ref = GEMM_REFERENCE_VALUES;
+  const relErr = (m: number, r: number): number =>
+    r !== 0 ? Math.abs(m - r) / Math.abs(r) : Math.abs(m);
+
+  const errors = [
+    relErr(output.fp_sum,         ref.sum!),
+    relErr(output.fp_norm,        ref.norm!),
+    ...output.fp_corners.map((c, i) => relErr(c, ref.corners![i])),
+  ];
+  const max_rel_error = Math.max(...errors);
+
+  return {
+    ...measured,
+    max_rel_error,
+    pass: max_rel_error <= GEMM_EPSILON_REL,
   };
 }
 
@@ -110,9 +201,4 @@ export function buildPerformanceCheck(
     measured_tflops,
     conformance_score,
   };
-}
-
-/** SHA-256 hex digest of a string — convenience for callers hashing artifacts. */
-export function sha256hex(data: string): string {
-  return createHash('sha256').update(data).digest('hex');
 }

@@ -1,0 +1,17 @@
+{
+  "_note": "Chain settled COMPLETED at slot 465341300 (~17s after post). Observer poller recorded 'timeout' because the state-enum bug (comparing string 'COMPLETED' against numeric 2) made every transition invisible. Workload failed: container exited 1 (numpy not installed in python:3.11-slim). outcome_code is 'job_error' (chain COMPLETED, container non-zero exit). cost_nos is 4131 raw = 0.004131 NOS (deposit 437400 minus escrow refund 433269, from ATA history). Bug fixed in wrap v2; this run is superseded by real-receipt.json.",
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "YDcMRyj9hddbucDSErNSyE8n2zC93haKFaTfXs3mSAL",
+  "market": "97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf",
+  "host": "Amqoidiw1Q75GM7HuNatUdzbnqotPjEozSVqw2QfKjit",
+  "gpu_class": null,
+  "posted_at": "2026-11-04T14:48:44.467Z",
+  "claimed_at": "2026-11-04T14:48:55.160Z",
+  "started_at": null,
+  "settled_at": "2026-11-04T14:49:03.000Z",
+  "result_hash": "bd45c7ed6077c3ad5fd2b3e1a86d1e8b5306cc778b74b5d4894b9f347c15d97e",
+  "cost_nos": 4131,
+  "chain_state": "COMPLETED",
+  "outcome_code": "job_error"
+}

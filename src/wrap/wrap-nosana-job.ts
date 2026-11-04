@@ -5,19 +5,34 @@
  *   1. walletPath file — JSON array [b0, b1, …, b63] or base58 string
  *   2. env var named by walletEnvVar (default: NOSANA_WALLET_PRIVATE_KEY) — same formats
  *
- * The @nosana/sdk Client handles both formats internally via getWallet().
- * Never prints or returns the keypair bytes.
+ * OUTCOME MODEL
+ * =============
+ * chain_state  — the on-chain terminal state from @nosana/sdk mapJob():
+ *                COMPLETED = node submitted a result (workload may still have failed)
+ *                STOPPED   = job halted before the node submitted any result
+ *
+ * outcome_code — derived from BOTH chain_state AND the IPFS result content:
+ *   ok          COMPLETED + result.status === 'success' (or no result to check)
+ *   job_error   COMPLETED + result.status === 'failed' (application failure, e.g. OOM, exit 1)
+ *   host_error  COMPLETED + result indicates infrastructure failure (hostShutDown, etc.)
+ *   failed      STOPPED on-chain
+ *   timeout     observer poll window closed before terminal state; chain state unknown
+ *   unknown     COMPLETED but IPFS fetch failed or result was unparseable
+ *
+ * COST
+ * ====
+ * cost_nos = NET NOS debit from the poster's wallet = escrow deposit minus refund.
+ * Computed from the wallet ATA balance before listing and after settlement.
+ * This is NOT job.price (which is the market's per-second rate).
  *
  * STATE NOTE: @nosana/sdk jobs.get() returns state as a STRING after mapJob()
  * transforms numeric codes via jobStateMapping: 0→'QUEUED', 1→'RUNNING',
  * 2→'COMPLETED', 3→'STOPPED'. Never compare state to numeric constants.
- * job.node is a PublicKey object (toString() gives base58).
- * job.price is a BN object (toNumber() gives integer NOS base units).
  */
 
 import { readFileSync } from 'fs';
 import { createHash } from 'crypto';
-import type { Receipt, OutcomeCode } from '../types/receipt.js';
+import type { Receipt, OutcomeCode, ChainState } from '../types/receipt.js';
 
 export interface WrapOptions {
   /** Market public key to post the job to (e.g. RTX 4090 market). */
@@ -48,17 +63,20 @@ const STATE_RUNNING   = 'RUNNING';
 const STATE_COMPLETED = 'COMPLETED';
 const STATE_STOPPED   = 'STOPPED';
 
+const NOS_MINT = 'nosXBVoaCTtYdLvKY6Csb4AC8JCdQKKAaWYtx2ZMoo7';
+
 /** Internal lifecycle state tracked during polling. */
 interface LifecycleState {
-  job_id:     string;
-  market:     string;
-  host:       string | null;
-  posted_at:  string;
-  claimed_at: string | null;
-  started_at: string | null;
-  settled_at: string | null;
+  job_id:      string;
+  market:      string;
+  host:        string | null;
+  posted_at:   string;
+  claimed_at:  string | null;
+  started_at:  string | null;
+  settled_at:  string | null;
   result_hash: string | null;
-  cost_nos:   number | null;
+  cost_nos:    number | null;
+  chain_state: ChainState | null;
   outcome_code: OutcomeCode | null;
   transitions: Array<{ state: string; at: string }>;
 }
@@ -68,15 +86,30 @@ function nowIso(): string {
 }
 
 /**
+ * Derive the associated NOS token account address for a wallet pubkey.
+ * Returns null on any error so cost_nos falls back to null gracefully.
+ */
+async function getAtaBalance(
+  connection: { getTokenAccountBalance(ata: unknown): Promise<{ value: { amount: string } }> },
+  walletPubkey: unknown,
+): Promise<number | null> {
+  try {
+    const { getAssociatedTokenAddressSync } = await import('@solana/spl-token') as {
+      getAssociatedTokenAddressSync(mint: unknown, owner: unknown): unknown;
+    };
+    const { PublicKey } = await import('@solana/web3.js') as { PublicKey: new(s: string) => unknown };
+    const mintPk = new PublicKey(NOS_MINT);
+    const ata = getAssociatedTokenAddressSync(mintPk, walletPubkey);
+    const bal = await connection.getTokenAccountBalance(ata);
+    return Number(bal.value.amount);
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Wrap a Nosana job definition: post it, poll for lifecycle transitions, and
  * return a Receipt when the job reaches a terminal state.
- *
- * Timestamps are observer-side wall-clock times from the polling process —
- * NOT on-chain timestamps. Use them for approximate duration measurement only.
- *
- * On timeout the job remains live on-chain. wrapNosanaJob attempts to delist
- * it via jobs.delist() but this may fail if the job has already been claimed.
- * Monitor the job address directly if precise on-chain cancellation matters.
  *
  * @param jobDef   Nosana job definition object (compatible with @nosana/sdk JobDefinition).
  * @param options  Market, wallet, and tuning parameters.
@@ -114,6 +147,15 @@ export async function wrapNosanaJob(
   // SDK Client(environment, wallet, config?) — wallet accepts JSON string or base58 string
   const client = new Client('mainnet', walletRaw as unknown as never);
 
+  // ── Capture pre-listing ATA balance for accurate cost_nos ────────────────
+  const connection = (client as unknown as { solana: { connection: unknown; wallet: { publicKey: unknown } } })
+    .solana?.connection;
+  const walletPubkey = (client as unknown as { solana: { wallet: { publicKey: unknown } } })
+    .solana?.wallet?.publicKey;
+  const preBalance = connection && walletPubkey
+    ? await getAtaBalance(connection as Parameters<typeof getAtaBalance>[0], walletPubkey)
+    : null;
+
   // ── Post job ─────────────────────────────────────────────────────────────
   const posted_at = nowIso();
   // jobs.list() pins the job def to IPFS, submits on-chain, and returns job address
@@ -129,6 +171,7 @@ export async function wrapNosanaJob(
     settled_at:  null,
     result_hash: null,
     cost_nos:    null,
+    chain_state: null,
     outcome_code: null,
     transitions: [{ state: 'POSTED', at: posted_at }],
   };
@@ -160,29 +203,46 @@ export async function wrapNosanaJob(
     if (jobState === STATE_RUNNING && !state.started_at) {
       state.started_at = nowIso();
     }
-    if (jobState === STATE_COMPLETED && !state.outcome_code) {
-      state.outcome_code = 'ok';
-      state.settled_at   = nowIso();
-      // job.price is a BN object — use Number() which calls BN.valueOf()
-      if (job.price != null) state.cost_nos = Number(job.price);
 
-      // Fetch result artifact from IPFS and hash its content
+    if (jobState === STATE_COMPLETED && !state.outcome_code) {
+      state.chain_state = 'COMPLETED';
+      state.settled_at  = nowIso();
+
+      // cost_nos: ATA delta (actual net debit), falls back to null
+      if (preBalance != null && connection && walletPubkey) {
+        const postBalance = await getAtaBalance(
+          connection as Parameters<typeof getAtaBalance>[0], walletPubkey,
+        );
+        if (postBalance != null) state.cost_nos = preBalance - postBalance;
+      }
+
+      // Fetch result artifact from IPFS
+      let ipfsContent: unknown = null;
       if (job.ipfsResult) {
         try {
-          const content = await client.ipfs.retrieve(job.ipfsResult);
+          ipfsContent = await client.ipfs.retrieve(job.ipfsResult);
           state.result_hash = createHash('sha256')
-            .update(JSON.stringify(content))
+            .update(JSON.stringify(ipfsContent))
             .digest('hex');
         } catch {
-          // result_hash stays null if IPFS fetch fails
+          // result_hash stays null; outcome becomes 'unknown' below
         }
       }
+
+      // Derive outcome_code from result content
+      state.outcome_code = deriveOutcomeCode(ipfsContent);
     }
+
     if (jobState === STATE_STOPPED && !state.outcome_code) {
-      // STOPPED covers failed, cancelled, and forcibly stopped jobs
+      state.chain_state = 'STOPPED';
       state.outcome_code = 'failed';
       state.settled_at   = nowIso();
-      if (job.price != null) state.cost_nos = Number(job.price);
+      if (preBalance != null && connection && walletPubkey) {
+        const postBalance = await getAtaBalance(
+          connection as Parameters<typeof getAtaBalance>[0], walletPubkey,
+        );
+        if (postBalance != null) state.cost_nos = preBalance - postBalance;
+      }
     }
 
     if (state.outcome_code) break;
@@ -192,6 +252,7 @@ export async function wrapNosanaJob(
   if (!state.outcome_code) {
     state.outcome_code = 'timeout';
     state.settled_at   = nowIso();
+    state.chain_state  = null; // unknown at poll-window close
     state.transitions.push({ state: 'POLL_TIMEOUT', at: state.settled_at });
     // Attempt to delist — may fail if claimed; non-fatal
     try {
@@ -205,6 +266,39 @@ export async function wrapNosanaJob(
   return buildReceipt(state);
 }
 
+/**
+ * Derive outcome_code from IPFS result content.
+ *
+ * Nosana's FlowState JSON has a top-level `status` field ('success'|'failed')
+ * and per-op `diagnostics.reason` flags (hostShutDown, jobStopped, jobExpired).
+ * Chain COMPLETED means the node submitted a result, but the workload or host
+ * may still have failed.
+ */
+function deriveOutcomeCode(ipfsContent: unknown): OutcomeCode {
+  if (ipfsContent == null) {
+    // No IPFS result — COMPLETED on chain but content unavailable
+    return 'unknown';
+  }
+  const result = ipfsContent as {
+    status?: string;
+    opStates?: Array<{
+      diagnostics?: { reason?: { hostShutDown?: boolean; jobExpired?: boolean } };
+    }>;
+  };
+
+  // Check for host/infra failure
+  const hostShutDown = result.opStates?.some(
+    op => op.diagnostics?.reason?.hostShutDown === true,
+  );
+  if (hostShutDown) return 'host_error';
+
+  if (result.status === 'success') return 'ok';
+  if (result.status === 'failed')  return 'job_error';
+
+  // status present but unknown value, or structure unexpected
+  return 'unknown';
+}
+
 function buildReceipt(s: LifecycleState): Receipt {
   return {
     receipt_version: '0.1.0',
@@ -212,14 +306,15 @@ function buildReceipt(s: LifecycleState): Receipt {
     job_id:          s.job_id,
     market:          s.market,
     host:            s.host,
-    gpu_class:       null, // @nosana/sdk Job does not expose gpu_class; set by caller if needed
+    gpu_class:       null,
     posted_at:       s.posted_at,
     claimed_at:      s.claimed_at,
     started_at:      s.started_at,
     settled_at:      s.settled_at,
     result_hash:     s.result_hash,
     cost_nos:        s.cost_nos,
-    outcome_code:    s.outcome_code ?? 'failed',
+    chain_state:     s.chain_state,
+    outcome_code:    s.outcome_code ?? 'unknown',
   };
 }
 
@@ -252,6 +347,6 @@ interface ListResult {
 interface NosanaJob {
   state:       string;           // 'QUEUED'|'RUNNING'|'COMPLETED'|'STOPPED' after mapJob
   node?:       { toString(): string };   // PublicKey object at runtime
-  price?:      { valueOf(): number };    // BN object at runtime
+  price?:      { valueOf(): number };    // BN object — PER-SECOND RATE, not total cost
   ipfsResult?: string;           // IPFS CID string after solHashToIpfsHash
 }

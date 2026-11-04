@@ -17,6 +17,7 @@
     "settled_at",
     "result_hash",
     "cost_nos",
+    "chain_state",
     "outcome_code"
   ],
   "properties": {
@@ -51,37 +52,42 @@
     "posted_at": {
       "type": "string",
       "format": "date-time",
-      "description": "ISO-8601 timestamp when the job was posted."
+      "description": "ISO-8601 observer-side wall-clock time when the job was posted."
     },
     "claimed_at": {
       "type": ["string", "null"],
       "format": "date-time",
-      "description": "ISO-8601 timestamp when a node claimed the job."
+      "description": "ISO-8601 observer-side wall-clock time when a node claimed the job."
     },
     "started_at": {
       "type": ["string", "null"],
       "format": "date-time",
-      "description": "ISO-8601 timestamp when execution started."
+      "description": "ISO-8601 observer-side wall-clock time when execution started."
     },
     "settled_at": {
       "type": ["string", "null"],
       "format": "date-time",
-      "description": "ISO-8601 timestamp when the job reached a terminal state."
+      "description": "ISO-8601 observer-side wall-clock time when the job reached a terminal state."
     },
     "result_hash": {
       "type": ["string", "null"],
       "pattern": "^[0-9a-f]{64}$",
-      "description": "SHA-256 hex digest of the job output artifact."
+      "description": "SHA-256 hex digest of the job output artifact (full IPFS FlowState JSON)."
     },
     "cost_nos": {
       "type": ["number", "null"],
       "minimum": 0,
-      "description": "NOS token cost as reported by the protocol (job.price from @nosana/sdk). Units are venue-specific (NOS lamports in Nosana mainnet v0.4)."
+      "description": "Net NOS debit from poster wallet: escrow deposit minus refund. Units: NOS base units (6 decimals)."
+    },
+    "chain_state": {
+      "type": ["string", "null"],
+      "enum": ["QUEUED", "RUNNING", "COMPLETED", "STOPPED", null],
+      "description": "Final on-chain job state as returned by @nosana/sdk mapJob(). Null on observer timeout."
     },
     "outcome_code": {
       "type": "string",
-      "enum": ["ok", "failed", "timeout", "cancelled"],
-      "description": "Terminal outcome."
+      "enum": ["ok", "job_error", "host_error", "failed", "timeout", "unknown"],
+      "description": "Terminal outcome derived from chain_state and job result content."
     }
   }
 }

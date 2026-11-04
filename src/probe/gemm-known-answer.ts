@@ -1,38 +1,51 @@
 /**
- * Known-answer constants for the gemm-fp32-1024-seed42 conformance probe.
+ * Known-answer reference values for the gemm-fp32-1024-seed42-torch probe.
  *
- * GEMM_EXPECTED_HASH is the SHA-256 hex digest of the JSON fingerprint
- * produced by the probe container:
+ * IMPORTANT: these reference values MUST come from a torch/GPU run, NOT numpy/CPU.
+ * torch.rand(seed=42) and np.random.rand(seed=42) produce different sequences —
+ * the matrices A and B are different, so C = A @ B is completely different.
+ * The CPU-numpy hash committed in 5825e3c is not valid for GPU conformance.
  *
- *   import numpy as np, json, hashlib
- *   np.random.seed(42)
- *   A = np.random.rand(1024, 1024).astype(np.float32)
- *   B = np.random.rand(1024, 1024).astype(np.float32)
- *   C = A @ B
- *   fp = {"shape": [1024, 1024],
- *          "sum":   round(float(C.sum()), 4),
- *          "norm":  round(float(np.linalg.norm(C)), 4),
- *          "corner":[round(float(C[0,0]),6), round(float(C[0,-1]),6),
- *                    round(float(C[-1,0]),6), round(float(C[-1,-1]),6)]}
- *   print(hashlib.sha256(json.dumps(fp, sort_keys=True).encode()).hexdigest())
+ * TOLERANCE DESIGN
+ * ================
+ * FP32 GPU results may differ by 1–2 ULPs across hardware families due to
+ * different FMA and tree-reduction ordering. We use a relative error tolerance
+ * rather than exact bit-identity:
+ *   pass iff |measured - reference| / |reference| ≤ GEMM_EPSILON_REL
  *
- * TIMING VALUES ARE NEVER INCLUDED IN THE HASH.
+ * The fingerprint values are rounded inside the probe container (sum/norm to 4dp,
+ * corners to 6dp), which provides a natural coarse tolerance band. GEMM_EPSILON_REL
+ * is an additional guard for cross-GPU-generation variance before rounding.
  *
- * To regenerate after a numpy or platform change:
- *   docker run --rm python:3.11-slim python -c "<script above>"
- * Then commit the new hash here with a comment noting the platform.
+ * To establish reference values after the first successful GPU run:
+ *   1. Run the GPU probe against a known-good RTX 4090 node
+ *   2. Record measured_sum, measured_norm, measured_corners from the IPFS result
+ *   3. Set GEMM_REFERENCE_VALUES below and mark GEMM_REFERENCE_READY = true
+ *   4. Commit with the job_id as evidence
  *
- * First live run: 2026-11-04, job AF6cCmvjg5dYi3vczvJYLp35bEoj6A2xdTxNzkLZSyHo
- * Platform: python:3.11-slim + numpy (CPU; RTX 4090 market, CPU-side numpy)
+ * STATUS: PENDING_GPU_RUN
  */
-export const GEMM_BENCHMARK_ID = 'gemm-fp32-1024-seed42';
+
+export const GEMM_BENCHMARK_ID = 'gemm-fp32-1024-seed42-torch';
+
+/** Relative error tolerance across all fingerprint values. */
+export const GEMM_EPSILON_REL = 1e-4;
 
 /**
- * SHA-256 of the JSON fingerprint {shape, sum, norm, corner} from the first
- * successful live run (2026-11-04). This is deterministic for float32 matmul
- * with seed 42 regardless of execution hardware (pure numpy CPU math).
+ * Reference values from canonical torch/GPU run.
+ * null = pending first GPU run; pass will be null until set.
  */
-export const GEMM_EXPECTED_HASH = 'd061ef85559cc15c1b56f97bab2514eb83542107bd856a309666c33ae8e0d8df' as const;
+export const GEMM_REFERENCE_VALUES: {
+  sum:     number | null;
+  norm:    number | null;
+  corners: [number, number, number, number] | null;
+} = {
+  sum:     null,  // PENDING_GPU_RUN
+  norm:    null,
+  corners: null,
+};
 
-/** True iff GEMM_EXPECTED_HASH has been populated with a real hash. */
-export const GEMM_KNOWN_ANSWER_READY = true;
+export const GEMM_REFERENCE_READY =
+  GEMM_REFERENCE_VALUES.sum !== null &&
+  GEMM_REFERENCE_VALUES.norm !== null &&
+  GEMM_REFERENCE_VALUES.corners !== null;

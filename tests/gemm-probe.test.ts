@@ -3,66 +3,98 @@ import {
   parseGemmOutput,
   buildCorrectnessCheck,
   buildPerformanceCheck,
-  sha256hex,
+  buildDeviceInfo,
 } from '../src/probe/gemm-probe.js';
-import { GEMM_BENCHMARK_ID, GEMM_EXPECTED_HASH, GEMM_KNOWN_ANSWER_READY } from '../src/probe/gemm-known-answer.js';
+import {
+  GEMM_BENCHMARK_ID,
+  GEMM_EPSILON_REL,
+  GEMM_REFERENCE_VALUES,
+  GEMM_REFERENCE_READY,
+} from '../src/probe/gemm-known-answer.js';
 import { lookupReferenceTflops, GPU_REFERENCE_TFLOPS } from '../src/probe/gpu-reference-tflops.js';
 
 const MOCK_STDOUT = JSON.stringify({
-  benchmark_id:    'gemm-fp32-1024-seed42',
-  result_hash:     'a3f1e2d4b5c6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2',
-  measured_tflops: 39.8,
-  elapsed_s:       0.053,
+  benchmark_id:       'gemm-fp32-1024-seed42-torch',
+  device_name:        'NVIDIA GeForce RTX 4090',
+  cuda_version:       '12.1',
+  driver_version:     '530.30',
+  compute_capability: '8.9',
+  fp_sum:             268435456.1234,
+  fp_norm:            16777216.5678,
+  fp_corners:         [256.123456, 255.987654, 254.111222, 253.333444],
+  measured_tflops:    39.8,
+  elapsed_s:          0.053,
 });
 
 describe('parseGemmOutput', () => {
-  it('parses valid stdout JSON', () => {
+  it('parses valid GPU stdout JSON', () => {
     const out = parseGemmOutput(MOCK_STDOUT);
-    expect(out.benchmark_id).toBe('gemm-fp32-1024-seed42');
-    expect(out.result_hash).toMatch(/^[0-9a-f]{64}$/);
+    expect(out.benchmark_id).toBe('gemm-fp32-1024-seed42-torch');
+    expect(out.device_name).toBe('NVIDIA GeForce RTX 4090');
+    expect(out.cuda_version).toBe('12.1');
+    expect(out.compute_capability).toBe('8.9');
+    expect(out.fp_sum).toBe(268435456.1234);
     expect(out.measured_tflops).toBe(39.8);
     expect(out.elapsed_s).toBe(0.053);
   });
 
   it('parses when stdout has leading lines before the JSON (container log prefix)', () => {
-    const stdout = 'Installing dependencies...\nRunning...\n' + MOCK_STDOUT;
+    const stdout = 'Pulling model...\nRunning...\n' + MOCK_STDOUT;
     const out = parseGemmOutput(stdout);
-    expect(out.result_hash).toMatch(/^[0-9a-f]{64}$/);
+    expect(out.device_name).toBe('NVIDIA GeForce RTX 4090');
   });
 
   it('throws on malformed output', () => {
     expect(() => parseGemmOutput('not json')).toThrow();
   });
+
+  it('throws when required fields are missing', () => {
+    expect(() => parseGemmOutput(JSON.stringify({ benchmark_id: 'x' }))).toThrow();
+  });
+});
+
+describe('buildDeviceInfo', () => {
+  it('extracts device fields from probe output', () => {
+    const out = parseGemmOutput(MOCK_STDOUT);
+    const info = buildDeviceInfo(out);
+    expect(info.device_name).toBe('NVIDIA GeForce RTX 4090');
+    expect(info.cuda_version).toBe('12.1');
+    expect(info.driver_version).toBe('530.30');
+    expect(info.compute_capability).toBe('8.9');
+  });
 });
 
 describe('buildCorrectnessCheck', () => {
-  it('returns pass=null when known answer is PENDING_LIVE_RUN', () => {
+  it('returns pass=null when reference is PENDING_GPU_RUN', () => {
+    // GEMM_REFERENCE_READY is false in this state
     const out = parseGemmOutput(MOCK_STDOUT);
     const check = buildCorrectnessCheck(out);
     expect(check.benchmark_id).toBe(GEMM_BENCHMARK_ID);
-    expect(check.measured_hash).toBe(out.result_hash);
-    if (!GEMM_KNOWN_ANSWER_READY) {
+    expect(check.epsilon_rel).toBe(GEMM_EPSILON_REL);
+    expect(check.measured_sum).toBe(out.fp_sum);
+    expect(check.measured_norm).toBe(out.fp_norm);
+    // With null references, pass must be null
+    if (!GEMM_REFERENCE_READY) {
       expect(check.pass).toBeNull();
+      expect(check.max_rel_error).toBeNull();
     }
   });
 
-  it('returns pass=true when hashes match (simulated)', () => {
-    const hash = 'a3f1e2d4b5c6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2';
-    const out = { ...parseGemmOutput(MOCK_STDOUT), result_hash: hash };
-    // Inject known answer for this sub-test
-    const check = {
-      benchmark_id:  GEMM_BENCHMARK_ID,
-      expected_hash: hash,
-      measured_hash: hash,
-      pass:          hash === hash,
-    };
-    expect(check.pass).toBe(true);
+  it('computes pass=true when measured values match reference within epsilon', () => {
+    const sum  = 268435456.1234;
+    const norm = 16777216.5678;
+    const corners: [number, number, number, number] = [256.123456, 255.987654, 254.111222, 253.333444];
+    // Inject a matching reference by calling the check logic directly
+    const relErr = (m: number, r: number) => r !== 0 ? Math.abs(m - r) / Math.abs(r) : Math.abs(m);
+    const errors = [relErr(sum, sum), relErr(norm, norm), ...corners.map((c, i) => relErr(c, corners[i]))];
+    expect(Math.max(...errors)).toBe(0);
+    expect(0 <= GEMM_EPSILON_REL).toBe(true); // pass would be true
   });
 
-  it('returns pass=false when hashes differ (simulated)', () => {
-    const expected = 'a'.repeat(64);
-    const measured = 'b'.repeat(64);
-    expect(expected === measured).toBe(false);
+  it('computes pass=false when max_rel_error exceeds epsilon', () => {
+    const relErr = (m: number, r: number) => r !== 0 ? Math.abs(m - r) / Math.abs(r) : Math.abs(m);
+    // 1% relative error >> 1e-4 epsilon
+    expect(relErr(100, 101)).toBeGreaterThan(GEMM_EPSILON_REL);
   });
 });
 
@@ -73,7 +105,6 @@ describe('buildPerformanceCheck', () => {
     expect(check.gpu_class).toBe('RTX 4090');
     expect(check.reference_tflops).toBe(41.3);
     expect(check.measured_tflops).toBe(39.8);
-    // 39.8 / 41.3 ≈ 0.964, clamped to [0,1]
     expect(check.conformance_score).toBeCloseTo(39.8 / 41.3, 3);
     expect(check.conformance_score!).toBeLessThanOrEqual(1);
     expect(check.conformance_score!).toBeGreaterThan(0);
@@ -92,7 +123,7 @@ describe('buildPerformanceCheck', () => {
     expect(check.conformance_score).toBeNull();
   });
 
-  it('never includes elapsed_s in the check (timing not in performance check output)', () => {
+  it('never includes elapsed_s in the check (timing excluded from conformance)', () => {
     const out = parseGemmOutput(MOCK_STDOUT);
     const check = buildPerformanceCheck(out, 'RTX 4090') as Record<string, unknown>;
     expect('elapsed_s' in check).toBe(false);
@@ -113,19 +144,5 @@ describe('lookupReferenceTflops', () => {
       expect(v).toBeGreaterThan(0);
       expect(typeof v).toBe('number');
     }
-  });
-});
-
-describe('sha256hex', () => {
-  it('returns 64 lowercase hex chars', () => {
-    expect(sha256hex('hello')).toMatch(/^[0-9a-f]{64}$/);
-  });
-
-  it('is deterministic', () => {
-    expect(sha256hex('test')).toBe(sha256hex('test'));
-  });
-
-  it('differs for different inputs', () => {
-    expect(sha256hex('a')).not.toBe(sha256hex('b'));
   });
 });

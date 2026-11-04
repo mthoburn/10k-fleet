@@ -2,41 +2,75 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/SCOPE/nosana-receipts/blob/main/src/schema/probe-receipt.schema.json",
   "title": "ProbeReceipt",
-  "description": "A Receipt extended with conformance probe results (correctness and/or performance).",
+  "description": "A Receipt extended with conformance probe results (device info, correctness, performance).",
   "allOf": [
     { "$ref": "./receipt.schema.json" },
     {
       "properties": {
+        "device_info": {
+          "type": "object",
+          "description": "GPU device info recorded inside the probe container.",
+          "required": ["device_name", "cuda_version", "driver_version", "compute_capability"],
+          "additionalProperties": false,
+          "properties": {
+            "device_name":        { "type": "string", "minLength": 1 },
+            "cuda_version":       { "type": "string", "minLength": 1 },
+            "driver_version":     { "type": "string", "minLength": 1 },
+            "compute_capability": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" }
+          }
+        },
         "correctness": {
           "type": "object",
-          "description": "SHA-256 correctness check against a committed known answer.",
-          "required": ["benchmark_id", "expected_hash", "measured_hash", "pass"],
+          "description": "Tolerance-based correctness check against reference float values from a canonical GPU run.",
+          "required": [
+            "benchmark_id",
+            "reference_sum", "reference_norm", "reference_corners",
+            "epsilon_rel",
+            "measured_sum", "measured_norm", "measured_corners",
+            "max_rel_error", "pass"
+          ],
           "additionalProperties": false,
           "properties": {
             "benchmark_id": {
               "type": "string",
               "minLength": 1,
-              "description": "Identifier for the known-answer problem, e.g. 'gemm-fp32-1024-seed42'."
+              "description": "Benchmark identifier, e.g. 'gemm-fp32-1024-seed42-torch'."
             },
-            "expected_hash": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$",
-              "description": "Pre-committed SHA-256 hex digest of the deterministic computation fingerprint."
+            "reference_sum":  { "type": ["number", "null"] },
+            "reference_norm": { "type": ["number", "null"] },
+            "reference_corners": {
+              "oneOf": [
+                { "type": "array", "items": { "type": "number" }, "minItems": 4, "maxItems": 4 },
+                { "type": "null" }
+              ]
             },
-            "measured_hash": {
-              "type": ["string", "null"],
-              "pattern": "^([0-9a-f]{64})?$",
-              "description": "SHA-256 hex digest measured from the job output. Null if job did not complete."
+            "epsilon_rel": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Max relative error tolerance: |m-r|/|r| ≤ epsilon_rel."
+            },
+            "measured_sum":  { "type": ["number", "null"] },
+            "measured_norm": { "type": ["number", "null"] },
+            "measured_corners": {
+              "oneOf": [
+                { "type": "array", "items": { "type": "number" }, "minItems": 4, "maxItems": 4 },
+                { "type": "null" }
+              ]
+            },
+            "max_rel_error": {
+              "type": ["number", "null"],
+              "minimum": 0,
+              "description": "Worst-case relative error across all checked values."
             },
             "pass": {
               "type": ["boolean", "null"],
-              "description": "True iff measured_hash === expected_hash."
+              "description": "True iff max_rel_error ≤ epsilon_rel."
             }
           }
         },
         "performance": {
           "type": "object",
-          "description": "Measured TFLOPS vs gpu_class reference. Timing values are never hashed.",
+          "description": "Measured GPU TFLOPS vs gpu_class reference.",
           "required": ["gpu_class", "reference_tflops", "measured_tflops", "conformance_score"],
           "additionalProperties": false,
           "properties": {

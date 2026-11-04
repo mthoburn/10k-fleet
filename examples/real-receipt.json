@@ -1,4 +1,5 @@
 {
+  "_note": "Attempt 3 (2026-11-04T17:40 UTC). Chain settled COMPLETED in ~28s. IPFS status: 'success', measured_tflops: 0.0543. NOTE: container used python:3.11-slim with numpy only — no CUDA, no GPU. 0.0543 TFLOPS is CPU matrix math, NOT RTX 4090 performance. The correctness block from the prior version (pass:true, hash match) was also CPU-numpy and is omitted here per spec. GPU probe must be re-run with pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime before correctness or performance fields are populated. cost_nos is 4818 raw = 0.004818 NOS (deposit 394200 minus escrow refund 389382, from ATA history). chain_state added per receipt v2 outcome model.",
   "receipt_version": "0.1.0",
   "provider": "nosana",
   "job_id": "AF6cCmvjg5dYi3vczvJYLp35bEoj6A2xdTxNzkLZSyHo",
@@ -10,12 +11,7 @@
   "started_at": "2026-11-04T17:40:54.175Z",
   "settled_at": "2026-11-04T17:41:13.275Z",
   "result_hash": "3a8de04ea5c10fcc6b19b85344a7c88a697b906bd5a65b8e28af32acd2513d64",
-  "cost_nos": 219,
-  "outcome_code": "ok",
-  "correctness": {
-    "benchmark_id": "gemm-fp32-1024-seed42",
-    "expected_hash": "d061ef85559cc15c1b56f97bab2514eb83542107bd856a309666c33ae8e0d8df",
-    "measured_hash": "d061ef85559cc15c1b56f97bab2514eb83542107bd856a309666c33ae8e0d8df",
-    "pass": true
-  }
+  "cost_nos": 4818,
+  "chain_state": "COMPLETED",
+  "outcome_code": "ok"
 }

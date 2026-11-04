@@ -1,4 +1,12 @@
-export type { Receipt, ProbeReceipt, OutcomeCode, CorrectnessCheck, PerformanceCheck } from './types/receipt.js';
+export type {
+  Receipt,
+  ProbeReceipt,
+  OutcomeCode,
+  ChainState,
+  CorrectnessCheck,
+  PerformanceCheck,
+  DeviceInfo,
+} from './types/receipt.js';
 export { wrapNosanaJob } from './wrap/wrap-nosana-job.js';
 export type { WrapOptions } from './wrap/wrap-nosana-job.js';
 export {
@@ -6,8 +14,13 @@ export {
   parseGemmOutput,
   buildCorrectnessCheck,
   buildPerformanceCheck,
-  sha256hex,
+  buildDeviceInfo,
 } from './probe/gemm-probe.js';
 export type { GemmProbeOutput } from './probe/gemm-probe.js';
-export { GEMM_BENCHMARK_ID, GEMM_EXPECTED_HASH, GEMM_KNOWN_ANSWER_READY } from './probe/gemm-known-answer.js';
+export {
+  GEMM_BENCHMARK_ID,
+  GEMM_EPSILON_REL,
+  GEMM_REFERENCE_VALUES,
+  GEMM_REFERENCE_READY,
+} from './probe/gemm-known-answer.js';
 export { GPU_REFERENCE_TFLOPS, lookupReferenceTflops } from './probe/gpu-reference-tflops.js';
