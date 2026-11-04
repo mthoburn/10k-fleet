@@ -1,0 +1,46 @@
+{
+  "name": "@SCOPE/nosana-receipts",
+  "version": "0.1.0",
+  "description": "Receipt spec, conformance probe, and job wrapper for Nosana GPU compute",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src/schema"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "peerDependencies": {
+    "@nosana/sdk": ">=0.4.0",
+    "@solana/web3.js": ">=1.95.0"
+  },
+  "peerDependenciesMeta": {
+    "@nosana/sdk": { "optional": true },
+    "@solana/web3.js": { "optional": true }
+  },
+  "devDependencies": {
+    "@nosana/sdk": "^0.4.4",
+    "@solana/web3.js": "^1.95.3",
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

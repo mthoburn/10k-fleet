@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/SCOPE/nosana-receipts/blob/main/src/schema/probe-receipt.schema.json",
+  "title": "ProbeReceipt",
+  "description": "A Receipt extended with conformance probe results (correctness and/or performance).",
+  "allOf": [
+    { "$ref": "./receipt.schema.json" },
+    {
+      "properties": {
+        "correctness": {
+          "type": "object",
+          "description": "SHA-256 correctness check against a committed known answer.",
+          "required": ["benchmark_id", "expected_hash", "measured_hash", "pass"],
+          "additionalProperties": false,
+          "properties": {
+            "benchmark_id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Identifier for the known-answer problem, e.g. 'gemm-fp32-1024-seed42'."
+            },
+            "expected_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "description": "Pre-committed SHA-256 hex digest of the deterministic computation fingerprint."
+            },
+            "measured_hash": {
+              "type": ["string", "null"],
+              "pattern": "^([0-9a-f]{64})?$",
+              "description": "SHA-256 hex digest measured from the job output. Null if job did not complete."
+            },
+            "pass": {
+              "type": ["boolean", "null"],
+              "description": "True iff measured_hash === expected_hash."
+            }
+          }
+        },
+        "performance": {
+          "type": "object",
+          "description": "Measured TFLOPS vs gpu_class reference. Timing values are never hashed.",
+          "required": ["gpu_class", "reference_tflops", "measured_tflops", "conformance_score"],
+          "additionalProperties": false,
+          "properties": {
+            "gpu_class": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reference_tflops": {
+              "type": ["number", "null"],
+              "exclusiveMinimum": 0
+            },
+            "measured_tflops": {
+              "type": ["number", "null"],
+              "minimum": 0
+            },
+            "conformance_score": {
+              "type": ["number", "null"],
+              "minimum": 0,
+              "maximum": 1,
+              "description": "measured_tflops / reference_tflops, clamped to [0, 1]."
+            }
+          }
+        }
+      }
+    }
+  ]
+}

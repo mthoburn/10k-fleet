@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/SCOPE/nosana-receipts/blob/main/src/schema/receipt.schema.json",
+  "title": "Receipt",
+  "description": "A receipt for a single compute job posted to a decentralised GPU market.",
+  "type": "object",
+  "required": [
+    "receipt_version",
+    "provider",
+    "job_id",
+    "market",
+    "host",
+    "gpu_class",
+    "posted_at",
+    "claimed_at",
+    "started_at",
+    "settled_at",
+    "result_hash",
+    "cost_usd",
+    "outcome_code"
+  ],
+  "properties": {
+    "receipt_version": {
+      "type": "string",
+      "const": "0.1.0",
+      "description": "Semver receipt schema version."
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Venue identifier, e.g. 'nosana'."
+    },
+    "job_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Job public key on the venue's chain."
+    },
+    "market": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Market public key the job was posted to."
+    },
+    "host": {
+      "type": ["string", "null"],
+      "description": "Node's on-chain public key. Null until claimed."
+    },
+    "gpu_class": {
+      "type": ["string", "null"],
+      "description": "GPU class reported by the venue. Null until known."
+    },
+    "posted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when the job was posted."
+    },
+    "claimed_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when a node claimed the job."
+    },
+    "started_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when execution started."
+    },
+    "settled_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when the job reached a terminal state."
+    },
+    "result_hash": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 hex digest of the job output artifact."
+    },
+    "cost_usd": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "USD cost as reported by the venue."
+    },
+    "outcome_code": {
+      "type": "string",
+      "enum": ["ok", "failed", "timeout", "cancelled"],
+      "description": "Terminal outcome."
+    }
+  }
+}
