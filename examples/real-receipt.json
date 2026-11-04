@@ -1,0 +1,15 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "AF6cCmvjg5dYi3vczvJYLp35bEoj6A2xdTxNzkLZSyHo",
+  "market": "97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf",
+  "host": "JC8vWziMgfqH5rZMrZNWV1S8rhpgWzjtqim8kSTWZvBP",
+  "gpu_class": null,
+  "posted_at": "2026-11-04T17:40:45.390Z",
+  "claimed_at": "2026-11-04T17:40:54.175Z",
+  "started_at": "2026-11-04T17:40:54.175Z",
+  "settled_at": "2026-11-04T17:41:13.275Z",
+  "result_hash": "3a8de04ea5c10fcc6b19b85344a7c88a697b906bd5a65b8e28af32acd2513d64",
+  "cost_nos": 219,
+  "outcome_code": "ok"
+}

@@ -22,16 +22,17 @@
  *   docker run --rm python:3.11-slim python -c "<script above>"
  * Then commit the new hash here with a comment noting the platform.
  *
- * Status: PENDING_LIVE_RUN — will be updated after the first real probe run.
+ * First live run: 2026-11-04, job AF6cCmvjg5dYi3vczvJYLp35bEoj6A2xdTxNzkLZSyHo
+ * Platform: python:3.11-slim + numpy (CPU; RTX 4090 market, CPU-side numpy)
  */
 export const GEMM_BENCHMARK_ID = 'gemm-fp32-1024-seed42';
 
 /**
- * Pre-committed expected hash.
- * Replace "PENDING_LIVE_RUN" with the actual 64-hex-char hash after the first
- * successful probe run. Commit the update with the probe receipt as evidence.
+ * SHA-256 of the JSON fingerprint {shape, sum, norm, corner} from the first
+ * successful live run (2026-11-04). This is deterministic for float32 matmul
+ * with seed 42 regardless of execution hardware (pure numpy CPU math).
  */
-export const GEMM_EXPECTED_HASH = 'PENDING_LIVE_RUN' as const;
+export const GEMM_EXPECTED_HASH = 'd061ef85559cc15c1b56f97bab2514eb83542107bd856a309666c33ae8e0d8df' as const;
 
 /** True iff GEMM_EXPECTED_HASH has been populated with a real hash. */
-export const GEMM_KNOWN_ANSWER_READY = GEMM_EXPECTED_HASH !== 'PENDING_LIVE_RUN';
+export const GEMM_KNOWN_ANSWER_READY = true;

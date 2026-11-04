@@ -84,9 +84,7 @@ export function parseGemmOutput(stdout: string): GemmProbeOutput {
 export function buildCorrectnessCheck(output: GemmProbeOutput): CorrectnessCheck {
   const measured_hash = output.result_hash;
   const expected_hash = GEMM_EXPECTED_HASH;
-  const pass = expected_hash === 'PENDING_LIVE_RUN'
-    ? null
-    : measured_hash === expected_hash;
+  const pass = measured_hash === expected_hash;
   return {
     benchmark_id: GEMM_BENCHMARK_ID,
     expected_hash,
