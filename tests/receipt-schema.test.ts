@@ -23,7 +23,7 @@ const BASE: Receipt = {
   started_at: null,
   settled_at: null,
   result_hash: null,
-  cost_usd:    null,
+  cost_nos:    null,
   outcome_code: 'ok',
 };
 
@@ -35,7 +35,7 @@ const SETTLED: Receipt = {
   started_at:  '2026-11-03T10:00:08.000Z',
   settled_at:  '2026-11-03T10:00:42.000Z',
   result_hash: 'a3f1e2d4b5c6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2',
-  cost_usd:    0.014,
+  cost_nos:    0.014,
 };
 
 describe('receipt.schema.json', () => {
@@ -61,8 +61,8 @@ describe('receipt.schema.json', () => {
     expect(validateReceipt({ ...BASE, result_hash: 'short' })).toBe(false);
   });
 
-  it('rejects negative cost_usd', () => {
-    expect(validateReceipt({ ...BASE, cost_usd: -1 })).toBe(false);
+  it('rejects negative cost_nos', () => {
+    expect(validateReceipt({ ...BASE, cost_nos: -1 })).toBe(false);
   });
 
   it('allows all four outcome_codes', () => {

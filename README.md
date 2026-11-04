@@ -12,13 +12,16 @@ A thin, vendor-agnostic layer that wraps a Nosana job run and returns a structur
 npm install @SCOPE/nosana-receipts @nosana/sdk @solana/web3.js
 
 # Dry run (no wallet needed):
-WALLET_PATH=/path/to/keypair.json npx tsx node_modules/@SCOPE/nosana-receipts/examples/submit-and-wrap.ts --dry-run
+npx tsx node_modules/@SCOPE/nosana-receipts/examples/submit-and-wrap.ts --dry-run
 
-# Real run against the RTX 4090 market:
+# Real run — wallet file (JSON array of 64 bytes):
 WALLET_PATH=/path/to/keypair.json npx tsx node_modules/@SCOPE/nosana-receipts/examples/submit-and-wrap.ts
+
+# Real run — wallet env var (base58 Phantom format or JSON array):
+NOSANA_WALLET_PRIVATE_KEY=<base58> npx tsx node_modules/@SCOPE/nosana-receipts/examples/submit-and-wrap.ts
 ```
 
-A funded wallet (NOS on Solana mainnet) is required for a real run. Mark provides the keypair path; never commit or print it.
+A funded wallet (NOS on Solana mainnet) is required for a real run. Never commit or print the keypair.
 
 ---
 
@@ -110,11 +113,15 @@ console.log(validate(receipt)); // true
 | `claimed_at` | ISO 8601 \| null | Job claimed by a node |
 | `started_at` | ISO 8601 \| null | Container started |
 | `settled_at` | ISO 8601 \| null | Job settled on-chain |
-| `result_hash` | 64-char hex \| null | SHA-256 of job stdout |
-| `cost_usd` | `number \| null` | Cost in USD (NOS × price at settlement) |
+| `result_hash` | 64-char hex \| null | SHA-256 of IPFS result artifact JSON |
+| `cost_nos` | `number \| null` | NOS cost as reported by the protocol (`job.price` from SDK; units are venue-specific) |
 | `outcome_code` | `"ok" \| "failed" \| "timeout" \| "cancelled"` | Job outcome |
 
 **ProbeReceipt** extends Receipt with optional `correctness` and `performance` objects — see `src/schema/probe-receipt.schema.json`.
+
+**Lifecycle timestamps** (`posted_at`, `claimed_at`, `started_at`, `settled_at`) are observer-side wall-clock times recorded by the polling process — NOT on-chain timestamps. Use them for approximate duration measurement only.
+
+**On timeout** the job remains live on-chain. `wrapNosanaJob` attempts `jobs.delist()` but this may fail if the job has already been claimed by a node. Monitor the `job_id` address directly if precise on-chain cancellation is required.
 
 ---
 

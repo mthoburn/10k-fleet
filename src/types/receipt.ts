@@ -3,6 +3,10 @@
  *
  * Venue-agnostic: `provider` identifies the compute venue ("nosana"),
  * not a specific node. `host` is the node's on-chain public key once claimed.
+ *
+ * Lifecycle timestamps (posted_at, claimed_at, started_at, settled_at) are
+ * observer-side wall-clock times recorded by the polling process — they are
+ * NOT on-chain timestamps. Use them for approximate duration measurement only.
  */
 
 export type OutcomeCode = 'ok' | 'failed' | 'timeout' | 'cancelled';
@@ -19,23 +23,39 @@ export interface Receipt {
   market: string;
   /** Node's on-chain public key. Null until the job is claimed. */
   host: string | null;
-  /** GPU class reported by the venue, e.g. "RTX 4090". Null until known. */
+  /** GPU class reported by the venue, e.g. "RTX 4090". Null if unavailable. */
   gpu_class: string | null;
-  /** ISO-8601 — when the job was posted to the market. */
+  /**
+   * ISO-8601 observer-side wall-clock time when the job was posted.
+   * Not an on-chain timestamp.
+   */
   posted_at: string;
-  /** ISO-8601 — when a node claimed the job. Null if not yet claimed. */
+  /**
+   * ISO-8601 observer-side wall-clock time when a node was first seen on the job.
+   * Not an on-chain timestamp. Null if not yet claimed.
+   */
   claimed_at: string | null;
-  /** ISO-8601 — when execution started. Null if not yet started. */
+  /**
+   * ISO-8601 observer-side wall-clock time when state first reached RUNNING.
+   * Not an on-chain timestamp. Null if not yet started.
+   */
   started_at: string | null;
-  /** ISO-8601 — when the job reached a terminal state. Null if still running. */
+  /**
+   * ISO-8601 observer-side wall-clock time when the job reached a terminal state.
+   * Not an on-chain timestamp. Null if still running.
+   */
   settled_at: string | null;
   /**
-   * SHA-256 hex digest of the job's output artifact.
+   * SHA-256 hex digest of the job result artifact retrieved from IPFS.
    * Null until the job settles with outcome_code "ok".
    */
   result_hash: string | null;
-  /** USD cost as reported by the venue. Null if unavailable. */
-  cost_usd: number | null;
+  /**
+   * NOS token cost as reported by the protocol (`job.price` from @nosana/sdk).
+   * Units are venue-specific (NOS lamports in Nosana mainnet v0.4).
+   * Null if unavailable.
+   */
+  cost_nos: number | null;
   /** Terminal outcome. */
   outcome_code: OutcomeCode;
 }

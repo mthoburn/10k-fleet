@@ -16,7 +16,7 @@
     "started_at",
     "settled_at",
     "result_hash",
-    "cost_usd",
+    "cost_nos",
     "outcome_code"
   ],
   "properties": {
@@ -73,10 +73,10 @@
       "pattern": "^[0-9a-f]{64}$",
       "description": "SHA-256 hex digest of the job output artifact."
     },
-    "cost_usd": {
+    "cost_nos": {
       "type": ["number", "null"],
       "minimum": 0,
-      "description": "USD cost as reported by the venue."
+      "description": "NOS token cost as reported by the protocol (job.price from @nosana/sdk). Units are venue-specific (NOS lamports in Nosana mainnet v0.4)."
     },
     "outcome_code": {
       "type": "string",
