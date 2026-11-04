@@ -1,0 +1,16 @@
+{
+  "_note": "Real job: claimed by host Amqoidiw1Q75GM7HuNatUdzbnqotPjEozSVqw2QfKjit after 11s, no RUNNING state within timeout. Cause not determined (host, market, or job-side — e.g. image pull). Kept as evidence: the receipt records what happened; it does not assign fault. Post-hoc check showed job reached COMPLETED on-chain after the poll window closed: the container ran but exited 1 (numpy not installed in python:3.11-slim). Fixed in GEMM_PROBE_JOB_DEF v2: pip install numpy at runtime.",
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "YDcMRyj9hddbucDSErNSyE8n2zC93haKFaTfXs3mSAL",
+  "market": "97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf",
+  "host": "Amqoidiw1Q75GM7HuNatUdzbnqotPjEozSVqw2QfKjit",
+  "gpu_class": null,
+  "posted_at": "2026-11-04T14:48:44.467Z",
+  "claimed_at": "2026-11-04T14:48:55.160Z",
+  "started_at": null,
+  "settled_at": "2026-11-04T14:58:50.877Z",
+  "result_hash": null,
+  "cost_nos": null,
+  "outcome_code": "timeout"
+}

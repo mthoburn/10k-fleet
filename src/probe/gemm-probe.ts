@@ -15,6 +15,33 @@ import type { CorrectnessCheck, PerformanceCheck } from '../types/receipt.js';
 import { GEMM_BENCHMARK_ID, GEMM_EXPECTED_HASH } from './gemm-known-answer.js';
 import { lookupReferenceTflops } from './gpu-reference-tflops.js';
 
+// Python script — uses only double-quoted strings so it can be safely
+// wrapped in single quotes inside a /bin/sh -c command string.
+const GEMM_PYTHON = [
+  'import numpy as np, json, hashlib, time',
+  'np.random.seed(42)',
+  'A = np.random.rand(1024, 1024).astype(np.float32)',
+  'B = np.random.rand(1024, 1024).astype(np.float32)',
+  't0 = time.perf_counter()',
+  'C = A @ B',
+  't1 = time.perf_counter()',
+  'elapsed = t1 - t0',
+  'ops = 2 * (1024 ** 3)',
+  'tflops = ops / elapsed / 1e12',
+  // Correctness fingerprint — timing is excluded
+  'fp = {"shape": [1024, 1024],'
+    + ' "sum": round(float(C.sum()), 4),'
+    + ' "norm": round(float(np.linalg.norm(C)), 4),'
+    + ' "corner": [round(float(C[0,0]),6), round(float(C[0,-1]),6),'
+    + '             round(float(C[-1,0]),6), round(float(C[-1,-1]),6)]}',
+  'h = hashlib.sha256(json.dumps(fp, sort_keys=True).encode()).hexdigest()',
+  // Output — measured_tflops is performance data, never hashed
+  'print(json.dumps({"benchmark_id": "gemm-fp32-1024-seed42",'
+    + ' "result_hash": h,'
+    + ' "measured_tflops": round(tflops, 4),'
+    + ' "elapsed_s": round(elapsed, 6)}))',
+].join('\n');
+
 /** Nosana job definition for the GEMM probe container. */
 export const GEMM_PROBE_JOB_DEF = {
   version: '0.1',
@@ -26,34 +53,10 @@ export const GEMM_PROBE_JOB_DEF = {
       id: 'gemm-probe',
       args: {
         image: 'python:3.11-slim',
-        cmd: [
-          'python', '-c',
-          [
-            'import numpy as np, json, hashlib, time',
-            'np.random.seed(42)',
-            "A = np.random.rand(1024, 1024).astype(np.float32)",
-            "B = np.random.rand(1024, 1024).astype(np.float32)",
-            't0 = time.perf_counter()',
-            'C = A @ B',
-            't1 = time.perf_counter()',
-            'elapsed = t1 - t0',
-            'ops = 2 * (1024 ** 3)',
-            'tflops = ops / elapsed / 1e12',
-            // Correctness fingerprint — timing is excluded
-            'fp = {"shape": [1024, 1024],'
-              + ' "sum": round(float(C.sum()), 4),'
-              + ' "norm": round(float(np.linalg.norm(C)), 4),'
-              + ' "corner": [round(float(C[0,0]),6), round(float(C[0,-1]),6),'
-              + '             round(float(C[-1,0]),6), round(float(C[-1,-1]),6)]}',
-            'result_hash = hashlib.sha256(json.dumps(fp, sort_keys=True).encode()).hexdigest()',
-            // Output — measured_tflops is performance data, never hashed
-            'print(json.dumps({'
-              + '"benchmark_id": "gemm-fp32-1024-seed42",'
-              + ' "result_hash": result_hash,'
-              + ' "measured_tflops": round(tflops, 4),'
-              + ' "elapsed_s": round(elapsed, 6)}))',
-          ].join('\n'),
-        ],
+        // pip install numpy at runtime; python:3.11-slim has no numpy pre-installed.
+        // The Python script uses only double-quoted strings — safe to embed in single quotes.
+        entrypoint: ['/bin/sh', '-c'],
+        cmd: [`pip install numpy -q 2>&1 | tail -1 && python3 -c '${GEMM_PYTHON}'`],
       },
     },
   ],
