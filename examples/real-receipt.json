@@ -11,5 +11,11 @@
   "settled_at": "2026-11-04T17:41:13.275Z",
   "result_hash": "3a8de04ea5c10fcc6b19b85344a7c88a697b906bd5a65b8e28af32acd2513d64",
   "cost_nos": 219,
-  "outcome_code": "ok"
+  "outcome_code": "ok",
+  "correctness": {
+    "benchmark_id": "gemm-fp32-1024-seed42",
+    "expected_hash": "d061ef85559cc15c1b56f97bab2514eb83542107bd856a309666c33ae8e0d8df",
+    "measured_hash": "d061ef85559cc15c1b56f97bab2514eb83542107bd856a309666c33ae8e0d8df",
+    "pass": true
+  }
 }
