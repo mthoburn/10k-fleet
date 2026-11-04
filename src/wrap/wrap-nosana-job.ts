@@ -7,6 +7,12 @@
  *
  * The @nosana/sdk Client handles both formats internally via getWallet().
  * Never prints or returns the keypair bytes.
+ *
+ * STATE NOTE: @nosana/sdk jobs.get() returns state as a STRING after mapJob()
+ * transforms numeric codes via jobStateMapping: 0→'QUEUED', 1→'RUNNING',
+ * 2→'COMPLETED', 3→'STOPPED'. Never compare state to numeric constants.
+ * job.node is a PublicKey object (toString() gives base58).
+ * job.price is a BN object (toNumber() gives integer NOS base units).
  */
 
 import { readFileSync } from 'fs';
@@ -36,10 +42,11 @@ export interface WrapOptions {
   jobTimeoutSecs?: number;
 }
 
-// Numeric job states from @nosana/sdk jobStateMapping
-const STATE_RUNNING   = 1;
-const STATE_COMPLETED = 2;
-const STATE_STOPPED   = 3; // failed, cancelled, or forcibly stopped
+// @nosana/sdk jobs.get() maps numeric states to these strings via mapJob().
+// NEVER compare job.state to numeric constants — the mapping happens inside the SDK.
+const STATE_RUNNING   = 'RUNNING';
+const STATE_COMPLETED = 'COMPLETED';
+const STATE_STOPPED   = 'STOPPED';
 
 /** Internal lifecycle state tracked during polling. */
 interface LifecycleState {
@@ -53,6 +60,7 @@ interface LifecycleState {
   result_hash: string | null;
   cost_nos:   number | null;
   outcome_code: OutcomeCode | null;
+  transitions: Array<{ state: string; at: string }>;
 }
 
 function nowIso(): string {
@@ -122,19 +130,31 @@ export async function wrapNosanaJob(
     result_hash: null,
     cost_nos:    null,
     outcome_code: null,
+    transitions: [{ state: 'POSTED', at: posted_at }],
   };
 
   // ── Poll for lifecycle ────────────────────────────────────────────────────
   const deadline = Date.now() + timeoutMs;
+  let lastState  = '';
 
   while (Date.now() < deadline) {
     await sleep(pollIntervalMs);
 
     const job = await client.jobs.get(job_id) as NosanaJob;
-    const jobState = typeof job.state === 'string' ? parseInt(job.state, 10) : job.state;
+    // jobs.get() maps numeric codes to strings via mapJob():
+    //   0→'QUEUED', 1→'RUNNING', 2→'COMPLETED', 3→'STOPPED'
+    const jobState = String(job.state).toUpperCase();
+
+    // Record every state transition with timestamp
+    if (jobState !== lastState) {
+      const at = nowIso();
+      state.transitions.push({ state: jobState, at });
+      process.stderr.write(`[nosana-receipts] ${job_id} → ${jobState}  ${at}\n`);
+      lastState = jobState;
+    }
 
     if (job.node && !state.host) {
-      state.host       = String(job.node);
+      state.host       = String(job.node);  // PublicKey.toString() → base58
       state.claimed_at = nowIso();
     }
     if (jobState === STATE_RUNNING && !state.started_at) {
@@ -143,6 +163,7 @@ export async function wrapNosanaJob(
     if (jobState === STATE_COMPLETED && !state.outcome_code) {
       state.outcome_code = 'ok';
       state.settled_at   = nowIso();
+      // job.price is a BN object — use Number() which calls BN.valueOf()
       if (job.price != null) state.cost_nos = Number(job.price);
 
       // Fetch result artifact from IPFS and hash its content
@@ -171,11 +192,13 @@ export async function wrapNosanaJob(
   if (!state.outcome_code) {
     state.outcome_code = 'timeout';
     state.settled_at   = nowIso();
+    state.transitions.push({ state: 'POLL_TIMEOUT', at: state.settled_at });
     // Attempt to delist — may fail if claimed; non-fatal
     try {
       await client.jobs.delist(job_id);
+      state.transitions.push({ state: 'DELIST_OK', at: nowIso() });
     } catch {
-      // best-effort; job may still be live on-chain
+      state.transitions.push({ state: 'DELIST_FAILED', at: nowIso() });
     }
   }
 
@@ -224,9 +247,11 @@ interface ListResult {
   job: string;
   run: string;
 }
+// Runtime types from @nosana/sdk after mapJob() transformation.
+// Despite the Job typedef, state is a string and node/price are objects.
 interface NosanaJob {
-  state:      number | string;
-  node?:      string;
-  price?:     number | string;
-  ipfsResult?: string;
+  state:       string;           // 'QUEUED'|'RUNNING'|'COMPLETED'|'STOPPED' after mapJob
+  node?:       { toString(): string };   // PublicKey object at runtime
+  price?:      { valueOf(): number };    // BN object at runtime
+  ipfsResult?: string;           // IPFS CID string after solHashToIpfsHash
 }

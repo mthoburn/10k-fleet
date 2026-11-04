@@ -2,8 +2,9 @@
  * Tests for wrapNosanaJob using a mock Nosana client injected via module mock.
  * No real network calls; no wallet files required.
  *
- * SDK state constants (from @nosana/sdk jobStateMapping):
- *   0 = QUEUED, 1 = RUNNING, 2 = COMPLETED, 3 = STOPPED
+ * SDK state constants (from @nosana/sdk mapJob() transformation):
+ *   'QUEUED', 'RUNNING', 'COMPLETED', 'STOPPED'
+ *   NEVER use numeric values — mapJob() converts them to strings before returning.
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -69,10 +70,10 @@ describe('wrapNosanaJob', () => {
     mockList.mockResolvedValue({ tx: 'txSig', job: 'JobPubkey_ok', run: 'runSig' });
     mockRetrieve.mockResolvedValue({ benchmark_id: 'test', measured_tflops: 40 });
     mockGet
-      .mockResolvedValueOnce({ state: 0 })                        // QUEUED
-      .mockResolvedValueOnce({ state: 1 })                        // RUNNING
+      .mockResolvedValueOnce({ state: 'QUEUED' })
+      .mockResolvedValueOnce({ state: 'RUNNING' })
       .mockResolvedValueOnce({
-        state:      2,                                             // COMPLETED
+        state:      'COMPLETED',
         node:       'NodePubkey_ok',
         price:      0.014,
         ipfsResult: 'QmSomeCid',
@@ -96,7 +97,7 @@ describe('wrapNosanaJob', () => {
 
   it('passes market through to the receipt (schema blocker fix)', async () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_mkt', run: 'run' });
-    mockGet.mockResolvedValue({ state: 3 }); // STOPPED
+    mockGet.mockResolvedValue({ state: 'STOPPED' });
 
     const r = await wrapNosanaJob(JOB_DEF, OPTS);
     expect(r.market).toBe('MarketPubkey123');
@@ -107,7 +108,7 @@ describe('wrapNosanaJob', () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_schema', run: 'run' });
     mockRetrieve.mockResolvedValue({ foo: 'bar' });
     mockGet.mockResolvedValue({
-      state:      2,
+      state:      'COMPLETED',
       node:       'NodePubkeyABCDEFGHIJKLMNOPQRSTUVWXYZ1234567',
       price:      0.005,
       ipfsResult: 'QmValidCid',
@@ -120,7 +121,7 @@ describe('wrapNosanaJob', () => {
 
   it('schema validation passes for a timeout receipt (all nullables null)', async () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_timeout_schema', run: 'run' });
-    mockGet.mockResolvedValue({ state: 0 }); // always QUEUED → timeout
+    mockGet.mockResolvedValue({ state: 'QUEUED' }); // always QUEUED → timeout
     mockDelist.mockResolvedValue({});
 
     const r = await wrapNosanaJob(JOB_DEF, { ...OPTS, timeoutMs: 50, pollIntervalMs: 10 });
@@ -131,7 +132,7 @@ describe('wrapNosanaJob', () => {
 
   it('returns outcome_code "failed" when the job state is STOPPED (3)', async () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_fail', run: 'run' });
-    mockGet.mockResolvedValue({ state: 3 });
+    mockGet.mockResolvedValue({ state: 'STOPPED' });
 
     const r = await wrapNosanaJob(JOB_DEF, OPTS);
     expect(r.outcome_code).toBe('failed');
@@ -141,7 +142,7 @@ describe('wrapNosanaJob', () => {
 
   it('returns outcome_code "timeout" when the job does not settle within timeoutMs', async () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_to', run: 'run' });
-    mockGet.mockResolvedValue({ state: 0 }); // never completes
+    mockGet.mockResolvedValue({ state: 'QUEUED' }); // never completes
     mockDelist.mockResolvedValue({});
 
     const r = await wrapNosanaJob(JOB_DEF, { ...OPTS, timeoutMs: 50, pollIntervalMs: 10 });
@@ -152,7 +153,7 @@ describe('wrapNosanaJob', () => {
 
   it('host is null when the job is queued and never claimed before terminal state', async () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_nohost', run: 'run' });
-    mockGet.mockResolvedValue({ state: 3 }); // STOPPED with no node
+    mockGet.mockResolvedValue({ state: 'STOPPED' }); // STOPPED with no node
 
     const r = await wrapNosanaJob(JOB_DEF, OPTS);
     expect(r.host).toBeNull();
@@ -163,7 +164,7 @@ describe('wrapNosanaJob', () => {
     const ipfsContent = { ops: [{ logs: [{ log: 'hello' }] }] };
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_hash', run: 'run' });
     mockRetrieve.mockResolvedValue(ipfsContent);
-    mockGet.mockResolvedValue({ state: 2, node: 'N', price: 0, ipfsResult: 'QmHash' });
+    mockGet.mockResolvedValue({ state: 'COMPLETED', node: 'N', price: 0, ipfsResult: 'QmHash' });
 
     const r = await wrapNosanaJob(JOB_DEF, OPTS);
     expect(r.result_hash).toMatch(/^[0-9a-f]{64}$/);
@@ -176,7 +177,7 @@ describe('wrapNosanaJob', () => {
   it('result_hash is null when IPFS retrieve fails', async () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_ipfsfail', run: 'run' });
     mockRetrieve.mockRejectedValue(new Error('IPFS unreachable'));
-    mockGet.mockResolvedValue({ state: 2, node: 'N', price: 0, ipfsResult: 'QmBad' });
+    mockGet.mockResolvedValue({ state: 'COMPLETED', node: 'N', price: 0, ipfsResult: 'QmBad' });
 
     const r = await wrapNosanaJob(JOB_DEF, OPTS);
     expect(r.outcome_code).toBe('ok');
@@ -185,7 +186,7 @@ describe('wrapNosanaJob', () => {
 
   it('falls back to env var wallet when walletPath is not set', async () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_env', run: 'run' });
-    mockGet.mockResolvedValue({ state: 3 });
+    mockGet.mockResolvedValue({ state: 'STOPPED' });
 
     const envKey = 'TEST_WALLET_VAR_XYZ';
     process.env[envKey] = JSON.stringify(Array(64).fill(1));

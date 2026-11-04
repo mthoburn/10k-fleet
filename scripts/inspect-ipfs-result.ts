@@ -5,7 +5,7 @@
 import { Client } from '@nosana/sdk';
 
 const raw = (process.env['NOSANA_WALLET_PRIVATE_KEY'] ?? '').trim();
-const CID = 'QmXUwGutoSp87XVL8gpg8TksMMXqTGaunzrcH3FAp8b7D7';
+const CID = process.env['CID'] ?? 'QmXUwGutoSp87XVL8gpg8TksMMXqTGaunzrcH3FAp8b7D7';
 
 const client = new Client('mainnet', raw as never);
 const result = await (client.ipfs as any).retrieve(CID);

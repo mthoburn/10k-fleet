@@ -54,9 +54,9 @@ export const GEMM_PROBE_JOB_DEF = {
       args: {
         image: 'python:3.11-slim',
         // pip install numpy at runtime; python:3.11-slim has no numpy pre-installed.
+        // cmd[0] = interpreter, cmd[1] = flag, cmd[2] = script avoids entrypoint override.
         // The Python script uses only double-quoted strings — safe to embed in single quotes.
-        entrypoint: ['/bin/sh', '-c'],
-        cmd: [`pip install numpy -q 2>&1 | tail -1 && python3 -c '${GEMM_PYTHON}'`],
+        cmd: ['/bin/sh', '-c', `pip install numpy -q 2>&1 | tail -1 && python3 -c '${GEMM_PYTHON}'`],
       },
     },
   ],
