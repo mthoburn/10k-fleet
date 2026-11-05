@@ -1,8 +1,16 @@
 {
   "name": "@SCOPE/nosana-receipts",
   "version": "0.1.0",
-  "description": "Receipt spec, conformance probe, and job wrapper for Nosana GPU compute",
+  "description": "Delivery-record spec and collector for Nosana GPU compute jobs",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mthoburn/10k-fleet.git"
+  },
+  "homepage": "https://github.com/mthoburn/10k-fleet#readme",
+  "bugs": {
+    "url": "https://github.com/mthoburn/10k-fleet/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
