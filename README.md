@@ -1,105 +1,35 @@
-# @SCOPE/nosana-receipts
+# 10k-fleet
 
-> **M1 public preview** — Receipt spec, conformance probe, and job wrapper for Nosana GPU compute.
+> **Independent project, not affiliated with or endorsed by Nosana.**
 
-A thin, vendor-agnostic layer that wraps a Nosana job run and returns a structured `Receipt` — with optional correctness and performance fields from the GEMM conformance probe.
+The open parts of 10k: the fleet delivery-record spec and the collector that
+writes a record for every compute job. The fleet coordinator itself is private.
 
----
+10k is the point where a fleet can't be run by hand: below it you can watch agents
+yourself; above it you need governance before they act and evidence after they run.
 
-## 60-second quickstart
-
-```bash
-npm install @SCOPE/nosana-receipts @nosana/sdk @solana/web3.js
-
-# Dry run (no wallet needed):
-npx tsx node_modules/@SCOPE/nosana-receipts/examples/submit-and-wrap.ts --dry-run
-
-# Real run — wallet file (JSON array of 64 bytes):
-WALLET_PATH=/path/to/keypair.json npx tsx node_modules/@SCOPE/nosana-receipts/examples/submit-and-wrap.ts
-
-# Real run — wallet env var (base58 Phantom format or JSON array):
-NOSANA_WALLET_PRIVATE_KEY=<base58> npx tsx node_modules/@SCOPE/nosana-receipts/examples/submit-and-wrap.ts
-```
-
-A funded wallet (NOS on Solana mainnet) is required for a real run. Never commit or print the keypair.
+**Status:** real records from live Nosana jobs are in `examples/`. The GPU probe
+format is defined and its first reference run is in progress. No GPU evidence
+is claimed yet.
 
 ---
 
-## Install
+## What's in this repo
 
-```bash
-npm install @SCOPE/nosana-receipts
-# peer deps:
-npm install @nosana/sdk @solana/web3.js
-```
-
----
-
-## Usage
-
-### Submit a GEMM probe job and get a receipt
-
-```typescript
-import {
-  wrapNosanaJob,
-  GEMM_PROBE_JOB_DEF,
-  parseGemmOutput,
-  buildCorrectnessCheck,
-  buildPerformanceCheck,
-} from '@SCOPE/nosana-receipts';
-
-const RTX_4090_MARKET = '97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf';
-
-const receipt = await wrapNosanaJob(GEMM_PROBE_JOB_DEF, {
-  market:         RTX_4090_MARKET,
-  walletPath:     process.env.WALLET_PATH!,
-  pollIntervalMs: 8_000,
-  timeoutMs:      600_000,
-});
-
-console.log(receipt);
-// {
-//   receipt_version: '0.1.0',
-//   provider: 'nosana',
-//   job_id: 'JiD5ee…',
-//   outcome_code: 'ok',
-//   host: 'NodePubkey…',
-//   gpu_class: 'RTX 4090',
-//   result_hash: 'a3f1e2…',
-//   cost_usd: 0.014,
-//   …
-// }
-```
-
-### Parse probe output from the job artifact store
-
-```typescript
-// After fetching stdout from the Nosana result store:
-const gemmOut = parseGemmOutput(stdout);
-
-receipt.correctness = buildCorrectnessCheck(gemmOut);
-// { benchmark_id, expected_hash, measured_hash, pass: true|false|null }
-
-receipt.performance = buildPerformanceCheck(gemmOut, receipt.gpu_class!);
-// { gpu_class, reference_tflops, measured_tflops, conformance_score }
-```
-
-### Validate a receipt against the JSON Schema
-
-```typescript
-import Ajv from 'ajv';
-import addFormats from 'ajv-formats';
-import receiptSchema from '@SCOPE/nosana-receipts/src/schema/receipt.schema.json' assert { type: 'json' };
-
-const ajv = new Ajv({ strict: false });
-addFormats(ajv);
-const validate = ajv.compile(receiptSchema);
-console.log(validate(receipt)); // true
-```
+| Path | Purpose |
+|------|---------|
+| `src/schema/receipt.schema.json` | Delivery-record spec (v0.1) |
+| `src/schema/probe-receipt.schema.json` | Extended spec with GPU probe fields |
+| `src/wrap/wrap-nosana-job.ts` | Collector: submits a job, polls, writes a record |
+| `src/probe/gemm-probe.ts` | GPU GEMM probe job definition and output parser |
+| `src/probe/gemm-known-answer.ts` | Float64 reference values (locally computed) |
+| `examples/` | Real delivery records from live jobs |
 
 ---
 
-## Receipt spec v0.1
+## Delivery-record spec v0.1
+
+A delivery record is a structured JSON object written after every compute job. It answers: did the job run, on what host, at what cost, and did the workload succeed?
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -114,28 +44,118 @@ console.log(validate(receipt)); // true
 | `started_at` | ISO 8601 \| null | Container started |
 | `settled_at` | ISO 8601 \| null | Job settled on-chain |
 | `result_hash` | 64-char hex \| null | SHA-256 of IPFS result artifact JSON |
-| `cost_nos` | `number \| null` | NOS cost as reported by the protocol (`job.price` from SDK; units are venue-specific) |
-| `outcome_code` | `"ok" \| "failed" \| "timeout" \| "cancelled"` | Job outcome |
+| `cost_nos` | `number \| null` | Net NOS debit from poster wallet (deposit minus escrow refund) |
+| `chain_state` | `"QUEUED" \| "RUNNING" \| "COMPLETED" \| "STOPPED" \| null` | On-chain terminal state |
+| `outcome_code` | `"ok" \| "job_error" \| "host_error" \| "failed" \| "timeout" \| "unknown"` | Derived from chain state + workload result |
 
-**ProbeReceipt** extends Receipt with optional `correctness` and `performance` objects — see `src/schema/probe-receipt.schema.json`.
+`chain_state` and `outcome_code` are separate: a job can settle `COMPLETED` on-chain while the container exited non-zero (`job_error`). See `examples/real-receipt-late-detection.json` for a real instance of that case.
 
-**Lifecycle timestamps** (`posted_at`, `claimed_at`, `started_at`, `settled_at`) are observer-side wall-clock times recorded by the polling process — NOT on-chain timestamps. Use them for approximate duration measurement only.
+**Lifecycle timestamps** are observer-side wall-clock times from the polling process — not on-chain timestamps. Use them for approximate duration measurement only.
 
-**On timeout** the job remains live on-chain. `wrapNosanaJob` attempts `jobs.delist()` but this may fail if the job has already been claimed by a node. Monitor the `job_id` address directly if precise on-chain cancellation is required.
+**ProbeReceipt** extends this with optional `device_info`, `correctness`, and `performance` objects — see `src/schema/probe-receipt.schema.json`.
 
 ---
 
-## GEMM conformance probe
+## GPU probe
 
-The probe runs a 1024×1024 fp32 GEMM (numpy seed 42) inside a container on the target node. It produces:
+The probe runs a 1024×1024 FP32 GEMM (PyTorch, seed 42) inside a container on the target node and records device information alongside correctness and performance evidence.
 
-- **Correctness:** SHA-256 fingerprint of the result matrix (shape, sum, norm, corner values) compared against a committed known answer. `pass: null` while `GEMM_EXPECTED_HASH` is `PENDING_LIVE_RUN`.
-- **Performance:** Measured TFLOPS vs a reference table keyed by `gpu_class`. `conformance_score = measured / reference`, clamped to [0, 1].
+**Correctness approach:** Reference values are computed locally in float64 (`scripts/compute-gemm-reference.py` — reproducible, no GPU required, no host trusted to define the right answer). The probe checks the host's float32 result against the float64 reference using max relative error ≤ 1e-4. TF32 is explicitly disabled before the matmul and recorded in the output.
 
-Timing values are **never** included in the correctness hash.
+**Performance:** Measured TFLOPS vs a reference table keyed by `gpu_class`. `conformance_score = measured / reference`, clamped to [0, 1].
+
+The first GPU reference run is in progress. No conformance results are claimed yet.
+
+---
+
+## Usage
+
+Not yet published to npm. Clone the repo and import from `src/`.
+
+```bash
+git clone https://github.com/mthoburn/10k-fleet.git
+cd 10k-fleet
+npm install
+```
+
+Scripts read credentials from environment variables — no hardcoded keys anywhere:
+
+| Variable | Required for |
+|----------|-------------|
+| `NOSANA_WALLET_PRIVATE_KEY` | All scripts that submit or inspect jobs (JSON array or base58) |
+| `WALLET_PATH` | Alternative to env var — path to a JSON keypair file |
+| `RPC_URL` | Optional override for the Solana RPC endpoint |
+
+A funded wallet (NOS on Solana mainnet) is required for live job submission.
+
+### Collect a delivery record for any Nosana job
+
+```typescript
+import { wrapNosanaJob } from './src/index.js';
+
+const record = await wrapNosanaJob(myJobDef, {
+  market:         '97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf',
+  walletPath:     process.env.WALLET_PATH!,
+  pollIntervalMs: 8_000,
+  timeoutMs:      600_000,
+});
+
+// record.outcome_code  → 'ok' | 'job_error' | 'host_error' | 'failed' | 'timeout' | 'unknown'
+// record.chain_state   → 'COMPLETED' | 'STOPPED' | null
+// record.cost_nos      → net NOS debit from ATA balance delta
+```
+
+### Run the GEMM probe and parse evidence
+
+```typescript
+import {
+  wrapNosanaJob,
+  GEMM_PROBE_JOB_DEF,
+  parseGemmOutput,
+  buildCorrectnessCheck,
+  buildPerformanceCheck,
+  buildDeviceInfo,
+} from './src/index.js';
+
+const record = await wrapNosanaJob(GEMM_PROBE_JOB_DEF, opts);
+
+// After fetching stdout from the IPFS result:
+const gemmOut = parseGemmOutput(stdout);
+
+const device      = buildDeviceInfo(gemmOut);
+// { device_name, cuda_version, driver_version, compute_capability }
+
+const correctness = buildCorrectnessCheck(gemmOut);
+// { benchmark_id, reference_sum, measured_sum, max_rel_error, pass: true|false|null }
+
+const performance = buildPerformanceCheck(gemmOut, 'RTX 4090');
+// { gpu_class, reference_tflops, measured_tflops, conformance_score }
+```
+
+### Validate a record against the JSON Schema
+
+```typescript
+import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
+import receiptSchema from './src/schema/receipt.schema.json' assert { type: 'json' };
+
+const ajv = new Ajv({ strict: false });
+addFormats(ajv);
+const validate = ajv.compile(receiptSchema);
+console.log(validate(record)); // true
+```
+
+---
+
+## Examples
+
+| File | Description |
+|------|-------------|
+| `examples/real-receipt.json` | Attempt 3: chain COMPLETED, outcome ok, CPU-only run (numpy, no CUDA) |
+| `examples/real-receipt-late-detection.json` | Attempt 1: chain COMPLETED, outcome job_error (numpy missing); state-enum bug hid the transition |
 
 ---
 
 ## License
 
-Apache-2.0 © 2026 Eden Botanical
+Apache-2.0 © 2026 Mark Thoburn

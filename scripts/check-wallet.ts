@@ -1,6 +1,5 @@
 /**
  * Check NOS balance and on-chain state of a job.
- * Usage: JOB_ID=<pubkey> railway run --service edenbotanical -- npx tsx scripts/check-wallet.ts
  * Never prints the private key.
  */
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';

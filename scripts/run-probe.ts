@@ -1,6 +1,5 @@
 /**
  * Run GEMM probe against a market and print the receipt JSON.
- * Usage: MARKET=<pubkey> TIMEOUT_MS=1200000 railway run --service edenbotanical -- npx tsx scripts/run-probe.ts
  */
 import { wrapNosanaJob, GEMM_PROBE_JOB_DEF } from '../src/index.js';
 

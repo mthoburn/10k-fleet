@@ -1,6 +1,5 @@
 /**
  * Print NOS token transaction history for the wallet to reconcile costs.
- * Usage: railway run --service edenbotanical npx tsx scripts/wallet-tx-history.ts
  */
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Client } from '@nosana/sdk';

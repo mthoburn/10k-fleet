@@ -1,6 +1,5 @@
 /**
  * Fetch a completed Nosana job's on-chain data + IPFS result and build a full receipt.
- * Usage: JOB_ID=<pubkey> railway run --service edenbotanical -- npx tsx scripts/fetch-completed-receipt.ts
  */
 import { createHash } from 'crypto';
 import { Client } from '@nosana/sdk';
