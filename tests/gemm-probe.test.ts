@@ -10,6 +10,7 @@ import {
   GEMM_EPSILON_REL,
   GEMM_REFERENCE_VALUES,
   GEMM_REFERENCE_READY,
+  GEMM_REFERENCE_A_PINS,
 } from '../src/probe/gemm-known-answer.js';
 import { lookupReferenceTflops, GPU_REFERENCE_TFLOPS } from '../src/probe/gpu-reference-tflops.js';
 
@@ -19,6 +20,8 @@ const MOCK_STDOUT = JSON.stringify({
   cuda_version:       '12.1',
   driver_version:     '530.30',
   compute_capability: '8.9',
+  tf32_matmul:        false,
+  tf32_cudnn:         false,
   fp_sum:             268435456.1234,
   fp_norm:            16777216.5678,
   fp_corners:         [256.123456, 255.987654, 254.111222, 253.333444],
@@ -64,31 +67,62 @@ describe('buildDeviceInfo', () => {
   });
 });
 
+describe('generation identity — probe float32 matches reference float32 construction', () => {
+  // torch.rand draws from different RNG streams per dtype: float32 and float64
+  // with the same seed produce completely different matrices. The reference script
+  // must generate in float32 (probe-identical), then upcast to float64 for the
+  // matmul. These pins assert the probe's generation line and the reference script
+  // start from the same input matrix — if either changes dtype, these values change.
+  it('GEMM_REFERENCE_A_PINS match torch.manual_seed(42) float32 construction', () => {
+    // These values were produced by:
+    //   torch.manual_seed(42); A = torch.rand(1024,1024,dtype=torch.float32)
+    //   A[0,0] = 0.8822692632675171, A[0,1] = 0.9150039553642273
+    // If the probe or reference script changed to float64 generation, these would
+    // become ~0.0582 and ~0.0629 — a detectable break.
+    expect(GEMM_REFERENCE_A_PINS.a_0_0).toBeCloseTo(0.8822692632675171, 10);
+    expect(GEMM_REFERENCE_A_PINS.a_0_1).toBeCloseTo(0.9150039553642273, 10);
+    // Sanity: float64-seed-42 first value is ~0.0582 (NOT what we want)
+    expect(GEMM_REFERENCE_A_PINS.a_0_0).not.toBeCloseTo(0.0582, 2);
+  });
+});
+
 describe('buildCorrectnessCheck', () => {
-  it('returns pass=null when reference is PENDING_GPU_RUN', () => {
-    // GEMM_REFERENCE_READY is false in this state
+  it('reference is populated with float32-input, float64-matmul values', () => {
+    expect(GEMM_REFERENCE_READY).toBe(true);
+    expect(GEMM_REFERENCE_VALUES.sum).toBeCloseTo(268155386.8045, 2);
+    expect(GEMM_REFERENCE_VALUES.norm).toBeCloseTo(261969.9119, 2);
+    expect(GEMM_REFERENCE_VALUES.corners).not.toBeNull();
+  });
+
+  it('populates reference fields and computes max_rel_error when reference is set', () => {
     const out = parseGemmOutput(MOCK_STDOUT);
     const check = buildCorrectnessCheck(out);
     expect(check.benchmark_id).toBe(GEMM_BENCHMARK_ID);
     expect(check.epsilon_rel).toBe(GEMM_EPSILON_REL);
     expect(check.measured_sum).toBe(out.fp_sum);
     expect(check.measured_norm).toBe(out.fp_norm);
-    // With null references, pass must be null
-    if (!GEMM_REFERENCE_READY) {
-      expect(check.pass).toBeNull();
-      expect(check.max_rel_error).toBeNull();
-    }
+    // MOCK_STDOUT values are intentionally different from the float64 reference
+    expect(check.reference_sum).toBe(GEMM_REFERENCE_VALUES.sum);
+    expect(check.max_rel_error).not.toBeNull();
+    // Mock values differ substantially from reference — expect pass=false
+    expect(check.pass).toBe(false);
   });
 
-  it('computes pass=true when measured values match reference within epsilon', () => {
-    const sum  = 268435456.1234;
-    const norm = 16777216.5678;
-    const corners: [number, number, number, number] = [256.123456, 255.987654, 254.111222, 253.333444];
-    // Inject a matching reference by calling the check logic directly
-    const relErr = (m: number, r: number) => r !== 0 ? Math.abs(m - r) / Math.abs(r) : Math.abs(m);
-    const errors = [relErr(sum, sum), relErr(norm, norm), ...corners.map((c, i) => relErr(c, corners[i]))];
-    expect(Math.max(...errors)).toBe(0);
-    expect(0 <= GEMM_EPSILON_REL).toBe(true); // pass would be true
+  it('pass=true when measured values match reference within epsilon', () => {
+    // Build a mock output whose fp values exactly match the float64 reference
+    const ref = GEMM_REFERENCE_VALUES;
+    const matchingStdout = JSON.stringify({
+      benchmark_id: 'gemm-fp32-1024-seed42-torch',
+      device_name: 'NVIDIA GeForce RTX 4090',
+      cuda_version: '12.1', driver_version: '530.30', compute_capability: '8.9',
+      tf32_matmul: false, tf32_cudnn: false,
+      fp_sum: ref.sum, fp_norm: ref.norm, fp_corners: ref.corners,
+      measured_tflops: 39.8, elapsed_s: 0.053,
+    });
+    const out = parseGemmOutput(matchingStdout);
+    const check = buildCorrectnessCheck(out);
+    expect(check.max_rel_error).toBe(0);
+    expect(check.pass).toBe(true);
   });
 
   it('computes pass=false when max_rel_error exceeds epsilon', () => {

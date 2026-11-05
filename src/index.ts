@@ -22,5 +22,6 @@ export {
   GEMM_EPSILON_REL,
   GEMM_REFERENCE_VALUES,
   GEMM_REFERENCE_READY,
+  GEMM_REFERENCE_A_PINS,
 } from './probe/gemm-known-answer.js';
 export { GPU_REFERENCE_TFLOPS, lookupReferenceTflops } from './probe/gpu-reference-tflops.js';
