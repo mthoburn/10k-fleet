@@ -1,29 +1,27 @@
 /**
  * Known-answer reference values for the gemm-fp32-1024-seed42-torch probe.
  *
- * IMPORTANT: these reference values MUST come from a torch/GPU run, NOT numpy/CPU.
- * torch.rand(seed=42) and np.random.rand(seed=42) produce different sequences —
- * the matrices A and B are different, so C = A @ B is completely different.
- * The CPU-numpy hash committed in 5825e3c is not valid for GPU conformance.
+ * REFERENCE DESIGN
+ * ================
+ * torch.manual_seed(42) produces the same A and B matrices on every machine.
+ * The reference is computed locally in float64 (scripts/compute-gemm-reference.py)
+ * and committed here — no GPU run required and no host is trusted to define
+ * the right answer. Any host's float32 result is checked against this reference.
+ *
+ * Run `python3 scripts/compute-gemm-reference.py` to reproduce these values.
  *
  * TOLERANCE DESIGN
  * ================
  * FP32 GPU results may differ by 1–2 ULPs across hardware families due to
- * different FMA and tree-reduction ordering. We use a relative error tolerance
- * rather than exact bit-identity:
- *   pass iff |measured - reference| / |reference| ≤ GEMM_EPSILON_REL
+ * different FMA and tree-reduction ordering. We use a relative error tolerance:
+ *   pass iff max(|measured - reference| / |reference|) ≤ GEMM_EPSILON_REL
  *
- * The fingerprint values are rounded inside the probe container (sum/norm to 4dp,
- * corners to 6dp), which provides a natural coarse tolerance band. GEMM_EPSILON_REL
- * is an additional guard for cross-GPU-generation variance before rounding.
- *
- * To establish reference values after the first successful GPU run:
- *   1. Run the GPU probe against a known-good RTX 4090 node
- *   2. Record measured_sum, measured_norm, measured_corners from the IPFS result
- *   3. Set GEMM_REFERENCE_VALUES below and mark GEMM_REFERENCE_READY = true
- *   4. Commit with the job_id as evidence
- *
- * STATUS: PENDING_GPU_RUN
+ * TF32 GUARD
+ * ==========
+ * The probe explicitly sets torch.backends.cuda.matmul.allow_tf32 = False and
+ * torch.backends.cudnn.allow_tf32 = False before the matmul. TF32 reduces
+ * mantissa precision and would blow through the 1e-4 tolerance on otherwise-honest
+ * hardware. Both flags are recorded in the receipt.
  */
 
 export const GEMM_BENCHMARK_ID = 'gemm-fp32-1024-seed42-torch';
@@ -32,17 +30,18 @@ export const GEMM_BENCHMARK_ID = 'gemm-fp32-1024-seed42-torch';
 export const GEMM_EPSILON_REL = 1e-4;
 
 /**
- * Reference values from canonical torch/GPU run.
- * null = pending first GPU run; pass will be null until set.
+ * Float64 reference values computed locally via scripts/compute-gemm-reference.py.
+ * torch.manual_seed(42), 1024×1024 float64, CPU matmul.
+ * Reproducible: run the script to verify.
  */
 export const GEMM_REFERENCE_VALUES: {
   sum:     number | null;
   norm:    number | null;
   corners: [number, number, number, number] | null;
 } = {
-  sum:     null,  // PENDING_GPU_RUN
-  norm:    null,
-  corners: null,
+  sum:     268276162.1166,
+  norm:    262087.9155,
+  corners: [245.501395, 251.00388, 243.896873, 251.008267],
 };
 
 export const GEMM_REFERENCE_READY =

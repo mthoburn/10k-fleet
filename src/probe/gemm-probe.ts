@@ -40,6 +40,12 @@ const GEMM_PYTHON = [
   // Hard-fail if no CUDA device — running on CPU is not a valid GPU probe result
   'if not torch.cuda.is_available():',
   '    sys.exit("FATAL: no CUDA device visible — aborting GPU conformance probe")',
+  // Disable TF32 before any matmul. TF32 reduces mantissa precision and would
+  // push honest hardware outside the 1e-4 tolerance relative to float64 reference.
+  'torch.backends.cuda.matmul.allow_tf32 = False',
+  'torch.backends.cudnn.allow_tf32 = False',
+  'tf32_matmul = torch.backends.cuda.matmul.allow_tf32',
+  'tf32_cudnn  = torch.backends.cudnn.allow_tf32',
   'device = torch.device("cuda:0")',
   'props = torch.cuda.get_device_properties(device)',
   'device_name = torch.cuda.get_device_name(0)',
@@ -54,10 +60,12 @@ const GEMM_PYTHON = [
   '    driver_version = f"{dv // 1000}.{(dv % 1000) // 10}"',
   'except Exception:',
   '    driver_version = "unknown"',
-  // Warm-up pass to avoid cold-start JIT latency in TFLOPS measurement
+  // Generate A and B on CPU (same seed = same matrices as the float64 reference),
+  // then move to CUDA for the timed float32 matmul.
   'torch.manual_seed(42)',
-  'A = torch.rand(1024, 1024, dtype=torch.float32, device=device)',
-  'B = torch.rand(1024, 1024, dtype=torch.float32, device=device)',
+  'A = torch.rand(1024, 1024, dtype=torch.float32).to(device)',
+  'B = torch.rand(1024, 1024, dtype=torch.float32).to(device)',
+  // Warm-up pass to avoid cold-start JIT latency in TFLOPS measurement
   '_ = A @ B',
   'torch.cuda.synchronize()',
   // Timed run
@@ -82,6 +90,8 @@ const GEMM_PYTHON = [
   '    "cuda_version":       cuda_version,',
   '    "driver_version":     driver_version,',
   '    "compute_capability": f"{props.major}.{props.minor}",',
+  '    "tf32_matmul":        tf32_matmul,',
+  '    "tf32_cudnn":         tf32_cudnn,',
   '    "fp_sum":             fp_sum,',
   '    "fp_norm":            fp_norm,',
   '    "fp_corners":         fp_corners,',
@@ -115,6 +125,8 @@ export interface GemmProbeOutput {
   cuda_version:       string;
   driver_version:     string;
   compute_capability: string;
+  tf32_matmul:        boolean;
+  tf32_cudnn:         boolean;
   fp_sum:             number;
   fp_norm:            number;
   fp_corners:         [number, number, number, number];
