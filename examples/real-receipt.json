@@ -1,18 +1,42 @@
 {
-  "_note": "Attempt 3 (2026-11-04T17:40 UTC). Chain settled COMPLETED in ~28s. IPFS status: 'success', measured_tflops: 0.0543. NOTE: container used python:3.11-slim with numpy only — no CUDA, no GPU. 0.0543 TFLOPS is CPU matrix math, NOT RTX 4090 performance. The correctness block from the prior version (pass:true, hash match) was also CPU-numpy and is omitted here per spec. GPU probe must be re-run with pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime before correctness or performance fields are populated. cost_nos is 4818 raw = 0.004818 NOS (deposit 394200 minus escrow refund 389382, from ATA history). chain_state added per receipt v2 outcome model.",
+  "_note": "Attempt 6 (2026-11-05T23:53 UTC). First successful GPU probe: RTX 4090 confirmed, CUDA 12.1, compute capability 8.9. correctness.pass=true, max_rel_error=3.18e-7 (tolerance 1e-4). measured_tflops=20.9646, conformance_score=0.508 (reference 41.3 TFLOPS — reference may need revision from a larger warm-up run). cost_nos=24480 raw (deposit minus refund, 102s at 240 raw/s). gpu:true flag added to job def in this run; prior attempt (attempt 5) saw no CUDA device because job def was missing that flag.",
   "receipt_version": "0.1.0",
   "provider": "nosana",
-  "job_id": "AF6cCmvjg5dYi3vczvJYLp35bEoj6A2xdTxNzkLZSyHo",
+  "job_id": "Hgj9fYQWGhtM7gge4qwJKjA3iBsn1t3uRhsSbkqLyWMX",
   "market": "97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf",
-  "host": "JC8vWziMgfqH5rZMrZNWV1S8rhpgWzjtqim8kSTWZvBP",
-  "gpu_class": null,
-  "posted_at": "2026-11-04T17:40:45.390Z",
-  "claimed_at": "2026-11-04T17:40:54.175Z",
-  "started_at": "2026-11-04T17:40:54.175Z",
-  "settled_at": "2026-11-04T17:41:13.275Z",
-  "result_hash": "3a8de04ea5c10fcc6b19b85344a7c88a697b906bd5a65b8e28af32acd2513d64",
-  "ipfs_cid": null,
-  "cost_nos": 4818,
+  "host": "96PLmNk8k5tXj9D3hn83ce7hNNsyy9BGCBsK7tmDwnrd",
+  "gpu_class": "RTX 4090",
+  "posted_at": "2026-11-05T23:53:21.821Z",
+  "claimed_at": "2026-11-05T23:53:32.711Z",
+  "started_at": "2026-11-05T23:53:32.711Z",
+  "settled_at": "2026-11-05T23:55:06.014Z",
+  "result_hash": "6401e613508c171d1a4b9dcad32fb8ca6eabf5491e19a165d4c639b5237d9dbd",
+  "ipfs_cid": "QmYE5T5tRr8wQDBs2rfBBD8KLYNguCgcFxA8bPUHyBTA7k",
+  "cost_nos": 24480,
   "chain_state": "COMPLETED",
-  "outcome_code": "ok"
+  "outcome_code": "ok",
+  "device_info": {
+    "device_name": "NVIDIA GeForce RTX 4090",
+    "cuda_version": "12.1",
+    "driver_version": "13.2",
+    "compute_capability": "8.9"
+  },
+  "correctness": {
+    "benchmark_id": "gemm-fp32-1024-seed42-torch",
+    "reference_sum": 268155386.8045,
+    "reference_norm": 261969.9119,
+    "reference_corners": [251.338413, 250.378111, 257.686787, 255.375658],
+    "epsilon_rel": 0.0001,
+    "measured_sum": 268155472.0,
+    "measured_norm": 261969.9219,
+    "measured_corners": [251.33847, 250.378113, 257.686768, 255.375671],
+    "max_rel_error": 3.1770944824808733e-7,
+    "pass": true
+  },
+  "performance": {
+    "gpu_class": "RTX 4090",
+    "reference_tflops": 41.3,
+    "measured_tflops": 20.9646,
+    "conformance_score": 0.5076174334140436
+  }
 }

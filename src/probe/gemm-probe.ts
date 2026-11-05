@@ -114,6 +114,7 @@ export const GEMM_PROBE_JOB_DEF = {
         // GPU resource is provided by the Nosana RTX 4090 market.
         image: 'pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime',
         cmd: ['/bin/sh', '-c', `python3 -c '${GEMM_PYTHON}'`],
+        gpu: true,
       },
     },
   ],
