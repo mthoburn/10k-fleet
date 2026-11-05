@@ -1,0 +1,18 @@
+{
+  "_note": "Attempt 5 (2026-11-05T23:37 UTC). torch.cuda.is_available() == False inside container on RTX 4090 market node GxsvrdXvmXAbGz1N3TByNAt4MxBjymkrFPacF7c7Xch. Probe emitted 'FATAL: no CUDA device visible — aborting GPU conformance probe' to stderr and exited in ~3s. Chain settled COMPLETED. CAUSE UNDETERMINED: post-run review found GEMM_PROBE_JOB_DEF was missing 'gpu: true' in op args; without that flag the Nosana runtime does not expose the GPU device to the container regardless of which market the job runs on. This may be a job-definition bug rather than a host failure. Receipt relabelled outcome_code 'unknown' pending a second run with a corrected job definition. ipfs_cid: QmaNm5CYyqmRZyVZsEx7XAfoGmSGmsstaeZztqxQ7sHGsj. cost_nos 37680 raw (deposit 432000, refund 394320; billed 157s at 240 raw/s).",
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "4LuQxdGwURU7piYQzo1Hbzv973Lia6Nv3pbYhfNTkD6t",
+  "market": "97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf",
+  "host": "GxsvrdXvmXAbGz1N3TByNAt4MxBjymkrFPacF7c7Xch",
+  "gpu_class": null,
+  "posted_at": "2026-11-05T23:37:39.715Z",
+  "claimed_at": "2026-11-05T23:37:51.081Z",
+  "started_at": "2026-11-05T23:37:51.081Z",
+  "settled_at": "2026-11-05T23:40:24.145Z",
+  "result_hash": "3fe462f8d954f13ef6ccb1f125486da9d8e5462dc88ed9e996251468a2116eff",
+  "ipfs_cid": "QmaNm5CYyqmRZyVZsEx7XAfoGmSGmsstaeZztqxQ7sHGsj",
+  "cost_nos": 37680,
+  "chain_state": "COMPLETED",
+  "outcome_code": "unknown"
+}
