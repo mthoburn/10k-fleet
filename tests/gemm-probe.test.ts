@@ -10,6 +10,7 @@ import {
   GEMM_EPSILON_REL,
   GEMM_REFERENCE_VALUES,
   GEMM_REFERENCE_READY,
+  GEMM_REFERENCE_A_PINS,
 } from '../src/probe/gemm-known-answer.js';
 import { lookupReferenceTflops, GPU_REFERENCE_TFLOPS } from '../src/probe/gpu-reference-tflops.js';
 
@@ -66,11 +67,30 @@ describe('buildDeviceInfo', () => {
   });
 });
 
+describe('generation identity — probe float32 matches reference float32 construction', () => {
+  // torch.rand draws from different RNG streams per dtype: float32 and float64
+  // with the same seed produce completely different matrices. The reference script
+  // must generate in float32 (probe-identical), then upcast to float64 for the
+  // matmul. These pins assert the probe's generation line and the reference script
+  // start from the same input matrix — if either changes dtype, these values change.
+  it('GEMM_REFERENCE_A_PINS match torch.manual_seed(42) float32 construction', () => {
+    // These values were produced by:
+    //   torch.manual_seed(42); A = torch.rand(1024,1024,dtype=torch.float32)
+    //   A[0,0] = 0.8822692632675171, A[0,1] = 0.9150039553642273
+    // If the probe or reference script changed to float64 generation, these would
+    // become ~0.0582 and ~0.0629 — a detectable break.
+    expect(GEMM_REFERENCE_A_PINS.a_0_0).toBeCloseTo(0.8822692632675171, 10);
+    expect(GEMM_REFERENCE_A_PINS.a_0_1).toBeCloseTo(0.9150039553642273, 10);
+    // Sanity: float64-seed-42 first value is ~0.0582 (NOT what we want)
+    expect(GEMM_REFERENCE_A_PINS.a_0_0).not.toBeCloseTo(0.0582, 2);
+  });
+});
+
 describe('buildCorrectnessCheck', () => {
-  it('reference is now populated (float64 local computation)', () => {
+  it('reference is populated with float32-input, float64-matmul values', () => {
     expect(GEMM_REFERENCE_READY).toBe(true);
-    expect(GEMM_REFERENCE_VALUES.sum).toBeCloseTo(268276162.1166, 2);
-    expect(GEMM_REFERENCE_VALUES.norm).toBeCloseTo(262087.9155, 2);
+    expect(GEMM_REFERENCE_VALUES.sum).toBeCloseTo(268155386.8045, 2);
+    expect(GEMM_REFERENCE_VALUES.norm).toBeCloseTo(261969.9119, 2);
     expect(GEMM_REFERENCE_VALUES.corners).not.toBeNull();
   });
 
