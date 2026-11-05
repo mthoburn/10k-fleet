@@ -27,6 +27,7 @@ import {
   parseGemmOutput,
   buildCorrectnessCheck,
   buildPerformanceCheck,
+  buildDeviceInfo,
 } from '../src/index.js';
 import type { ProbeReceipt } from '../src/index.js';
 
@@ -79,17 +80,18 @@ async function main() {
     // Fetch IPFS result to extract stdout for probe checks
     try {
       const { Client } = await import('@nosana/sdk') as { Client: any };
-      // Read-only client — no wallet needed for IPFS fetch
-      const client = new Client('mainnet');
-      // jobs.get() was already called in wrapNosanaJob; re-fetch to get ipfsResult CID.
-      // (In production you'd thread this through from the wrap rather than re-fetching.)
-      const jobAccount = await client.jobs.get(receipt.job_id);
+      const walletSrc = process.env['NOSANA_WALLET_PRIVATE_KEY'] ?? '';
+      const client = new Client('mainnet', walletSrc as never);
+      // Re-fetch the job account to get the ipfsResult CID.
+      // The account may be closed shortly after settlement; attempt it now.
+      const jobAccount = await client.jobs.get(receipt.job_id).catch(() => null);
       const ipfsResult = jobAccount?.ipfsResult;
 
       if (ipfsResult) {
         const flowState = await client.ipfs.retrieve(ipfsResult);
-        // Collect stdout lines from the first op
-        const opState = flowState?.state?.opStates?.[0];
+        // IPFS FlowState structure: { status, opStates: [{ logs: [...] }] }
+        // No extra 'state' wrapper — top-level opStates.
+        const opState = flowState?.opStates?.[0];
         const stdoutLines: string[] = (opState?.logs ?? [])
           .filter((l: { type: string; log?: string }) => l.type === 'stdout' && l.log)
           .map((l: { log: string }) => l.log);
@@ -100,10 +102,19 @@ async function main() {
           console.log('\nStdout from container:');
           console.log(stdout);
           const gemmOut = parseGemmOutput(stdout);
-          probeReceipt.correctness = buildCorrectnessCheck(gemmOut);
-          probeReceipt.performance = buildPerformanceCheck(gemmOut, 'RTX 4090');
+          probeReceipt.device_info  = buildDeviceInfo(gemmOut);
+          probeReceipt.correctness  = buildCorrectnessCheck(gemmOut);
+          probeReceipt.performance  = buildPerformanceCheck(gemmOut, 'RTX 4090');
           console.log('\nProbe results:');
+          console.log('  device_name:', probeReceipt.device_info.device_name);
+          console.log('  cuda_version:', probeReceipt.device_info.cuda_version);
+          console.log('  driver_version:', probeReceipt.device_info.driver_version);
+          console.log('  compute_capability:', probeReceipt.device_info.compute_capability);
+          console.log('  tf32_matmul:', (gemmOut as any).tf32_matmul);
+          console.log('  tf32_cudnn:', (gemmOut as any).tf32_cudnn);
+          console.log('  measured_tflops:', gemmOut.measured_tflops);
           console.log('  correctness.pass:', probeReceipt.correctness.pass);
+          console.log('  max_rel_error:', probeReceipt.correctness.max_rel_error);
           console.log('  performance.conformance_score:', probeReceipt.performance?.conformance_score);
         }
       }
