@@ -9,8 +9,9 @@ writes a record for every compute job. The fleet coordinator itself is private.
 yourself; above it you need governance before they act and evidence after they run.
 
 **Status:** real records from live Nosana jobs are in `examples/`. The GPU probe
-format is defined and its first reference run is in progress. No GPU evidence
-is claimed yet.
+has a confirmed first run: RTX 4090, CUDA 12.1, `correctness.pass: true`,
+`max_rel_error: 3.18e-7` (tolerance `1e-4`). Performance calibration is an open
+item (see issue #7) — `conformance_score` is not yet meaningful.
 
 ---
 
@@ -44,6 +45,7 @@ A delivery record is a structured JSON object written after every compute job. I
 | `started_at` | ISO 8601 \| null | Container started |
 | `settled_at` | ISO 8601 \| null | Job settled on-chain |
 | `result_hash` | 64-char hex \| null | SHA-256 of IPFS result artifact JSON |
+| `ipfs_cid` | `string \| null` | IPFS CID of the raw result artifact — captured before the job account closes |
 | `cost_nos` | `number \| null` | Net NOS debit from poster wallet (deposit minus escrow refund) |
 | `chain_state` | `"QUEUED" \| "RUNNING" \| "COMPLETED" \| "STOPPED" \| null` | On-chain terminal state |
 | `outcome_code` | `"ok" \| "job_error" \| "host_error" \| "failed" \| "timeout" \| "unknown"` | Derived from chain state + workload result |
@@ -64,7 +66,31 @@ The probe runs a 1024×1024 FP32 GEMM (PyTorch, seed 42) inside a container on t
 
 **Performance:** Measured TFLOPS vs a reference table keyed by `gpu_class`. `conformance_score = measured / reference`, clamped to [0, 1].
 
-The first GPU reference run is in progress. No conformance results are claimed yet.
+**First confirmed GPU run** (attempt 6, 2026-11-05):
+
+```json
+{
+  "job_id": "Hgj9fYQWGhtM7gge4qwJKjA3iBsn1t3uRhsSbkqLyWMX",
+  "outcome_code": "ok",
+  "chain_state": "COMPLETED",
+  "ipfs_cid": "QmYE5T5tRr8wQDBs2rfBBD8KLYNguCgcFxA8bPUHyBTA7k",
+  "device_info": {
+    "device_name": "NVIDIA GeForce RTX 4090",
+    "cuda_version": "12.1",
+    "driver_version": "13.2",
+    "compute_capability": "8.9"
+  },
+  "correctness": {
+    "benchmark_id": "gemm-fp32-1024-seed42-torch",
+    "max_rel_error": 3.1770944824808733e-7,
+    "pass": true
+  }
+}
+```
+
+Full ProbeReceipt in `examples/real-receipt.json`.
+
+**Performance calibration** is an open item (issue #7): `conformance_score` at 1024³ reflects kernel size, not host speed. Omit it from comparisons until resolved.
 
 ---
 
@@ -151,8 +177,9 @@ console.log(validate(record)); // true
 
 | File | Description |
 |------|-------------|
-| `examples/real-receipt.json` | Attempt 3: chain COMPLETED, outcome ok, CPU-only run (numpy, no CUDA) |
-| `examples/real-receipt-late-detection.json` | Attempt 1: chain COMPLETED, outcome job_error (numpy missing); state-enum bug hid the transition |
+| `examples/real-receipt.json` | Attempt 6: RTX 4090 GPU probe — `outcome_code: ok`, `correctness.pass: true`, full `device_info` |
+| `examples/real-receipt-late-detection.json` | Attempt 1: chain COMPLETED, `outcome_code: job_error` (numpy missing); state-enum bug hid the transition — late-detection case study |
+| `examples/real-receipt-no-cuda-attempt1.json` | Attempt 5: `outcome_code: unknown` — `torch.cuda.is_available() == False`; cause was missing `gpu: true` in job def |
 
 ---
 
