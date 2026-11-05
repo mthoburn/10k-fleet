@@ -70,10 +70,28 @@ The first GPU reference run is in progress. No conformance results are claimed y
 
 ## Usage
 
+Not yet published to npm. Clone the repo and import from `src/`.
+
+```bash
+git clone https://github.com/mthoburn/10k-fleet.git
+cd 10k-fleet
+npm install
+```
+
+Scripts read credentials from environment variables — no hardcoded keys anywhere:
+
+| Variable | Required for |
+|----------|-------------|
+| `NOSANA_WALLET_PRIVATE_KEY` | All scripts that submit or inspect jobs (JSON array or base58) |
+| `WALLET_PATH` | Alternative to env var — path to a JSON keypair file |
+| `RPC_URL` | Optional override for the Solana RPC endpoint |
+
+A funded wallet (NOS on Solana mainnet) is required for live job submission.
+
 ### Collect a delivery record for any Nosana job
 
 ```typescript
-import { wrapNosanaJob } from '@SCOPE/nosana-receipts';
+import { wrapNosanaJob } from './src/index.js';
 
 const record = await wrapNosanaJob(myJobDef, {
   market:         '97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf',
@@ -97,7 +115,7 @@ import {
   buildCorrectnessCheck,
   buildPerformanceCheck,
   buildDeviceInfo,
-} from '@SCOPE/nosana-receipts';
+} from './src/index.js';
 
 const record = await wrapNosanaJob(GEMM_PROBE_JOB_DEF, opts);
 
@@ -119,25 +137,13 @@ const performance = buildPerformanceCheck(gemmOut, 'RTX 4090');
 ```typescript
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import receiptSchema from '@SCOPE/nosana-receipts/src/schema/receipt.schema.json' assert { type: 'json' };
+import receiptSchema from './src/schema/receipt.schema.json' assert { type: 'json' };
 
 const ajv = new Ajv({ strict: false });
 addFormats(ajv);
 const validate = ajv.compile(receiptSchema);
 console.log(validate(record)); // true
 ```
-
----
-
-## Install
-
-```bash
-npm install @SCOPE/nosana-receipts
-# peer deps:
-npm install @nosana/sdk @solana/web3.js
-```
-
-A funded wallet (NOS on Solana mainnet) is required for live job submission.
 
 ---
 
@@ -152,4 +158,4 @@ A funded wallet (NOS on Solana mainnet) is required for live job submission.
 
 ## License
 
-Apache-2.0 © 2026 Eden Botanical
+Apache-2.0 © 2026 Mark Thoburn

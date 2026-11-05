@@ -1,6 +1,5 @@
 /**
  * Print the full IPFS result for a completed job to understand its structure.
- * Usage: railway run --service edenbotanical -- npx tsx scripts/inspect-ipfs-result.ts
  */
 import { Client } from '@nosana/sdk';
 

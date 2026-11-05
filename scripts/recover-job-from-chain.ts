@@ -7,7 +7,7 @@
  * builds a full receipt.
  *
  * Usage:
- *   JOB_ID=<base58> railway run --service edenbotanical npx tsx scripts/recover-job-from-chain.ts
+ *   JOB_ID=<base58> NOSANA_WALLET_PRIVATE_KEY=<key> npx tsx scripts/recover-job-from-chain.ts
  */
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Client } from '@nosana/sdk';
