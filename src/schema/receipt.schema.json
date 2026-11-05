@@ -16,6 +16,7 @@
     "started_at",
     "settled_at",
     "result_hash",
+    "ipfs_cid",
     "cost_nos",
     "chain_state",
     "outcome_code"
@@ -73,6 +74,10 @@
       "type": ["string", "null"],
       "pattern": "^[0-9a-f]{64}$",
       "description": "SHA-256 hex digest of the job output artifact (full IPFS FlowState JSON)."
+    },
+    "ipfs_cid": {
+      "type": ["string", "null"],
+      "description": "IPFS CID of the raw job result artifact. Use to re-fetch without re-querying the (possibly closed) job account."
     },
     "cost_nos": {
       "type": ["number", "null"],

@@ -1,0 +1,18 @@
+{
+  "_note": "Attempt 5 (2026-11-05T23:37 UTC). Host GxsvrdXvmXAbGz1N3TByNAt4MxBjymkrFPacF7c7Xch accepted from RTX 4090 market but exposed no CUDA device to the container. Probe emitted 'FATAL: no CUDA device visible — aborting GPU conformance probe' to stderr and exited in ~3s. Chain settled COMPLETED (host submitted a result). outcome_code is 'host_error': host accepted a GPU market job it could not fulfil — this is host infrastructure failure, not an application error. ipfs_cid: QmaNm5CYyqmRZyVZsEx7XAfoGmSGmsstaeZztqxQ7sHGsj. cost_nos is 37680 raw = 0.037680 NOS (deposit 432000, refund 394320, net 37680 raw; billed 157s at 240 raw/s). The host was running but its GPU was not visible to the container runtime.",
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "4LuQxdGwURU7piYQzo1Hbzv973Lia6Nv3pbYhfNTkD6t",
+  "market": "97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf",
+  "host": "GxsvrdXvmXAbGz1N3TByNAt4MxBjymkrFPacF7c7Xch",
+  "gpu_class": null,
+  "posted_at": "2026-11-05T23:37:39.715Z",
+  "claimed_at": "2026-11-05T23:37:51.081Z",
+  "started_at": "2026-11-05T23:37:51.081Z",
+  "settled_at": "2026-11-05T23:40:24.145Z",
+  "result_hash": "3fe462f8d954f13ef6ccb1f125486da9d8e5462dc88ed9e996251468a2116eff",
+  "ipfs_cid": "QmaNm5CYyqmRZyVZsEx7XAfoGmSGmsstaeZztqxQ7sHGsj",
+  "cost_nos": 37680,
+  "chain_state": "COMPLETED",
+  "outcome_code": "host_error"
+}

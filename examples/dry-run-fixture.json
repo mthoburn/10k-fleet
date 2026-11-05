@@ -11,7 +11,9 @@
   "started_at": null,
   "settled_at": null,
   "result_hash": null,
+  "ipfs_cid": null,
   "cost_nos": null,
+  "chain_state": null,
   "outcome_code": "ok",
   "correctness": {
     "benchmark_id": "gemm-fp32-1024-seed42",
