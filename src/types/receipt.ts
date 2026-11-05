@@ -80,6 +80,12 @@ export interface Receipt {
    */
   result_hash: string | null;
   /**
+   * IPFS CID of the raw job result artifact (Nosana FlowState JSON).
+   * Null if the job did not reach COMPLETED or the CID was unavailable.
+   * Use this to re-fetch the full result without re-querying the (possibly closed) job account.
+   */
+  ipfs_cid: string | null;
+  /**
    * Net NOS debit from the poster's wallet: deposit minus escrow refund.
    * Units: NOS base units (6 decimals). Null if unavailable.
    * This is NOT job.price from @nosana/sdk — that field is the per-second rate.

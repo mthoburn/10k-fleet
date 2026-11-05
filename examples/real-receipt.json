@@ -11,6 +11,7 @@
   "started_at": "2026-11-04T17:40:54.175Z",
   "settled_at": "2026-11-04T17:41:13.275Z",
   "result_hash": "3a8de04ea5c10fcc6b19b85344a7c88a697b906bd5a65b8e28af32acd2513d64",
+  "ipfs_cid": null,
   "cost_nos": 4818,
   "chain_state": "COMPLETED",
   "outcome_code": "ok"

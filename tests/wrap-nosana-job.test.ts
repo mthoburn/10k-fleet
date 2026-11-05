@@ -135,6 +135,27 @@ describe('wrapNosanaJob', () => {
     expect(r.chain_state).toBe('COMPLETED');
   });
 
+  it('returns outcome_code "host_error" when probe emits FATAL to stderr', async () => {
+    // Probe hard-fails with FATAL: on stderr when host accepted GPU market job
+    // but did not expose CUDA device to container. hostShutDown is false in this case.
+    mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_fatal', run: 'run' });
+    mockRetrieve.mockResolvedValue({
+      status: 'failed',
+      opStates: [{
+        diagnostics: { reason: { hostShutDown: false } },
+        logs: [
+          { type: 'stderr', log: 'FATAL: no CUDA device visible — aborting GPU conformance probe' },
+        ],
+      }],
+    });
+    mockGet.mockResolvedValue({ state: 'COMPLETED', node: 'GxsvrdX', ipfsResult: 'QmFatal' });
+
+    const r = await wrapNosanaJob(JOB_DEF, OPTS);
+    expect(r.outcome_code).toBe('host_error');
+    expect(r.chain_state).toBe('COMPLETED');
+    expect(r.ipfs_cid).toBe('QmFatal');
+  });
+
   it('returns outcome_code "unknown" when IPFS content has no recognisable status', async () => {
     mockList.mockResolvedValue({ tx: 'tx', job: 'JobPubkey_unknown', run: 'run' });
     mockRetrieve.mockResolvedValue({ foo: 'bar' }); // no status field

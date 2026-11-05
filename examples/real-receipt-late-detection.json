@@ -11,6 +11,7 @@
   "started_at": null,
   "settled_at": "2026-11-04T14:49:03.000Z",
   "result_hash": "bd45c7ed6077c3ad5fd2b3e1a86d1e8b5306cc778b74b5d4894b9f347c15d97e",
+  "ipfs_cid": null,
   "cost_nos": 4131,
   "chain_state": "COMPLETED",
   "outcome_code": "job_error"

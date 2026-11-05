@@ -75,6 +75,7 @@ interface LifecycleState {
   started_at:  string | null;
   settled_at:  string | null;
   result_hash: string | null;
+  ipfs_cid:    string | null;
   cost_nos:    number | null;
   chain_state: ChainState | null;
   outcome_code: OutcomeCode | null;
@@ -170,6 +171,7 @@ export async function wrapNosanaJob(
     started_at:  null,
     settled_at:  null,
     result_hash: null,
+    ipfs_cid:    null,
     cost_nos:    null,
     chain_state: null,
     outcome_code: null,
@@ -215,6 +217,11 @@ export async function wrapNosanaJob(
         );
         if (postBalance != null) state.cost_nos = preBalance - postBalance;
       }
+
+      // Thread the IPFS CID — available from the job account while it's still open.
+      // Store it before the account may close, so callers can re-fetch without
+      // re-querying the job account (which is swept after settlement).
+      if (job.ipfsResult) state.ipfs_cid = job.ipfsResult;
 
       // Fetch result artifact from IPFS
       let ipfsContent: unknown = null;
@@ -283,14 +290,23 @@ function deriveOutcomeCode(ipfsContent: unknown): OutcomeCode {
     status?: string;
     opStates?: Array<{
       diagnostics?: { reason?: { hostShutDown?: boolean; jobExpired?: boolean } };
+      logs?: Array<{ type?: string; log?: string }>;
     }>;
   };
 
-  // Check for host/infra failure
+  // Check for SDK-level host/infra failure signal
   const hostShutDown = result.opStates?.some(
     op => op.diagnostics?.reason?.hostShutDown === true,
   );
   if (hostShutDown) return 'host_error';
+
+  // Check for probe hard-fail on host infrastructure (e.g. CUDA device not visible).
+  // The probe emits 'FATAL: ...' to stderr only when the host failed to provide
+  // an advertised resource — it is not an application error in the job definition.
+  const fatalHostFailure = result.opStates?.some(op =>
+    op.logs?.some(l => l.type === 'stderr' && l.log?.trimStart().startsWith('FATAL:')),
+  );
+  if (fatalHostFailure) return 'host_error';
 
   if (result.status === 'success') return 'ok';
   if (result.status === 'failed')  return 'job_error';
@@ -312,6 +328,7 @@ function buildReceipt(s: LifecycleState): Receipt {
     started_at:      s.started_at,
     settled_at:      s.settled_at,
     result_hash:     s.result_hash,
+    ipfs_cid:        s.ipfs_cid,
     cost_nos:        s.cost_nos,
     chain_state:     s.chain_state,
     outcome_code:    s.outcome_code ?? 'unknown',
