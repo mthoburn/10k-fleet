@@ -1,6 +1,6 @@
 # Evidence Ladder — 10k Coordinator
 
-Three rungs of live evidence for the Nosana grant application.
+Three rungs of evidence — live, shadow, and benchmarked — for the Nosana grant application. Rungs 1–2 are live/production data; rung 3 is a synthetic-at-scale benchmark on real schema.
 
 ---
 
