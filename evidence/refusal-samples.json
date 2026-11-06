@@ -1,0 +1,56 @@
+{
+  "description": "5 sample cap_reached refusal records from eden-pilot (hostnames redacted)",
+  "generated_at": "2026-11-06T16:17:52.126Z",
+  "samples": [
+    {
+      "job_id": "656385e7-85aa-4229-9622-3aa80bfdbf96",
+      "kind": "write_reading",
+      "namespace": "eden-pilot",
+      "outcome_code": "cap_reached",
+      "settled_at": "2026-11-06T11:43:36.246Z",
+      "refusal_reason": "Budget refused: scope=job_kind (write_reading), period=daily, limit=1.000000, spent=0.927849, reserved=0.067500, available=0.004651, needed=0.013500",
+      "cost_usd": "0.000000",
+      "lineage_outcome_code": "refused"
+    },
+    {
+      "job_id": "3175a369-544d-410a-ab8f-794dcaec1bfd",
+      "kind": "write_reading",
+      "namespace": "eden-pilot",
+      "outcome_code": "cap_reached",
+      "settled_at": "2026-11-06T11:43:36.110Z",
+      "refusal_reason": "Budget refused: scope=job_kind (write_reading), period=daily, limit=1.000000, spent=0.927849, reserved=0.067500, available=0.004651, needed=0.013500",
+      "cost_usd": "0.000000",
+      "lineage_outcome_code": "refused"
+    },
+    {
+      "job_id": "52d859ec-d73c-44bf-a430-7c871394daf5",
+      "kind": "write_reading",
+      "namespace": "eden-pilot",
+      "outcome_code": "cap_reached",
+      "settled_at": "2026-11-06T11:43:35.462Z",
+      "refusal_reason": "Budget refused: scope=job_kind (write_reading), period=daily, limit=1.000000, spent=0.927849, reserved=0.067500, available=0.004651, needed=0.013500",
+      "cost_usd": "0.000000",
+      "lineage_outcome_code": "refused"
+    },
+    {
+      "job_id": "5ec5a9be-6040-423e-8152-494acf7a368b",
+      "kind": "write_reading",
+      "namespace": "eden-pilot",
+      "outcome_code": "cap_reached",
+      "settled_at": "2026-11-06T11:43:34.884Z",
+      "refusal_reason": "Budget refused: scope=job_kind (write_reading), period=daily, limit=1.000000, spent=0.927849, reserved=0.067500, available=0.004651, needed=0.013500",
+      "cost_usd": "0.000000",
+      "lineage_outcome_code": "refused"
+    },
+    {
+      "job_id": "63a93809-43fb-4175-b989-4e2e5d1b6a14",
+      "kind": "write_reading",
+      "namespace": "eden-pilot",
+      "outcome_code": "cap_reached",
+      "settled_at": "2026-11-06T11:43:34.759Z",
+      "refusal_reason": "Budget refused: scope=job_kind (write_reading), period=daily, limit=1.000000, spent=0.927849, reserved=0.067500, available=0.004651, needed=0.013500",
+      "cost_usd": "0.000000",
+      "lineage_outcome_code": "refused"
+    }
+  ]
+}

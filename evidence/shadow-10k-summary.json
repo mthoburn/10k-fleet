@@ -1,0 +1,41 @@
+{
+  "description": "10k shadow run on production coordinator — real events, real twin fleet, shadow mode (woken_live=0). Namespace: eden-prod.",
+  "namespace": "eden-prod",
+  "coordinator": "production (an isolated Neon project)",
+
+  "fleet": {
+    "twins": 10000,
+    "ecoregions": 588,
+    "twin_kind": "dormant"
+  },
+
+  "window": {
+    "start": "2026-10-30T21:05:00Z",
+    "end":   "2026-11-01T21:05:00Z",
+    "hours": 48
+  },
+
+  "window_results": {
+    "events_submitted": 101,
+    "events_scouted": 101,
+    "scout_rate_pct": 100,
+    "shadow_wakes": 1733,
+    "live_wakes": 0,
+    "coalesced": 0,
+    "skipped": 0,
+    "failures": 0,
+    "fan_out_per_event": { "p50": 18, "p95": 18, "max": 18 },
+    "shadow_est_usd": 23.3955,
+    "implied_fully_live_usd_per_day": 11.70,
+    "eden_pilot_affected": false
+  },
+
+  "as_of_today": {
+    "queried_at": "2026-11-06T16:28:12Z",
+    "note": "shadow run is ongoing; cumulative figures since namespace creation",
+    "events_scouted_total": 305,
+    "shadow_wakes_total": 4842,
+    "live_wakes_total": 0,
+    "shadow_est_usd_total": 65.3670
+  }
+}

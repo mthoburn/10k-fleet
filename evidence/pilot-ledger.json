@@ -1,0 +1,54 @@
+{
+  "description": "eden-pilot daily ledger since 2026-10-30 (UTC days, COALESCE settled_at/created_at)",
+  "generated_at": "2026-11-06T16:17:48.714Z",
+  "rows": [
+    {
+      "day": "2026-10-30",
+      "delivered": "98",
+      "refused": "196",
+      "spend_usd": "0.9124"
+    },
+    {
+      "day": "2026-10-31",
+      "delivered": "0",
+      "refused": "460",
+      "spend_usd": "0.0000"
+    },
+    {
+      "day": "2026-11-01",
+      "delivered": "0",
+      "refused": "400",
+      "spend_usd": "0.0000"
+    },
+    {
+      "day": "2026-11-02",
+      "delivered": "0",
+      "refused": "400",
+      "spend_usd": "0.0000"
+    },
+    {
+      "day": "2026-11-03",
+      "delivered": "93",
+      "refused": "556",
+      "spend_usd": "0.9363"
+    },
+    {
+      "day": "2026-11-04",
+      "delivered": "93",
+      "refused": "461",
+      "spend_usd": "0.9355"
+    },
+    {
+      "day": "2026-11-05",
+      "delivered": "92",
+      "refused": "313",
+      "spend_usd": "0.9263"
+    },
+    {
+      "day": "2026-11-06",
+      "delivered": "91",
+      "refused": "117",
+      "spend_usd": "0.9278"
+    }
+  ]
+}

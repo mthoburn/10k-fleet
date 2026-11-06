@@ -1,0 +1,76 @@
+# evidence/
+
+Real-data evidence for the 10k coordinator Nosana grant application. No mocked or concept items.
+
+---
+
+## Files
+
+### `pilot-ledger.json`
+Daily delivered/refused/spend counts for the eden-pilot namespace since 2026-10-30, bucketed by UTC day using `COALESCE(settled_at, created_at)`.
+
+**How to verify:** Connect to the production coordinator and run:
+```sql
+SELECT
+  (DATE_TRUNC('day', COALESCE(l.settled_at, l.created_at) AT TIME ZONE 'UTC'))::date::text AS day,
+  COUNT(*) FILTER (WHERE l.outcome_code = 'ok')      AS delivered,
+  COUNT(*) FILTER (WHERE l.outcome_code = 'refused') AS refused,
+  ROUND(SUM(COALESCE(l.cost_usd, 0)), 4)             AS spend_usd
+FROM coordinator.lineage l
+JOIN coordinator.jobs j ON j.id = l.job_id
+WHERE j.namespace = 'eden-pilot'
+  AND COALESCE(l.settled_at, l.created_at) >= '2026-10-30T00:00:00Z'
+GROUP BY 1 ORDER BY 1;
+```
+
+---
+
+### `refusal-samples.json`
+5 most recent `cap_reached` refusal records from eden-pilot, including the full `refusal_reason` structure. Hostnames redacted; all budget arithmetic is preserved.
+
+**How to verify:**
+```sql
+SELECT j.id, j.outcome_code, j.result->>'refusal_reason'
+FROM coordinator.jobs j
+WHERE j.namespace = 'eden-pilot' AND j.outcome_code = 'cap_reached'
+ORDER BY j.settled_at DESC NULLS LAST LIMIT 5;
+```
+
+---
+
+### `shadow-10k-summary.json`
+10k shadow run on the production coordinator (namespace `eden-prod`). 10,000 real twins, shadow mode only (woken_live=0). 48h window results plus live cumulative figures as of 2026-11-06.
+
+**How to verify:**
+```sql
+SELECT COUNT(*) AS summaries, SUM(woken_shadow) AS shadow_wakes, SUM(woken_live) AS live_wakes,
+       SUM(shadow_estimated_usd::numeric) AS shadow_est_usd
+FROM coordinator.event_summaries WHERE namespace = 'eden-prod';
+```
+
+---
+
+### `load-test-summary.json`
+570k load test on an isolated Neon test branch. Real schema, synthetic data. Covers twin seed, event replay, sweep benchmark, and budget-lock correctness.
+
+**Source:** mthoburn/edenbotanical#556, branch `load-test/phase2` @ `063155bb`
+
+---
+
+### `fleet-distribution.json`
+Per-ecoregion count of all render-eligible images (no per-region cap). 591 ecoregions, 569,896 total. This is the full-fleet target distribution the twin-seed draws from.
+
+**How to verify:** Run `scripts/readings-seed-twins.ts --dry-run` from the eden repo. The eligibility query is in `server/routes/image-resolution.ts` (`IMAGE_EVENT_JOIN_SQL`).
+
+---
+
+### `ladder-summary.md`
+Three-rung narrative with all numbers: pilot live-fleet, selective wake, and scale test.
+
+---
+
+### `load-test-report.md`
+Consolidated load test report from mthoburn/edenbotanical#556. Pass/fail per item, two recorded ceilings, index verdict, daily table-growth figures.
+
+**Issue link:** mthoburn/edenbotanical#556  
+**Reproduction:** `load-test/phase2` branch in edenbotanical repo — all scripts in `scripts/load-test/`.
