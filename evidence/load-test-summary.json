@@ -1,0 +1,50 @@
+{
+  "description": "570k load test on an isolated Neon test branch, Nov 2026. Real schema, synthetic data at fleet scale.",
+  "source_issue": "mthoburn/edenbotanical#556",
+  "branch": "load-test/phase2",
+  "commit": "063155bb",
+  "run_date": "2026-11-06",
+
+  "seed": {
+    "twins_inserted": 569896,
+    "ecoregions": 591,
+    "duration_seconds": 389
+  },
+
+  "event_replay": {
+    "window_days": 7,
+    "qualifying_events": 14,
+    "severity_threshold": 0.3,
+    "total_wake_decisions": 107616,
+    "wake_decisions_table_mb": 31,
+    "scout_latency_ms": { "p50": 270, "p95": 807, "p99": 807, "max": 807 },
+    "per_event_fan_out_avg": 7687,
+    "daily": [
+      { "day": "2026-10-31", "events": 2, "wake_decisions": 6034 },
+      { "day": "2026-11-01", "events": 4, "wake_decisions": 53724 },
+      { "day": "2026-11-02", "events": 1, "wake_decisions": 7730 },
+      { "day": "2026-11-03", "events": 3, "wake_decisions": 2636 },
+      { "day": "2026-11-05", "events": 2, "wake_decisions": 28883 },
+      { "day": "2026-11-06", "events": 2, "wake_decisions": 8609 }
+    ]
+  },
+
+  "sweep_benchmark": {
+    "note": "All-tier-2 worst case (synthetic data, NULL memory). Production eligibility pre-filter reduces candidate set.",
+    "pilot": { "n": 35, "k": 5, "warm_p50_ms": 2016, "warm_p95_ms": 2049 },
+    "fleet": { "n": 1000, "k": 20, "warm_p50_ms": 2310, "warm_p95_ms": 2654 },
+    "bottleneck": "parallel external-merge disk sort on 6 computed JSONB expressions over 570k rows; sort key is per-day-varying, no static index can serve it",
+    "ceiling": "~2.3s at 570k / all-eligible; operationally a non-problem for a once-per-24h batch job"
+  },
+
+  "budget_lock": {
+    "concurrency_levels_tested": [1, 10, 50],
+    "overrun_at_all_levels": 0,
+    "p99_latency_ms": { "c1_est": 50, "c10": 3020, "c50": 10681 },
+    "correctness": "PASS",
+    "ceiling": "serialization scales linearly with queue depth; at real sweep concurrency (sequential, C≈1) well under 200ms"
+  },
+
+  "shadow_cost_estimate_usd_per_day": null,
+  "shadow_cost_note": "Cost estimate deferred — requires real job payloads and model pricing at fleet scale; pilot actual is ~$0.93/day for 93 deliveries at $0.008133/job"
+}
