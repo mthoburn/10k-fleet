@@ -8,9 +8,10 @@ writes a record for every compute job. The fleet coordinator itself is private.
 10k is the point where a fleet can't be run by hand: below it you can watch agents
 yourself; above it you need governance before they act and evidence after they run.
 
-**Status:** real records from live Nosana jobs are in `examples/`. The GPU probe
-format is defined and its first reference run is in progress. No GPU evidence
-is claimed yet.
+**Status:** First GPU probe run passed correctness on an RTX 4090
+(`examples/real-receipt.json`): max relative error 3.2e-7 vs a 1e-4 tolerance
+against a reproducible float64 reference. Throughput calibration is in progress;
+performance and conformance_score fields are not yet meaningful.
 
 ---
 
@@ -62,9 +63,7 @@ The probe runs a 1024×1024 FP32 GEMM (PyTorch, seed 42) inside a container on t
 
 **Correctness approach:** Reference values are computed locally in float64 (`scripts/compute-gemm-reference.py` — reproducible, no GPU required, no host trusted to define the right answer). The probe checks the host's float32 result against the float64 reference using max relative error ≤ 1e-4. TF32 is explicitly disabled before the matmul and recorded in the output.
 
-**Performance:** Measured TFLOPS vs a reference table keyed by `gpu_class`. `conformance_score = measured / reference`, clamped to [0, 1].
-
-The first GPU reference run is in progress. No conformance results are claimed yet.
+**Performance:** Measured TFLOPS recorded in `performance.measured_tflops`. `performance.calibrated` is `false` until the reference is established with warm-up runs, N≥8192, and the median of several timed repeats. Until then `conformance_score` is `null` and must not be used as a verdict.
 
 ---
 
@@ -151,8 +150,9 @@ console.log(validate(record)); // true
 
 | File | Description |
 |------|-------------|
-| `examples/real-receipt.json` | Attempt 3: chain COMPLETED, outcome ok, CPU-only run (numpy, no CUDA) |
-| `examples/real-receipt-late-detection.json` | Attempt 1: chain COMPLETED, outcome job_error (numpy missing); state-enum bug hid the transition |
+| `examples/real-receipt.json` | Attempt 6: RTX 4090 GPU probe — `outcome_code: ok`, `correctness.pass: true`, full `device_info`; `performance.calibrated: false` |
+| `examples/real-receipt-late-detection.json` | Attempt 1: `outcome_code: job_error` (numpy missing); state-enum bug hid the transition — late-detection case |
+| `examples/real-receipt-no-cuda-attempt1.json` | Attempt 5: `outcome_code: unknown` — `torch.cuda.is_available() == False`; cause was missing `gpu: true` in job def |
 
 ---
 

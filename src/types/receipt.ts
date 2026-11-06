@@ -147,17 +147,35 @@ export interface PerformanceCheck {
   measured_tflops: number | null;
   /**
    * measured_tflops / reference_tflops, clamped to [0, 1].
-   * 1.0 = at or above reference; <0.8 suggests degraded GPU or slow node.
-   * Null if either TFLOPS value is null.
+   * Null when calibrated is false — do not interpret until the reference is
+   * measured with warm-up runs, a larger N (≥8192), and multiple timed repeats
+   * with the median taken.
    */
   conformance_score: number | null;
+  /**
+   * False until reference_tflops is measured at the same benchmark size and
+   * method as the probe (warm-up, N≥8192, median of several timed repeats).
+   * When false, conformance_score is null and must not be used as a verdict.
+   */
+  calibrated: boolean;
 }
 
 /** GPU device info recorded inside the probe container. */
 export interface DeviceInfo {
   device_name: string;
+  /** CUDA runtime version bundled with the container image, e.g. "12.1". */
   cuda_version: string;
-  driver_version: string;
+  /**
+   * CUDA driver API version: the highest CUDA version the installed NVIDIA
+   * driver supports (from cuDriverGetVersion), e.g. "13.2". NOT the NVIDIA
+   * display driver version — see nvidia_driver_version for that.
+   */
+  cuda_driver_version: string;
+  /**
+   * NVIDIA display driver version as reported by nvidia-smi, e.g. "545.23.08".
+   * "unknown" if nvidia-smi was unavailable inside the container.
+   */
+  nvidia_driver_version: string;
   compute_capability: string;
 }
 

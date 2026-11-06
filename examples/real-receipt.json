@@ -1,5 +1,5 @@
 {
-  "_note": "Attempt 6 (2026-11-05T23:53 UTC). First successful GPU probe: RTX 4090 confirmed, CUDA 12.1, compute capability 8.9. correctness.pass=true, max_rel_error=3.18e-7 (tolerance 1e-4). measured_tflops=20.9646, conformance_score=0.508 (reference 41.3 TFLOPS — reference may need revision from a larger warm-up run). cost_nos=24480 raw (deposit minus refund, 102s at 240 raw/s). gpu:true flag added to job def in this run; prior attempt (attempt 5) saw no CUDA device because job def was missing that flag.",
+  "_note": "Attempt 6 (2026-11-05T23:53 UTC). First successful GPU probe: RTX 4090 confirmed, CUDA 12.1, compute capability 8.9. correctness.pass=true, max_rel_error=3.18e-7 (tolerance 1e-4). measured_tflops=20.9646; performance.calibrated=false — reference_tflops of 41.3 is from published specs, not measured at the same benchmark size; conformance_score is null until calibrated (see issue #7). nvidia_driver_version='unknown' because probe did not yet call nvidia-smi; will be populated on the next probe run. cost_nos=24480 raw (102s at 240 raw/s).",
   "receipt_version": "0.1.0",
   "provider": "nosana",
   "job_id": "Hgj9fYQWGhtM7gge4qwJKjA3iBsn1t3uRhsSbkqLyWMX",
@@ -18,7 +18,8 @@
   "device_info": {
     "device_name": "NVIDIA GeForce RTX 4090",
     "cuda_version": "12.1",
-    "driver_version": "13.2",
+    "cuda_driver_version": "13.2",
+    "nvidia_driver_version": "unknown",
     "compute_capability": "8.9"
   },
   "correctness": {
@@ -37,6 +38,7 @@
     "gpu_class": "RTX 4090",
     "reference_tflops": 41.3,
     "measured_tflops": 20.9646,
-    "conformance_score": 0.5076174334140436
+    "conformance_score": null,
+    "calibrated": false
   }
 }

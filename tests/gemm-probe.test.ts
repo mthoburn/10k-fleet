@@ -15,11 +15,12 @@ import {
 import { lookupReferenceTflops, GPU_REFERENCE_TFLOPS } from '../src/probe/gpu-reference-tflops.js';
 
 const MOCK_STDOUT = JSON.stringify({
-  benchmark_id:       'gemm-fp32-1024-seed42-torch',
-  device_name:        'NVIDIA GeForce RTX 4090',
-  cuda_version:       '12.1',
-  driver_version:     '530.30',
-  compute_capability: '8.9',
+  benchmark_id:           'gemm-fp32-1024-seed42-torch',
+  device_name:            'NVIDIA GeForce RTX 4090',
+  cuda_version:           '12.1',
+  cuda_driver_version:    '13.2',
+  nvidia_driver_version:  '545.23.08',
+  compute_capability:     '8.9',
   tf32_matmul:        false,
   tf32_cudnn:         false,
   fp_sum:             268435456.1234,
@@ -62,7 +63,8 @@ describe('buildDeviceInfo', () => {
     const info = buildDeviceInfo(out);
     expect(info.device_name).toBe('NVIDIA GeForce RTX 4090');
     expect(info.cuda_version).toBe('12.1');
-    expect(info.driver_version).toBe('530.30');
+    expect(info.cuda_driver_version).toBe('13.2');
+    expect(info.nvidia_driver_version).toBe('545.23.08');
     expect(info.compute_capability).toBe('8.9');
   });
 });
@@ -114,7 +116,7 @@ describe('buildCorrectnessCheck', () => {
     const matchingStdout = JSON.stringify({
       benchmark_id: 'gemm-fp32-1024-seed42-torch',
       device_name: 'NVIDIA GeForce RTX 4090',
-      cuda_version: '12.1', driver_version: '530.30', compute_capability: '8.9',
+      cuda_version: '12.1', cuda_driver_version: '13.2', nvidia_driver_version: '545.23.08', compute_capability: '8.9',
       tf32_matmul: false, tf32_cudnn: false,
       fp_sum: ref.sum, fp_norm: ref.norm, fp_corners: ref.corners,
       measured_tflops: 39.8, elapsed_s: 0.053,
@@ -133,21 +135,16 @@ describe('buildCorrectnessCheck', () => {
 });
 
 describe('buildPerformanceCheck', () => {
-  it('computes conformance_score = measured / reference for a known gpu_class', () => {
+  it('records measured_tflops and reference_tflops but marks uncalibrated', () => {
     const out = parseGemmOutput(MOCK_STDOUT); // measured_tflops = 39.8
     const check = buildPerformanceCheck(out, 'RTX 4090');
     expect(check.gpu_class).toBe('RTX 4090');
     expect(check.reference_tflops).toBe(41.3);
     expect(check.measured_tflops).toBe(39.8);
-    expect(check.conformance_score).toBeCloseTo(39.8 / 41.3, 3);
-    expect(check.conformance_score!).toBeLessThanOrEqual(1);
-    expect(check.conformance_score!).toBeGreaterThan(0);
-  });
-
-  it('clamps conformance_score to 1 when measured exceeds reference', () => {
-    const out = { ...parseGemmOutput(MOCK_STDOUT), measured_tflops: 999 };
-    const check = buildPerformanceCheck(out, 'RTX 4090');
-    expect(check.conformance_score).toBe(1);
+    // conformance_score is null until the reference is calibrated at the same
+    // benchmark size (N≥8192, warm-up, median of repeats)
+    expect(check.conformance_score).toBeNull();
+    expect(check.calibrated).toBe(false);
   });
 
   it('returns reference_tflops=null for unknown gpu_class', () => {
@@ -155,6 +152,7 @@ describe('buildPerformanceCheck', () => {
     const check = buildPerformanceCheck(out, 'Unknown GPU X');
     expect(check.reference_tflops).toBeNull();
     expect(check.conformance_score).toBeNull();
+    expect(check.calibrated).toBe(false);
   });
 
   it('never includes elapsed_s in the check (timing excluded from conformance)', () => {

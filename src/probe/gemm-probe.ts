@@ -50,16 +50,25 @@ const GEMM_PYTHON = [
   'props = torch.cuda.get_device_properties(device)',
   'device_name = torch.cuda.get_device_name(0)',
   'cuda_version = str(torch.version.cuda)',
-  // driver_version available via ctypes on linux; fall back gracefully
+  // cuda_driver_version: highest CUDA version the installed driver supports (cuDriverGetVersion)
   'try:',
   '    import ctypes',
   '    libcuda = ctypes.cdll.LoadLibrary("libcuda.so.1")',
   '    ver = ctypes.c_int(0)',
   '    libcuda.cuDriverGetVersion(ctypes.byref(ver))',
   '    dv = ver.value',
-  '    driver_version = f"{dv // 1000}.{(dv % 1000) // 10}"',
+  '    cuda_driver_version = f"{dv // 1000}.{(dv % 1000) // 10}"',
   'except Exception:',
-  '    driver_version = "unknown"',
+  '    cuda_driver_version = "unknown"',
+  // nvidia_driver_version: NVIDIA display driver version from nvidia-smi
+  'try:',
+  '    import subprocess',
+  '    nv = subprocess.check_output(',
+  '        ["nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader,nounits"],',
+  '        text=True, timeout=5)',
+  '    nvidia_driver_version = nv.strip().split("\\n")[0].strip()',
+  'except Exception:',
+  '    nvidia_driver_version = "unknown"',
   // Generate A and B on CPU (same seed = same matrices as the float64 reference),
   // then move to CUDA for the timed float32 matmul.
   'torch.manual_seed(42)',
@@ -86,9 +95,10 @@ const GEMM_PYTHON = [
   // Output JSON — timing only in measured_tflops/elapsed_s, never in correctness
   'print(json.dumps({',
   '    "benchmark_id":       "gemm-fp32-1024-seed42-torch",',
-  '    "device_name":        device_name,',
-  '    "cuda_version":       cuda_version,',
-  '    "driver_version":     driver_version,',
+  '    "device_name":           device_name,',
+  '    "cuda_version":          cuda_version,',
+  '    "cuda_driver_version":   cuda_driver_version,',
+  '    "nvidia_driver_version": nvidia_driver_version,',
   '    "compute_capability": f"{props.major}.{props.minor}",',
   '    "tf32_matmul":        tf32_matmul,',
   '    "tf32_cudnn":         tf32_cudnn,',
@@ -121,11 +131,12 @@ export const GEMM_PROBE_JOB_DEF = {
 };
 
 export interface GemmProbeOutput {
-  benchmark_id:       string;
-  device_name:        string;
-  cuda_version:       string;
-  driver_version:     string;
-  compute_capability: string;
+  benchmark_id:           string;
+  device_name:            string;
+  cuda_version:           string;
+  cuda_driver_version:    string;
+  nvidia_driver_version:  string;
+  compute_capability:     string;
   tf32_matmul:        boolean;
   tf32_cudnn:         boolean;
   fp_sum:             number;
@@ -149,10 +160,11 @@ export function parseGemmOutput(stdout: string): GemmProbeOutput {
 /** Extract DeviceInfo from parsed probe output. */
 export function buildDeviceInfo(output: GemmProbeOutput): DeviceInfo {
   return {
-    device_name:        output.device_name,
-    cuda_version:       output.cuda_version,
-    driver_version:     output.driver_version,
-    compute_capability: output.compute_capability,
+    device_name:          output.device_name,
+    cuda_version:         output.cuda_version,
+    cuda_driver_version:  output.cuda_driver_version,
+    nvidia_driver_version: output.nvidia_driver_version,
+    compute_capability:   output.compute_capability,
   };
 }
 
@@ -197,21 +209,26 @@ export function buildCorrectnessCheck(output: GemmProbeOutput): CorrectnessCheck
   };
 }
 
-/** Build a PerformanceCheck from parsed probe output and gpu class. */
+/**
+ * Build a PerformanceCheck from parsed probe output and gpu class.
+ *
+ * calibrated is always false until the reference is measured at the same
+ * benchmark size and method as the probe:
+ *   - N ≥ 8192 (1024 is too small to saturate memory bandwidth)
+ *   - at least one warm-up run before timing
+ *   - several timed repeats with the median taken
+ *   - reference_tflops measured the same way on a known-good unit of that class
+ * Until then conformance_score is null and must not be presented as a verdict.
+ */
 export function buildPerformanceCheck(
   output: GemmProbeOutput,
   gpuClass: string,
 ): PerformanceCheck {
-  const reference_tflops = lookupReferenceTflops(gpuClass);
-  const measured_tflops = output.measured_tflops;
-  const conformance_score =
-    reference_tflops != null && measured_tflops != null
-      ? Math.min(1, measured_tflops / reference_tflops)
-      : null;
   return {
-    gpu_class: gpuClass,
-    reference_tflops,
-    measured_tflops,
-    conformance_score,
+    gpu_class:         gpuClass,
+    reference_tflops:  lookupReferenceTflops(gpuClass),
+    measured_tflops:   output.measured_tflops,
+    conformance_score: null,   // null until calibrated
+    calibrated:        false,
   };
 }

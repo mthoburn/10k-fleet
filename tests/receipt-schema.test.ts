@@ -87,10 +87,11 @@ describe('probe-receipt.schema.json', () => {
   const PROBE: ProbeReceipt = {
     ...SETTLED,
     device_info: {
-      device_name:        'NVIDIA GeForce RTX 4090',
-      cuda_version:       '12.1',
-      driver_version:     '530.30',
-      compute_capability: '8.9',
+      device_name:           'NVIDIA GeForce RTX 4090',
+      cuda_version:          '12.1',
+      cuda_driver_version:   '13.2',
+      nvidia_driver_version: '545.23.08',
+      compute_capability:    '8.9',
     },
     correctness: {
       benchmark_id:       'gemm-fp32-1024-seed42-torch',
@@ -108,7 +109,8 @@ describe('probe-receipt.schema.json', () => {
       gpu_class:         'RTX 4090',
       reference_tflops:  41.3,
       measured_tflops:   39.8,
-      conformance_score: 0.96,
+      conformance_score: null,
+      calibrated:        false,
     },
   };
 
@@ -126,8 +128,14 @@ describe('probe-receipt.schema.json', () => {
     expect(validateProbe(r)).toBe(true);
   });
 
-  it('rejects performance.conformance_score > 1', () => {
+  it('rejects performance.conformance_score > 1 when set', () => {
     const bad = { ...PROBE, performance: { ...PROBE.performance!, conformance_score: 1.5 } };
+    expect(validateProbe(bad)).toBe(false);
+  });
+
+  it('rejects performance missing calibrated field', () => {
+    const { calibrated: _, ...perfNoCal } = PROBE.performance!;
+    const bad = { ...PROBE, performance: perfNoCal };
     expect(validateProbe(bad)).toBe(false);
   });
 

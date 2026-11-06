@@ -10,13 +10,14 @@
         "device_info": {
           "type": "object",
           "description": "GPU device info recorded inside the probe container.",
-          "required": ["device_name", "cuda_version", "driver_version", "compute_capability"],
+          "required": ["device_name", "cuda_version", "cuda_driver_version", "nvidia_driver_version", "compute_capability"],
           "additionalProperties": false,
           "properties": {
-            "device_name":        { "type": "string", "minLength": 1 },
-            "cuda_version":       { "type": "string", "minLength": 1 },
-            "driver_version":     { "type": "string", "minLength": 1 },
-            "compute_capability": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" }
+            "device_name":            { "type": "string", "minLength": 1 },
+            "cuda_version":           { "type": "string", "minLength": 1, "description": "CUDA runtime version bundled with the container image, e.g. '12.1'." },
+            "cuda_driver_version":    { "type": "string", "minLength": 1, "description": "CUDA driver API version from cuDriverGetVersion — the highest CUDA version the installed NVIDIA driver supports, e.g. '13.2'. Not the NVIDIA display driver version." },
+            "nvidia_driver_version":  { "type": "string", "minLength": 1, "description": "NVIDIA display driver version from nvidia-smi, e.g. '545.23.08'. 'unknown' if nvidia-smi was unavailable." },
+            "compute_capability":     { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" }
           }
         },
         "correctness": {
@@ -71,7 +72,7 @@
         "performance": {
           "type": "object",
           "description": "Measured GPU TFLOPS vs gpu_class reference.",
-          "required": ["gpu_class", "reference_tflops", "measured_tflops", "conformance_score"],
+          "required": ["gpu_class", "reference_tflops", "measured_tflops", "conformance_score", "calibrated"],
           "additionalProperties": false,
           "properties": {
             "gpu_class": {
@@ -90,7 +91,11 @@
               "type": ["number", "null"],
               "minimum": 0,
               "maximum": 1,
-              "description": "measured_tflops / reference_tflops, clamped to [0, 1]."
+              "description": "measured_tflops / reference_tflops, clamped to [0, 1]. Null when calibrated is false."
+            },
+            "calibrated": {
+              "type": "boolean",
+              "description": "False until reference_tflops is measured at the same benchmark size and method (warm-up, N≥8192, median of several timed repeats). When false, conformance_score is null and must not be used as a verdict."
             }
           }
         }
