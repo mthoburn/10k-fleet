@@ -2,7 +2,7 @@
 
 Evidence for the 10k coordinator Nosana grant application: live pilot data, a production shadow run, and a synthetic-at-scale benchmark. No mocked or concept items.
 
-**On verification:** the notes below show the exact queries and sources each file was produced from — for transparency. Several require production access reviewers will not have; the team will re-run any of them on request (and can do so live on a call). The GPU receipts in `../examples/` verify independently against the chain.
+**On verification:** the notes below show the exact queries and sources each file was produced from — for transparency. Several require production access reviewers will not have; the team will re-run any of them on request. The GPU receipts in `../examples/` verify independently against the chain.
 
 ---
 
