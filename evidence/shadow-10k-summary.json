@@ -37,5 +37,26 @@
     "shadow_wakes_total": 4842,
     "live_wakes_total": 0,
     "shadow_est_usd_total": 65.3670
+  },
+
+  "final_cumulative_pre_full_fleet_registration": {
+    "queried_at": "2026-11-09T16:34:45Z",
+    "note": "Final read before 570k twin registration changes eden-prod. Closes 10k shadow run as a distinct exhibit.",
+    "run_start": "2026-10-30T21:05:00Z",
+    "run_end_approx": "2026-11-09T16:34:45Z",
+    "events_submitted": 478,
+    "events_scouted": 478,
+    "scout_rate_pct": 100,
+    "shadow_wakes": 7855,
+    "live_wakes": 0,
+    "skipped_severity": 0,
+    "skipped_attribute": 0,
+    "skipped_budget": 0,
+    "skipped_coalesced": 0,
+    "failures": 0,
+    "fan_out_per_event": { "p50": 18, "p95": 18, "max": 18 },
+    "events_with_nonzero_wakes": 447,
+    "shadow_est_usd_total": 106.0425,
+    "implied_fully_live_usd_per_day": 11.70
   }
 }
