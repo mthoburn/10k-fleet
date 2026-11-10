@@ -1,0 +1,18 @@
+{
+  "description": "Eden-prod twin registration — 580k full-fleet batch, 2026-11-09",
+  "queried_at": "2026-11-10T13:45:00Z",
+  "namespace": "eden-prod",
+  "total_twins_registered": 580551,
+  "distinct_regions": 594,
+  "batch_nov9": {
+    "net_new_inserts": 570551,
+    "pre_existing_upserted_in_place": 10000,
+    "batch_window": "2026-11-09T16:45:38Z → 2026-11-09T16:47:36Z"
+  },
+  "dedupe_outcome": "ON CONFLICT (namespace, kind, external_ref) DO UPDATE — 10,000 pre-existing rows updated in-place, 0 duplicates created",
+  "budgets_eden_pilot": [
+    { "scope": "fleet",    "scope_ref": null,            "period": "daily", "limit_usd": "1.50" },
+    { "scope": "job_kind", "scope_ref": "sweep_reading", "period": "daily", "limit_usd": "0.50" },
+    { "scope": "job_kind", "scope_ref": "write_reading",  "period": "daily", "limit_usd": "0.50" }
+  ]
+}

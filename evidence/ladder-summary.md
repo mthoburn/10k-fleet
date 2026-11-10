@@ -1,6 +1,6 @@
 # Evidence Ladder — 10k Coordinator
 
-Three rungs of evidence — live, shadow, and benchmarked — for the Nosana grant application. Rungs 1–2 are live/production data; rung 3 is a synthetic-at-scale benchmark on real schema.
+Four rungs of evidence — live, shadow, benchmarked and registered — for the Nosana grant application. Rungs 1, 2 and 4 are production data; rung 3 is a synthetic-at-scale benchmark on real schema.
 
 ---
 
@@ -72,7 +72,32 @@ Every active day: spend ≤ $1.00 job_kind cap ✓ and ≤ $1.50 fleet cap ✓
 
 ---
 
+## Rung 4 — Registered: the full demonstration fleet on the production coordinator
+
+**What it is:** The full render-eligible image set registered as twins in namespace `eden-prod` on the production coordinator, in a single bulk batch on 9 Nov 2026. Twins stay dormant until an event touches their ecoregion.
+
+**Numbers (production query, 2026-11-10 13:45 UTC):**
+
+| Metric | Value |
+|--------|-------|
+| Twins registered (`eden-prod`) | **580,551** |
+| Distinct ecoregions | 594 |
+| Net new inserts (9 Nov batch) | 570,551 |
+| Pre-existing twins updated in place | 10,000 |
+| Duplicates created | 0 (`ON CONFLICT (namespace, kind, external_ref) DO UPDATE`) |
+| Batch window | 2026-11-09 16:45:38 → 16:47:36 UTC (under 2 minutes) |
+
+**Status:** registered as of 9 Nov 2026. Under Readings v0.1, event wakes are record-only, with no model spend. Wake-record metrics accumulate from the first post-registration events; an export showing live event recording will follow after several days of operation. This rung evidences registration only.
+
+**Reconciliation with rung 3:** rung 3 used the 569,896 render-eligible images across 591 ecoregions counted on 6 Nov 2026. Rung 4's 580,551 across 594 ecoregions is higher because new renders landed between 6 and 9 Nov.
+
+**Also recorded:** the `eden-pilot` daily budgets in force at query time (fleet $1.50; `write_reading` $0.50; `sweep_reading` $0.50). These belong to the 500-twin pilot (rung 1) and are unchanged by this registration.
+
+**Verification:** `registration-580k.json` in this directory. Production query, re-run on request.
+
+---
+
 ## Fleet target distribution
 
-591 ecoregions · 569,896 render-eligible images · no per-region cap.  
-See `fleet-distribution.json`.
+591 ecoregions · 569,896 render-eligible images (6 Nov 2026) · no per-region cap.  
+See `fleet-distribution.json`. Registered fleet as of 9 Nov 2026: 580,551 twins across 594 ecoregions (rung 4).
