@@ -1,6 +1,6 @@
 # Evidence Ladder — 10k Coordinator
 
-Four rungs of evidence — live, shadow, benchmarked and registered — for the Nosana grant application. Rungs 1, 2 and 4 are production data; rung 3 is a synthetic-at-scale benchmark on real schema.
+Four rungs of evidence — live, shadow, benchmarked and registered-live — for the Nosana grant application. Rungs 1, 2 and 4 are production data; rung 3 is a synthetic-at-scale benchmark on real schema.
 
 ---
 
@@ -47,7 +47,9 @@ Every active day: spend ≤ $1.00 job_kind cap ✓ and ≤ $1.50 fleet cap ✓
 | Failures | 0 |
 | eden-pilot affected | No |
 
-**As of 2026-11-06 (run ongoing):** 305 events scouted · 4,842 shadow wakes · $65.37 cumulative shadow est.
+**As of 2026-11-06:** 305 events scouted · 4,842 shadow wakes · $65.37 cumulative shadow est.
+
+**Status:** 48-hour measured run complete (figures as reported); the 10,000 shadow twins were absorbed into the full-fleet registration on 9 Nov 2026 (rung 4).
 
 **Verification:** `shadow-10k-summary.json` in this directory. Query: `coordinator.event_summaries WHERE namespace='eden-prod'`.
 
@@ -72,9 +74,9 @@ Every active day: spend ≤ $1.00 job_kind cap ✓ and ≤ $1.50 fleet cap ✓
 
 ---
 
-## Rung 4 — Registered: the full demonstration fleet on the production coordinator
+## Rung 4 — Registered-live: the full demonstration fleet on the production coordinator
 
-**What it is:** The full render-eligible image set registered as twins in namespace `eden-prod` on the production coordinator, in a single bulk batch on 9 Nov 2026. Twins stay dormant until an event touches their ecoregion.
+**What it is:** The full render-eligible image set registered as twins in namespace `eden-prod` on the production coordinator on 9 Nov 2026, and reacting to real events since. Twins stay dormant until an event touches their ecoregion; a wake is recorded, with no job and no model spend.
 
 **Numbers (production query, 2026-11-10 13:45 UTC):**
 
@@ -85,15 +87,25 @@ Every active day: spend ≤ $1.00 job_kind cap ✓ and ≤ $1.50 fleet cap ✓
 | Net new inserts (9 Nov batch) | 570,551 |
 | Pre-existing twins updated in place | 10,000 |
 | Duplicates created | 0 (`ON CONFLICT (namespace, kind, external_ref) DO UPDATE`) |
-| Batch window | 2026-11-09 16:45:38 → 16:47:36 UTC (under 2 minutes) |
+| Insert batch window (database write) | 2026-11-09 16:45:38 → 16:47:36 UTC: 1m58s (~4,900 rows/sec) |
+| End-to-end run, including verification | ~6 minutes |
 
-**Status:** registered as of 9 Nov 2026. Under Readings v0.1, event wakes are record-only, with no model spend. Wake-record metrics accumulate from the first post-registration events; an export showing live event recording will follow after several days of operation. This rung evidences registration only.
+**Live since registration (production query, 2026-11-10 14:00 UTC):**
+
+| Metric | Value |
+|--------|-------|
+| Real events scouted | 35 |
+| Wakes recorded | 178,757 |
+| Jobs submitted | 0 |
+| Spend | $0.00 |
+
+Wakes are counted from `event_summaries.woken_shadow`, the authoritative wake counter for shadow namespaces. Each wake is recorded without submitting a job or spending on a model. These are measured results; wake-record metrics keep accumulating, and a fuller export will follow after several days of operation.
 
 **Reconciliation with rung 3:** rung 3 used the 569,896 render-eligible images across 591 ecoregions counted on 6 Nov 2026. Rung 4's 580,551 across 594 ecoregions is higher because new renders landed between 6 and 9 Nov.
 
 **Also recorded:** the `eden-pilot` daily budgets in force at query time (fleet $1.50; `write_reading` $0.50; `sweep_reading` $0.50). These belong to the 500-twin pilot (rung 1) and are unchanged by this registration.
 
-**Verification:** `registration-580k.json` in this directory. Production query, re-run on request.
+**Verification:** registration figures in `registration-580k.json` in this directory (production query, 2026-11-10 13:45 UTC). Live figures from production queries of `coordinator.event_summaries`, `coordinator.jobs` and `coordinator.lineage` for `eden-prod` (2026-11-10 14:00 UTC); raw export to follow. Both re-run on request.
 
 ---
 

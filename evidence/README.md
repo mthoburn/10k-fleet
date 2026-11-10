@@ -72,7 +72,7 @@ Four-rung narrative with all numbers: pilot live fleet, shadow run, scale test a
 ---
 
 ### `registration-580k.json`
-Rung 4: the 9 Nov 2026 registration of 580,551 twins across 594 ecoregions in `eden-prod` on the production coordinator (production query, 10 Nov 2026 13:45 UTC). Evidences registration only; live event-recording metrics follow in a later export.
+Rung 4: the 9 Nov 2026 registration of 580,551 twins across 594 ecoregions in `eden-prod` on the production coordinator (production query, 10 Nov 2026 13:45 UTC). Live figures since registration (events scouted, wakes recorded, jobs, spend) are in the rung-4 section of `ladder-summary.md`; a raw export follows.
 
 ---
 
