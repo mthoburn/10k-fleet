@@ -72,7 +72,14 @@ Four-rung narrative with all numbers: pilot live fleet, shadow run, scale test a
 ---
 
 ### `registration-580k.json`
-Rung 4: the 9 Nov 2026 registration of 580,551 twins across 594 ecoregions in `eden-prod` on the production coordinator (production query, 10 Nov 2026 13:45 UTC). Live figures since registration (events scouted, wakes recorded, jobs, spend) are in the rung-4 section of `ladder-summary.md`; a raw export follows.
+Rung 4: the 9 Nov 2026 registration of 580,551 twins across 594 ecoregions in `eden-prod` on the production coordinator (production query, 10 Nov 2026 13:45 UTC). Live figures since registration (events scouted, wakes recorded, jobs, spend) are in the rung-4 section of `ladder-summary.md`; the raw export is `rung4-live-2026-11-10.json`.
+
+---
+
+### `rung4-live-2026-11-10.json`
+Rung 4 raw export for `eden-prod`: every event since registration finished (2026-11-09 16:47:36 UTC), queried 2026-11-10 16:32 UTC. 35 events, one row each, with per-event wakes and the coordinator's shadow cost estimate. Totals: 178,757 wakes recorded, 0 live wakes, 0 jobs, $0 spend. `shadow_est_usd` ($2,413.22) is an **estimate** of model spend had every wake been a paid Reading, not a measured cost. Per-event rows sum exactly to the totals.
+
+**Provenance (production access — re-run on request):** `coordinator.event_summaries`, `coordinator.jobs` and `coordinator.lineage` for `namespace = 'eden-prod'`, `evaluated_at >= '2026-11-09T16:47:36Z'`.
 
 ---
 

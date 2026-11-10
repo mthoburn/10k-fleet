@@ -1,0 +1,268 @@
+{
+  "description": "Eden-prod live evidence since full-fleet registration — rung 4 raw export",
+  "namespace": "eden-prod",
+  "since": "2026-11-09T16:47:36Z",
+  "queried_at": "2026-11-10T16:32:52.748Z",
+  "fleet": {
+    "twins": 580551,
+    "regions": 594
+  },
+  "totals": {
+    "events_scouted": 35,
+    "shadow_wakes": 178757,
+    "live_wakes": 0,
+    "skipped_severity": 0,
+    "skipped_budget": 0,
+    "skipped_coalesced": 0,
+    "shadow_est_usd": "2413.2195",
+    "jobs_submitted": 0,
+    "spend_usd": "0"
+  },
+  "per_event": [
+    {
+      "event_ref": "0e92ac22-0fbf-49bb-bed3-49aaf32875a3",
+      "woken_shadow": 3018,
+      "woken_live": 0,
+      "shadow_est_usd": "40.7430",
+      "evaluated_at": "2026-11-09T17:24:46.787Z"
+    },
+    {
+      "event_ref": "672bc319-4966-4ab0-bf19-85cbc6dd0c2e",
+      "woken_shadow": 3018,
+      "woken_live": 0,
+      "shadow_est_usd": "40.7430",
+      "evaluated_at": "2026-11-09T17:24:47.430Z"
+    },
+    {
+      "event_ref": "d7450aa6-e089-4cac-b64b-33ad3b04112b",
+      "woken_shadow": 4320,
+      "woken_live": 0,
+      "shadow_est_usd": "58.3200",
+      "evaluated_at": "2026-11-09T19:24:46.822Z"
+    },
+    {
+      "event_ref": "0cb1d514-d87c-437c-b289-e45a6ed65d3e",
+      "woken_shadow": 13557,
+      "woken_live": 0,
+      "shadow_est_usd": "183.0195",
+      "evaluated_at": "2026-11-09T20:24:46.850Z"
+    },
+    {
+      "event_ref": "4995d572-56cd-4448-8ade-5424e6c860de",
+      "woken_shadow": 9937,
+      "woken_live": 0,
+      "shadow_est_usd": "134.1495",
+      "evaluated_at": "2026-11-09T20:24:47.523Z"
+    },
+    {
+      "event_ref": "d9707a15-3a6b-410e-a24d-d089167bc6e5",
+      "woken_shadow": 56,
+      "woken_live": 0,
+      "shadow_est_usd": "0.7560",
+      "evaluated_at": "2026-11-09T20:24:47.935Z"
+    },
+    {
+      "event_ref": "9e813d17-9349-4216-9ab1-50bd5932f258",
+      "woken_shadow": 6544,
+      "woken_live": 0,
+      "shadow_est_usd": "88.3440",
+      "evaluated_at": "2026-11-09T20:24:48.294Z"
+    },
+    {
+      "event_ref": "84e21ac2-b53a-493f-b851-5c05f21407ea",
+      "woken_shadow": 3018,
+      "woken_live": 0,
+      "shadow_est_usd": "40.7430",
+      "evaluated_at": "2026-11-09T20:24:48.719Z"
+    },
+    {
+      "event_ref": "1cd5f071-8339-4c8e-ad4c-67d54bf825b4",
+      "woken_shadow": 6544,
+      "woken_live": 0,
+      "shadow_est_usd": "88.3440",
+      "evaluated_at": "2026-11-09T20:24:49.110Z"
+    },
+    {
+      "event_ref": "5fbb1e6f-14bd-4921-bed6-03e43b5ebf31",
+      "woken_shadow": 3018,
+      "woken_live": 0,
+      "shadow_est_usd": "40.7430",
+      "evaluated_at": "2026-11-09T20:24:49.467Z"
+    },
+    {
+      "event_ref": "2a2f0522-3bd9-40c6-95f9-9aaa7509915d",
+      "woken_shadow": 6544,
+      "woken_live": 0,
+      "shadow_est_usd": "88.3440",
+      "evaluated_at": "2026-11-09T21:24:46.877Z"
+    },
+    {
+      "event_ref": "faaa02d9-f4f8-4f5c-9a79-e4c59f952e1c",
+      "woken_shadow": 6544,
+      "woken_live": 0,
+      "shadow_est_usd": "88.3440",
+      "evaluated_at": "2026-11-09T21:24:47.650Z"
+    },
+    {
+      "event_ref": "ce12b960-e570-4349-b59c-27fe6a72164e",
+      "woken_shadow": 6021,
+      "woken_live": 0,
+      "shadow_est_usd": "81.2835",
+      "evaluated_at": "2026-11-09T22:29:47.327Z"
+    },
+    {
+      "event_ref": "2d9d00ff-c2d4-4c6a-b754-2b2e237c5851",
+      "woken_shadow": 3143,
+      "woken_live": 0,
+      "shadow_est_usd": "42.4305",
+      "evaluated_at": "2026-11-10T00:50:05.609Z"
+    },
+    {
+      "event_ref": "c63f08ac-fa80-419a-9cff-9bf7f1cdfda7",
+      "woken_shadow": 8036,
+      "woken_live": 0,
+      "shadow_est_usd": "108.4860",
+      "evaluated_at": "2026-11-10T00:50:06.261Z"
+    },
+    {
+      "event_ref": "f9647b07-c4bd-44bf-aa13-a0321ec1d2d1",
+      "woken_shadow": 1585,
+      "woken_live": 0,
+      "shadow_est_usd": "21.3975",
+      "evaluated_at": "2026-11-10T00:50:06.909Z"
+    },
+    {
+      "event_ref": "d2df407d-6065-4fb7-83c5-35cd2ed51fbd",
+      "woken_shadow": 8036,
+      "woken_live": 0,
+      "shadow_est_usd": "108.4860",
+      "evaluated_at": "2026-11-10T00:50:07.276Z"
+    },
+    {
+      "event_ref": "72990a09-ab20-4057-8a66-4f16cbeee800",
+      "woken_shadow": 5331,
+      "woken_live": 0,
+      "shadow_est_usd": "71.9685",
+      "evaluated_at": "2026-11-10T00:50:07.641Z"
+    },
+    {
+      "event_ref": "6b2a1925-01fa-4b53-88c2-9a9e5408f705",
+      "woken_shadow": 8036,
+      "woken_live": 0,
+      "shadow_est_usd": "108.4860",
+      "evaluated_at": "2026-11-10T00:50:08.047Z"
+    },
+    {
+      "event_ref": "a5a141aa-cd34-490b-94d8-1f2edc0c068f",
+      "woken_shadow": 1574,
+      "woken_live": 0,
+      "shadow_est_usd": "21.2490",
+      "evaluated_at": "2026-11-10T00:55:05.171Z"
+    },
+    {
+      "event_ref": "85c99600-f8c4-4216-8187-0d0c332f5e8b",
+      "woken_shadow": 6586,
+      "woken_live": 0,
+      "shadow_est_usd": "88.9110",
+      "evaluated_at": "2026-11-10T02:49:35.227Z"
+    },
+    {
+      "event_ref": "5a401026-007f-4bb5-9117-c72c599bc6bd",
+      "woken_shadow": 60,
+      "woken_live": 0,
+      "shadow_est_usd": "0.8100",
+      "evaluated_at": "2026-11-10T03:10:05.599Z"
+    },
+    {
+      "event_ref": "6084057f-d252-4f86-8f7c-09e516a4d9fe",
+      "woken_shadow": 13557,
+      "woken_live": 0,
+      "shadow_est_usd": "183.0195",
+      "evaluated_at": "2026-11-10T04:45:05.706Z"
+    },
+    {
+      "event_ref": "23002013-1cd4-4ca6-a7d1-9a5f27d2e7d7",
+      "woken_shadow": 13557,
+      "woken_live": 0,
+      "shadow_est_usd": "183.0195",
+      "evaluated_at": "2026-11-10T05:50:05.737Z"
+    },
+    {
+      "event_ref": "19929710-b556-4e72-ba9e-f3ed3cfc439c",
+      "woken_shadow": 8196,
+      "woken_live": 0,
+      "shadow_est_usd": "110.6460",
+      "evaluated_at": "2026-11-10T06:50:05.882Z"
+    },
+    {
+      "event_ref": "9423403b-d57c-4de6-8d16-28832fda9e71",
+      "woken_shadow": 4428,
+      "woken_live": 0,
+      "shadow_est_usd": "59.7780",
+      "evaluated_at": "2026-11-10T07:45:05.834Z"
+    },
+    {
+      "event_ref": "98835e00-f887-4bb5-b5ef-2bea6a4a3ec9",
+      "woken_shadow": 161,
+      "woken_live": 0,
+      "shadow_est_usd": "2.1735",
+      "evaluated_at": "2026-11-10T08:05:05.913Z"
+    },
+    {
+      "event_ref": "50965dbd-ac08-4ebf-a9bb-21c2ee495405",
+      "woken_shadow": 750,
+      "woken_live": 0,
+      "shadow_est_usd": "10.1250",
+      "evaluated_at": "2026-11-10T08:50:05.943Z"
+    },
+    {
+      "event_ref": "014af583-9a58-43f6-bdd6-b54d6b6c44dc",
+      "woken_shadow": 771,
+      "woken_live": 0,
+      "shadow_est_usd": "10.4085",
+      "evaluated_at": "2026-11-10T08:50:06.372Z"
+    },
+    {
+      "event_ref": "516b4a93-f34c-491a-b876-235cf2364a48",
+      "woken_shadow": 179,
+      "woken_live": 0,
+      "shadow_est_usd": "2.4165",
+      "evaluated_at": "2026-11-10T09:50:05.955Z"
+    },
+    {
+      "event_ref": "abc6e055-23e4-435b-9cfe-dcc770cff1f3",
+      "woken_shadow": 6497,
+      "woken_live": 0,
+      "shadow_est_usd": "87.7095",
+      "evaluated_at": "2026-11-10T12:50:05.587Z"
+    },
+    {
+      "event_ref": "5ec3d702-268c-4fe0-9f2f-2cd2dc106e3e",
+      "woken_shadow": 8036,
+      "woken_live": 0,
+      "shadow_est_usd": "108.4860",
+      "evaluated_at": "2026-11-10T12:50:06.229Z"
+    },
+    {
+      "event_ref": "87361dff-27dc-4d11-a685-892128ef7734",
+      "woken_shadow": 8036,
+      "woken_live": 0,
+      "shadow_est_usd": "108.4860",
+      "evaluated_at": "2026-11-10T12:50:06.666Z"
+    },
+    {
+      "event_ref": "09102252-9d64-4a33-966e-f202dde1a5c5",
+      "woken_shadow": 0,
+      "woken_live": 0,
+      "shadow_est_usd": "0.0000",
+      "evaluated_at": "2026-11-10T12:50:07.044Z"
+    },
+    {
+      "event_ref": "d5a94d17-9464-44cd-afaf-4b448d1752cf",
+      "woken_shadow": 63,
+      "woken_live": 0,
+      "shadow_est_usd": "0.8505",
+      "evaluated_at": "2026-11-10T13:50:05.597Z"
+    }
+  ]
+}
