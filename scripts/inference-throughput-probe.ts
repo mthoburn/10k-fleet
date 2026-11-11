@@ -321,12 +321,14 @@ async function main() {
   console.log(`  jobPrice: ${marketPriceRaw} raw/s = ${marketPriceNosPerHour.toFixed(4)} NOS/GPU-hour  (slot ${marketSlot})`);
 
   // ── Pre-submit: idle-node check ───────────────────────────────────────────
-  // queueType 0 = node queue  (queue entries are idle nodes; jobs claim immediately)
-  // queueType 1 = job queue   (queue entries are waiting jobs; idle nodes = 0)
+  // MarketQueue enum from @nosana/sdk dist/types/market.d.ts:
+  //   JOB_QUEUE  = 0  (queue entries are waiting jobs;  idle nodes = 0)
+  //   NODE_QUEUE = 1  (queue entries are idle nodes;    job backlog = 0)
+  //   EMPTY      = undefined
   const queueType: number = market.queueType ?? -1;
   const queueEntries: unknown[] = Array.isArray(market.queue) ? market.queue : [];
-  const idleNodes  = queueType === 0 ? queueEntries.length : 0;
-  const jobBacklog = queueType === 1 ? queueEntries.length : 0;
+  const idleNodes  = queueType === 1 ? queueEntries.length : 0;
+  const jobBacklog = queueType === 0 ? queueEntries.length : 0;
   console.log(`  idle nodes: ${idleNodes}  job backlog: ${jobBacklog}  (queueType=${queueType})`);
 
   if (idleNodes === 0) {
