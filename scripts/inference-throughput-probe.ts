@@ -31,7 +31,18 @@ import { fileURLToPath } from 'url';
 const __dir = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dir, '..');
 
-const RTX_4090_MARKET = '97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf';
+// RTX 4090 markets (Nosana public API, 2026-11-11):
+//   97G9…odAf — "NVIDIA 4090" (PREMIUM, 24 GB VRAM)        ← default
+//   Dcwz62…zXy8 — "NVIDIA 4090 Community" (COMMUNITY, 24 GB VRAM)
+// Override with env var NOSANA_MARKET or --market <address> CLI arg.
+const RTX_4090_PREMIUM   = '97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf';
+const RTX_4090_COMMUNITY = 'Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8';
+const marketArg = process.argv.find(a => a.startsWith('--market='))?.split('=')[1]
+               ?? process.argv[process.argv.indexOf('--market') + 1];
+const MARKET = (marketArg && marketArg !== 'undefined')
+  ? marketArg
+  : (process.env['NOSANA_MARKET'] ?? RTX_4090_PREMIUM);
+
 const NOS_MINT_STR    = 'nosXBVoaCTtYdLvKY6Csb4AC8JCdQKKAaWYtx2ZMoo7';
 const RPC_URL         = 'https://api.mainnet-beta.solana.com';
 
@@ -275,21 +286,22 @@ async function main() {
   const { Connection, PublicKey } = await import('@solana/web3.js') as any;
   const connection = new Connection(RPC_URL, 'confirmed');
   const marketSlot = await connection.getSlot();
-  const market = await client.jobs.getMarket(RTX_4090_MARKET) as any;
+  console.log(`Using market: ${MARKET}`);
+  const market = await client.jobs.getMarket(MARKET) as any;
   // jobPrice is a BN (raw NOS per second)
   const marketPriceRaw: number = typeof market.jobPrice?.toNumber === 'function'
     ? market.jobPrice.toNumber()
     : Number(market.jobPrice);
   const marketPriceNosPerHour = (marketPriceRaw / NOS_RAW_PER_NOS) * 3600;
 
-  console.log(`Market ${RTX_4090_MARKET}`);
+  console.log(`Market ${MARKET}`);
   console.log(`  jobPrice: ${marketPriceRaw} raw/s = ${marketPriceNosPerHour.toFixed(4)} NOS/GPU-hour  (slot ${marketSlot})`);
 
   // ── Submit job ────────────────────────────────────────────────────────────
   console.log('\nSubmitting inference throughput probe to RTX 4090 market...');
 
   const receipt = await wrapNosanaJob(INFERENCE_THROUGHPUT_JOB_DEF, {
-    market:         RTX_4090_MARKET,
+    market:         MARKET,
     walletPath,
     walletEnvVar:   'NOSANA_WALLET_PRIVATE_KEY',
     pollIntervalMs: 10_000,
@@ -412,7 +424,7 @@ async function main() {
 | Tokens per Reading | ${meanPromptToks} + 180 = ${meanPromptToks + 180} |
 | GPU | ${probeOutput.nvidia_smi} |
 | CUDA offload | ${probeOutput.offload_line} |
-| Market | \`${RTX_4090_MARKET}\` |
+| Market | \`${MARKET}\` |
 | Market price (on-chain) | ${marketPriceRaw} raw/s = **${marketPriceNosPerHour.toFixed(4)} NOS/GPU-hour** (slot ${marketSlot}, ${NOS_USD_DATE}) |
 
 ---
@@ -463,6 +475,7 @@ Figures from wallet ATA transaction history (source: ${costBreakdown.source}).
 | **Net cost** (deposit minus refund) | ${netRaw.toLocaleString()} | ${toNos(netRaw)} | \$${toUsd(netRaw / NOS_RAW_PER_NOS)} |
 
 Job ID: \`${receipt.job_id}\`
+Market: \`${MARKET}\`
 ${jobDurationSec !== null ? `Actual job duration: ${jobDurationSec.toFixed(0)} s` : ''}
 
 ---
