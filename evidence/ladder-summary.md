@@ -101,11 +101,13 @@ Every active day: spend ≤ $1.00 job_kind cap ✓ and ≤ $1.50 fleet cap ✓
 
 Wakes are counted from `event_summaries.woken_shadow`, the authoritative wake counter for shadow namespaces. Each wake is recorded without submitting a job or spending on a model. These are measured results; wake-record metrics keep accumulating, and a fuller export will follow after several days of operation.
 
+**Raw export (2026-11-10 16:32 UTC):** `rung4-live-2026-11-10.json`, covering every event since registration finished (2026-11-09 16:47:36 UTC): 35 events, one row each; woken_shadow sums to 178,757; live wakes 0; jobs 0; spend $0. The export also carries `shadow_est_usd`: an **estimated** $2,413.22 of model spend had each of those 178,757 wakes been a paid Reading (the coordinator's shadow estimate, $0.0135 per wake). Actual spend: $0.00. It is an estimate of spend avoided by record-only waking, not a measured cost.
+
 **Reconciliation with rung 3:** rung 3 used the 569,896 render-eligible images across 591 ecoregions counted on 6 Nov 2026. Rung 4's 580,551 across 594 ecoregions is higher because new renders landed between 6 and 9 Nov.
 
 **Also recorded:** the `eden-pilot` daily budgets in force at query time (fleet $1.50; `write_reading` $0.50; `sweep_reading` $0.50). These belong to the 500-twin pilot (rung 1) and are unchanged by this registration.
 
-**Verification:** registration figures in `registration-580k.json` in this directory (production query, 2026-11-10 13:45 UTC). Live figures from production queries of `coordinator.event_summaries`, `coordinator.jobs` and `coordinator.lineage` for `eden-prod` (2026-11-10 14:00 UTC); raw export to follow. Both re-run on request.
+**Verification:** registration figures in `registration-580k.json` in this directory (production query, 2026-11-10 13:45 UTC). Live figures from production queries of `coordinator.event_summaries`, `coordinator.jobs` and `coordinator.lineage` for `eden-prod` (2026-11-10 14:00 UTC), with the raw export in `rung4-live-2026-11-10.json` (2026-11-10 16:32 UTC). Both re-run on request.
 
 ---
 
