@@ -355,8 +355,8 @@ async function main() {
     walletPath,
     walletEnvVar:   'NOSANA_WALLET_PRIVATE_KEY',
     pollIntervalMs: 10_000,
-    timeoutMs:      900_000,   // 15 min
-    jobTimeoutSecs: 900,
+    timeoutMs:      1_800_000,  // 30 min — 510 s pre-benchmark + ~590 s benchmark + margin
+    jobTimeoutSecs: 1800,
   });
 
   console.log('\nJob', receipt.job_id, '→', receipt.outcome_code);
@@ -631,7 +631,7 @@ async function fetchAtaJobCostBreakdown(
     const postedUnix  = new Date(receipt.posted_at).getTime() / 1000;
     const settledUnix = receipt.settled_at
       ? new Date(receipt.settled_at).getTime() / 1000
-      : postedUnix + 900;
+      : postedUnix + 1800;
 
     // Most-recent-first; job window is recent so it's near the front
     const sigs = await connection.getSignaturesForAddress(ata, { limit: 30 });
