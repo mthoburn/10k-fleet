@@ -320,6 +320,24 @@ async function main() {
   console.log(`Market ${MARKET}`);
   console.log(`  jobPrice: ${marketPriceRaw} raw/s = ${marketPriceNosPerHour.toFixed(4)} NOS/GPU-hour  (slot ${marketSlot})`);
 
+  // ── Pre-submit: idle-node check ───────────────────────────────────────────
+  // queueType 0 = node queue  (queue entries are idle nodes; jobs claim immediately)
+  // queueType 1 = job queue   (queue entries are waiting jobs; idle nodes = 0)
+  const queueType: number = market.queueType ?? -1;
+  const queueEntries: unknown[] = Array.isArray(market.queue) ? market.queue : [];
+  const idleNodes  = queueType === 0 ? queueEntries.length : 0;
+  const jobBacklog = queueType === 1 ? queueEntries.length : 0;
+  console.log(`  idle nodes: ${idleNodes}  job backlog: ${jobBacklog}  (queueType=${queueType})`);
+
+  if (idleNodes === 0) {
+    console.error(
+      `\nABORTED: no idle nodes on this market right now (job backlog: ${jobBacklog}).\n` +
+      `Submitting would queue the job and risk another timeout-with-no-run.\n` +
+      `Check the market again or choose a different one, then resubmit.`,
+    );
+    process.exit(1);
+  }
+
   // ── Submit job ────────────────────────────────────────────────────────────
   console.log('\nSubmitting inference throughput probe to RTX 4090 market...');
 
