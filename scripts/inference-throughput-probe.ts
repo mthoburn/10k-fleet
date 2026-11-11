@@ -103,8 +103,8 @@ IMAGE_CUDA_VER=\$(cat /usr/local/cuda/version.txt 2>/dev/null || nvcc --version 
 LIST_DEVICES=\$(LD_LIBRARY_PATH="/app\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}" /app/llama-server --list-devices 2>&1 || echo "")
 >&2 echo "[probe] --list-devices output:"
 >&2 echo "\$LIST_DEVICES"
-if ! echo "\$LIST_DEVICES" | grep -qiE "CUDA|GPU"; then
-  >&2 echo "[probe] FATAL: --list-devices shows no CUDA device — GPU offload will not work on this host"
+if ! echo "\$LIST_DEVICES" | grep -qE "^[[:space:]]*CUDA[0-9]+:"; then
+  >&2 echo "[probe] FATAL: --list-devices shows no CUDA device line (expected 'CUDA0: ...') — GPU offload will not work on this host"
   exit 1
 fi
 
@@ -151,9 +151,16 @@ T_SERVER_READY=\$(date +%s%3N)
 # ── 5. HARD FAIL if model not loaded onto GPU (VRAM check) ───────────────────
 # This build prints no reliable offload lines at this verbosity; check VRAM
 # usage directly.  Q4_K_M 8B needs ~4,900 MiB; 4,000 MiB is a safe floor.
-GPU_MEM_USED=\$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -d ' ' || echo "0")
+GPU_MEM_USED=\$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -d ' ' || echo "")
 >&2 echo "[probe] GPU memory used after model load: \${GPU_MEM_USED} MiB"
-if [ "\$GPU_MEM_USED" -lt 4000 ] 2>/dev/null; then
+case "\$GPU_MEM_USED" in
+  ''|*[!0-9]*)
+    >&2 echo "[probe] FATAL: nvidia-smi memory.used returned non-numeric or empty: '\${GPU_MEM_USED}'"
+    >&2 echo "[probe] server log (\$(wc -l < /tmp/server.log) lines):"
+    >&2 cat /tmp/server.log
+    exit 1 ;;
+esac
+if [ "\$GPU_MEM_USED" -lt 4000 ]; then
   >&2 echo "[probe] FATAL: GPU memory used \${GPU_MEM_USED} MiB < 4000 MiB — model not on GPU"
   >&2 echo "[probe] server log (\$(wc -l < /tmp/server.log) lines):"
   >&2 cat /tmp/server.log
