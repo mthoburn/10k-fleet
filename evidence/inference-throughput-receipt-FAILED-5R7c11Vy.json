@@ -31,15 +31,15 @@
     "node": "JDyabtgoV4RseZJwhG1NCduH4vcTBXAMZM4VzZMNDZSj"
   },
   "_failure_analysis": {
-    "verdict": "host_error — container never ran",
+    "verdict": "host_error — host failed to publish the job result; what ran during the 179 billed seconds is unknown",
     "ipfs_flow_state": {
       "status": "failed",
       "opStates_length": 0,
       "errors": ["Failed to publish the job result: fetch failed"]
     },
-    "probe_lines": "none — opStates is empty; no container output",
-    "step_reached": "none — bash script did not start",
-    "outcome_code_correction": "wrapNosanaJob assigned job_error (from status=failed); corrected to host_error because opStates=[] means no container executed",
+    "probe_lines": "none — opStates is empty; no container output was recorded",
+    "step_reached": "unknown — 179 s were billed but opStates is empty and the only recorded output is the node-level publish error",
+    "outcome_code_correction": "wrapNosanaJob assigned job_error (from status=failed); corrected to host_error because opStates=[] with a node-level publish error indicates a host-side failure",
     "session_cost_table": {
       "job1_BufJNa": { "outcome": "timeout/delist", "deposit_raw": 225000, "refund_raw": 225000, "net_raw": 0, "net_nos": 0.0 },
       "job2_2awU8GZe": { "outcome": "job_error (bash exited 1, CPU-only server)", "deposit_raw": 225000, "refund_raw": 162250, "net_raw": 62750, "net_nos": 0.062750 },

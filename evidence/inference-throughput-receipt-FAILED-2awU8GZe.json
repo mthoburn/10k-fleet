@@ -34,7 +34,7 @@
   },
   "_failure_analysis": {
     "verdict": "(c) not determinable from the log",
-    "explanation": "The server log (393 lines, all stderr) produces zero matches for load_backend, libggml, ggml_backend, libcuda, cuda, 'failed to load', or 'no usable GPU'. The llama.cpp server emitted no diagnostic about why the CUDA backend was not loaded; it silently took the CPU path. Neither entrypoint/path error (a) nor driver unavailability (b) is proven by any log line.",
+    "explanation": "The job ran: the server started, became healthy, and ran for 251 s. The server log (393 lines) produces zero matches for load_backend, libggml, ggml_backend, libcuda, cuda, 'failed to load', or 'no usable GPU'. The llama.cpp server emitted no diagnostic about why the CUDA backend was not loaded; it silently took the CPU path. Neither entrypoint/path error (a) nor driver unavailability (b) is proven by any log line.",
     "probe_fatal_line": "[probe] FATAL: no 'offloaded N/N layers to GPU' line found in server log",
     "server_log_lines_total": 393,
     "server_log_llama_cpp_lines": [
