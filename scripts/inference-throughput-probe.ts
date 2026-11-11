@@ -85,15 +85,25 @@ T_JOB_START=\$(date +%s%3N)
 NVIDIASMI=\$(nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>/dev/null || echo "unavailable")
 >&2 echo "[probe] gpu: \$NVIDIASMI"
 
-# ── 1b. CUDA library pre-flight ─────────────────────────────────────────────
-# If libcuda.so isn't in ldconfig, llama.cpp won't load the CUDA backend even
-# though nvidia-smi shows the GPU.  Catch this before the 4.9 GB model download.
+# ── 1b–1d. CUDA pre-flight (runs BEFORE the 4.9 GB download) ────────────────
+# Job 2awU8GZe ran CPU-only: zero CUDA messages in 393-line server log.
+# Root cause undetermined from log alone; these checks surface the most likely
+# causes before spending network time on the model.
+
+# 1b: libcuda.so in ldconfig — required for any CUDA-capable binary to init
 LIBCUDA_CHECK=\$(ldconfig -p 2>/dev/null | grep libcuda || echo "")
 >&2 echo "[probe] ldconfig libcuda: \$(echo "\$LIBCUDA_CHECK" | head -3 | tr '\\n' '|' || echo 'none')"
 if [ -z "\$LIBCUDA_CHECK" ]; then
-  >&2 echo "[probe] FATAL: libcuda.so not in ldconfig — CUDA backend unavailable on this host"
+  >&2 echo "[probe] FATAL: libcuda.so not in ldconfig — CUDA driver libraries not visible to this container"
   exit 1
 fi
+
+# 1c: dynamic backend SOs in /app — newer llama.cpp loads libggml-cuda.so from /app
+>&2 echo "[probe] /app SOs: \$(ls /app/*.so* 2>/dev/null | tr '\\n' ' ' || echo 'none')"
+
+# 1d: driver version — CUDA 12.8.1 image requires driver >= 570.x
+DRIVER_VER=\$(nvidia-smi --query-gpu=driver_version --format=csv,noheader 2>/dev/null | head -1 || echo "unavailable")
+>&2 echo "[probe] driver version: \$DRIVER_VER"
 
 # ── 2. Download model (~4.9 GB) ──────────────────────────────────────────────
 MODEL_URL="https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
@@ -106,6 +116,9 @@ T_DOWNLOAD_DONE=\$(date +%s%3N)
 # ENTRYPOINT is overridden in the Nosana job def; binary is at /app/llama-server.
 # Server stdout+stderr → /tmp/server.log for CUDA verification.
 >&2 echo "[probe] starting /app/llama-server -ngl 99 -np 32 -c 40960..."
+# LD_LIBRARY_PATH includes /app so the dynamic CUDA backend SO (libggml-cuda.so)
+# is found even if /app is not in ldconfig.  This is a no-op when it's already there.
+export LD_LIBRARY_PATH="/app\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"
 /app/llama-server \\
   -m /tmp/model.gguf \\
   -ngl 99 \\

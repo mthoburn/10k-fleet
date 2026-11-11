@@ -4,12 +4,12 @@
   "job_id": "2awU8GZePnEN83YURKEMSshshih1KtfMUTWaoy3Hf8KH",
   "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
   "market_name": "NVIDIA 4090 Community (COMMUNITY)",
-  "host": null,
+  "host": "EkEEjgQuZnmyu6jmGdgsQtWgyGJFi83NQcg6pqrMhhGY",
   "gpu_class": null,
   "posted_at": null,
   "claimed_at": null,
-  "started_at": null,
-  "settled_at": null,
+  "started_at": "2026-11-11T20:33:42.000Z",
+  "settled_at": "2026-11-11T20:37:53.000Z",
   "result_hash": null,
   "ipfs_cid": "QmNUykw3FzrUPejutY419JxLWXuydjpB4fcrTU6VKYBffC",
   "cost_nos": 62750,
@@ -23,35 +23,52 @@
     "source": "ata-history"
   },
   "inference_probe": null,
+  "_chain": {
+    "timeStart": 1794429222,
+    "timeEnd": 1794429473,
+    "duration_sec": 251,
+    "state": "COMPLETED",
+    "node": "EkEEjgQuZnmyu6jmGdgsQtWgyGJFi83NQcg6pqrMhhGY",
+    "ipfsJob": "QmbqH8a1vu6FAyAGfMKu9HNdga5f4PxFboA3Kdsi3hdvtx",
+    "ipfsResult": "QmNUykw3FzrUPejutY419JxLWXuydjpB4fcrTU6VKYBffC"
+  },
   "_failure_analysis": {
-    "root_cause": "CUDA backend not loaded — zero ggml_cuda_init messages in 393-line server log",
+    "verdict": "(c) not determinable from the log",
+    "explanation": "The server log (393 lines, all stderr) produces zero matches for load_backend, libggml, ggml_backend, libcuda, cuda, 'failed to load', or 'no usable GPU'. The llama.cpp server emitted no diagnostic about why the CUDA backend was not loaded; it silently took the CPU path. Neither entrypoint/path error (a) nor driver unavailability (b) is proven by any log line.",
     "probe_fatal_line": "[probe] FATAL: no 'offloaded N/N layers to GPU' line found in server log",
-    "cuda_evidence_in_log": [
-      "[probe] gpu: NVIDIA GeForce RTX 4090, 24564 MiB",
-      "[probe] starting /app/llama-server -ngl 99 -np 32 -c 40960...",
-      "[probe] FATAL: no 'offloaded N/N layers to GPU' line found in server log",
-      "0.00.135.024 W srv  server_setup: security: no API key is set..."
+    "server_log_lines_total": 393,
+    "server_log_llama_cpp_lines": [
+      "0.00.134.488 I srv  llama_server: initializing ...",
+      "0.00.134.499 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)",
+      "0.00.135.024 W srv  server_setup: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)",
+      "0.00.136.817 I srv    load_model: loading model '/tmp/model.gguf'",
+      "0.01.474.610 I cmn          init: llama threadpool init, n_threads = 6",
+      "0.01.547.511 I srv    load_model: initializing, n_slots = 32, n_ctx_slot = 1280, kv_unified = 'false'",
+      "0.01.552.488 I srv  server_run_i: model loaded",
+      "0.01.552.507 I srv  server_on_li: listening on http://0.0.0.0:8080"
     ],
-    "cuda_init_lines": 0,
-    "server_log_lines": 393,
-    "model_load_time_sec": 1.4,
-    "model_load_verdict": "1.4s for 4.9 GB = CPU mmap (GPU offload would take far longer)",
-    "fix_applied": "ldconfig pre-flight (step 1b) + ggml_cuda_init check (step 5 check A) added to probe script",
-    "ipfs_cid": "QmNUykw3FzrUPejutY419JxLWXuydjpB4fcrTU6VKYBffC",
-    "cost_nos_raw": 62750,
-    "cost_nos": 0.062750,
-    "session_table": {
+    "cpu_evidence": "llama threadpool init, n_threads = 6 — CPU thread pool; no GPU thread pool message",
+    "fixes_applied_for_job3": [
+      "Pre-flight step 1b: ldconfig -p | grep libcuda — exits FATAL if libcuda.so absent",
+      "Pre-flight step 1c: ls /app/*.so* — enumerates dynamic backends present in image",
+      "Pre-flight step 1d: nvidia-smi driver version for CUDA 12.8.1 compatibility check",
+      "Server launch: explicit LD_LIBRARY_PATH=/app:${LD_LIBRARY_PATH:-} covers dynamic backend SO in /app",
+      "CUDA init check (step 5A): grep for ggml_cuda_init before the offload-line check"
+    ],
+    "session_cost_table": {
       "job1_BufJNa": {
-        "outcome": "timeout/delist",
+        "outcome": "timeout/delist (refunded in full)",
         "deposit_raw": 225000,
         "refund_raw": 225000,
-        "net_raw": 0
+        "net_raw": 0,
+        "net_nos": 0.0
       },
       "job2_2awU8GZe": {
-        "outcome": "job_error",
+        "outcome": "job_error (this job)",
         "deposit_raw": 225000,
         "refund_raw": 162250,
-        "net_raw": 62750
+        "net_raw": 62750,
+        "net_nos": 0.062750
       },
       "session_net_raw": 62750,
       "session_net_nos": 0.062750
