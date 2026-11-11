@@ -1,0 +1,51 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "6oRMVaMD8q8cTTrbZ8U7zpQvxXudmvDdGvG9i1oXxwtt",
+  "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+  "market_name": "NVIDIA 4090 Community (COMMUNITY)",
+  "host": "AW2NkHXFrCz9Ron7ztbTzaDGyZTuNjADxdVY6FzTnxhT",
+  "gpu_class": null,
+  "posted_at": "2026-11-11T23:06:41.339Z",
+  "claimed_at": "2026-11-11T23:06:53.333Z",
+  "started_at": "2026-11-11T23:06:53.333Z",
+  "settled_at": "2026-11-11T23:08:46.086Z",
+  "result_hash": "a6dc06ee46126f5e12f208d42cbbad5e94bc3a128d35abf6f6eec968615fda17",
+  "ipfs_cid": "QmaUd2SW6pgJ7jwedb6bZDp8SoyCrdBe1RWSjFvdiMDCBt",
+  "cost_nos": 28980,
+  "chain_state": "COMPLETED",
+  "outcome_code": "job_error",
+  "market_price_raw_per_sec": 252,
+  "market_price_slot": 468301511,
+  "cost_breakdown": {
+    "deposit_raw": 226800,
+    "refund_raw": 197820,
+    "net_raw": 28980,
+    "source": "ata-history"
+  },
+  "inference_probe": null,
+  "_preflight": {
+    "nvidia_smi": "NVIDIA GeForce RTX 4090, 24564 MiB",
+    "app_sos_includes_libggml_cuda": true,
+    "driver_version": "595.99.02",
+    "image_cuda_version": "unavailable (runtime image, no nvcc or version.txt)",
+    "driver_cuda_compat": "595.99.02 >= 570 required for CUDA 12.8.1 — compatible",
+    "list_devices_output": "Available devices:\n  CUDA0: NVIDIA GeForce RTX 4090 (24076 MiB, 22684 MiB free)"
+  },
+  "_failure_analysis": {
+    "step_reached": "1d (--list-devices check)",
+    "fatal_line": "[probe] FATAL: --list-devices shows no CUDA device — GPU offload will not work on this host",
+    "verdict": "false FATAL — bug in the grep check, not a host failure",
+    "explanation": "--list-devices returned 'CUDA0: NVIDIA GeForce RTX 4090 (24076 MiB, 22684 MiB free)', proving libggml-cuda.so loaded and the CUDA backend found the device. The check used grep -qi 'CUDA\\|cuda\\|GPU' (BRE); in this container's grep \\| is not treated as alternation, so the pattern matches the literal string 'CUDA\\|cuda\\|GPU' rather than any of the three alternatives. Fix: grep -qiE 'CUDA|GPU' (extended regex, | is unambiguous alternation).",
+    "fix_applied": "grep -qi 'CUDA\\|cuda\\|GPU' → grep -qiE 'CUDA|GPU' in scripts/inference-throughput-probe.ts",
+    "session_cost_table": {
+      "job1_BufJNa":   { "outcome": "timeout/delist",                             "net_raw": 0,      "net_nos": 0.000000 },
+      "job2_2awU8GZe": { "outcome": "job_error (ran; no CUDA backend loaded)",    "net_raw": 62750,  "net_nos": 0.062750 },
+      "job3_5R7c11Vy": { "outcome": "host_error (host failed to publish result)", "net_raw": 44750,  "net_nos": 0.044750 },
+      "job4_6zqSqaZF": { "outcome": "timeout (queued ~15 min, no node claimed)",  "net_raw": 0,      "net_nos": 0.000000 },
+      "job5_6oRMVaMD": { "outcome": "job_error (this job, false FATAL in check)", "net_raw": 28980,  "net_nos": 0.028980 },
+      "session_net_raw": 136480,
+      "session_net_nos": 0.136480
+    }
+  }
+}

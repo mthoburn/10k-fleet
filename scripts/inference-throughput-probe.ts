@@ -103,7 +103,7 @@ IMAGE_CUDA_VER=\$(cat /usr/local/cuda/version.txt 2>/dev/null || nvcc --version 
 LIST_DEVICES=\$(LD_LIBRARY_PATH="/app\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}" /app/llama-server --list-devices 2>&1 || echo "")
 >&2 echo "[probe] --list-devices output:"
 >&2 echo "\$LIST_DEVICES"
-if ! echo "\$LIST_DEVICES" | grep -qi "CUDA\|cuda\|GPU"; then
+if ! echo "\$LIST_DEVICES" | grep -qiE "CUDA|GPU"; then
   >&2 echo "[probe] FATAL: --list-devices shows no CUDA device — GPU offload will not work on this host"
   exit 1
 fi
