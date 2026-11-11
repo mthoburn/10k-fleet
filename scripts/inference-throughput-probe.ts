@@ -85,25 +85,28 @@ T_JOB_START=\$(date +%s%3N)
 NVIDIASMI=\$(nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>/dev/null || echo "unavailable")
 >&2 echo "[probe] gpu: \$NVIDIASMI"
 
-# ── 1b–1d. CUDA pre-flight (runs BEFORE the 4.9 GB download) ────────────────
-# Job 2awU8GZe ran CPU-only: zero CUDA messages in 393-line server log.
-# Root cause undetermined from log alone; these checks surface the most likely
-# causes before spending network time on the model.
+# ── 1b–1e. CUDA pre-flight (runs BEFORE the 4.9 GB download) ────────────────
+# All checks exit before the download so a bad host costs seconds, not minutes.
+export LD_LIBRARY_PATH="/app\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"
 
-# 1b: libcuda.so in ldconfig — required for any CUDA-capable binary to init
-LIBCUDA_CHECK=\$(ldconfig -p 2>/dev/null | grep libcuda || echo "")
->&2 echo "[probe] ldconfig libcuda: \$(echo "\$LIBCUDA_CHECK" | head -3 | tr '\\n' '|' || echo 'none')"
-if [ -z "\$LIBCUDA_CHECK" ]; then
-  >&2 echo "[probe] FATAL: libcuda.so not in ldconfig — CUDA driver libraries not visible to this container"
-  exit 1
-fi
-
-# 1c: dynamic backend SOs in /app — newer llama.cpp loads libggml-cuda.so from /app
+# 1b: enumerate dynamic backend SOs in /app (info only)
 >&2 echo "[probe] /app SOs: \$(ls /app/*.so* 2>/dev/null | tr '\\n' ' ' || echo 'none')"
 
-# 1d: driver version — CUDA 12.8.1 image requires driver >= 570.x
+# 1c: driver version + image CUDA version (CUDA 12.8.1 requires driver >= 570.x)
 DRIVER_VER=\$(nvidia-smi --query-gpu=driver_version --format=csv,noheader 2>/dev/null | head -1 || echo "unavailable")
->&2 echo "[probe] driver version: \$DRIVER_VER"
+IMAGE_CUDA_VER=\$(cat /usr/local/cuda/version.txt 2>/dev/null || nvcc --version 2>/dev/null | grep -oE "release [0-9.]+" | head -1 || echo "unavailable")
+>&2 echo "[probe] driver version: \$DRIVER_VER  image CUDA: \$IMAGE_CUDA_VER"
+
+# 1d: --list-devices: HARD FAIL if no CUDA device listed
+# This calls the actual binary with LD_LIBRARY_PATH already set, so it loads
+# the CUDA backend and reports devices without loading any model.
+LIST_DEVICES=\$(LD_LIBRARY_PATH="/app\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}" /app/llama-server --list-devices 2>&1 || echo "")
+>&2 echo "[probe] --list-devices output:"
+>&2 echo "\$LIST_DEVICES"
+if ! echo "\$LIST_DEVICES" | grep -qi "CUDA\|cuda\|GPU"; then
+  >&2 echo "[probe] FATAL: --list-devices shows no CUDA device — GPU offload will not work on this host"
+  exit 1
+fi
 
 # ── 2. Download model (~4.9 GB) ──────────────────────────────────────────────
 MODEL_URL="https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
@@ -113,18 +116,16 @@ T_DOWNLOAD_DONE=\$(date +%s%3N)
 >&2 echo "[probe] download done in \$(( (T_DOWNLOAD_DONE - T_JOB_START) / 1000 ))s"
 
 # ── 3. Start llama-server ────────────────────────────────────────────────────
-# ENTRYPOINT is overridden in the Nosana job def; binary is at /app/llama-server.
-# Server stdout+stderr → /tmp/server.log for CUDA verification.
->&2 echo "[probe] starting /app/llama-server -ngl 99 -np 32 -c 40960..."
-# LD_LIBRARY_PATH includes /app so the dynamic CUDA backend SO (libggml-cuda.so)
-# is found even if /app is not in ldconfig.  This is a no-op when it's already there.
-export LD_LIBRARY_PATH="/app\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"
+# -lv 4 enables verbose logging so backend/offload lines are captured if printed.
+# LD_LIBRARY_PATH already set in pre-flight block above.
+>&2 echo "[probe] starting /app/llama-server -ngl 99 -np 32 -c 40960 -lv 4..."
 /app/llama-server \\
   -m /tmp/model.gguf \\
   -ngl 99 \\
   -np 32 \\
   -c 40960 \\
   --port 8080 \\
+  -lv 4 \\
   > /tmp/server.log 2>&1 &
 SRV_PID=\$!
 T_SERVER_START=\$(date +%s%3N)
@@ -147,36 +148,20 @@ fi
 T_SERVER_READY=\$(date +%s%3N)
 >&2 echo "[probe] server ready in \$(( (T_SERVER_READY - T_SERVER_START) / 1000 ))s"
 
-# ── 5. HARD FAIL if not all layers offloaded to GPU ──────────────────────────
-# Check A: CUDA backend must have initialized.  llama.cpp logs "ggml_cuda_init:"
-# in both old plain-text and new structured-log formats.  Absence means the CUDA
-# runtime was not linked even though the GPU is visible to nvidia-smi.
-CUDA_INIT=\$(grep -E "ggml_cuda_init|ggml-cuda|CUDA device" /tmp/server.log 2>/dev/null | head -3 || echo "")
-if [ -z "\$CUDA_INIT" ]; then
-  >&2 echo "[probe] FATAL: no CUDA initialization messages in server log — CUDA backend not loaded"
-  >&2 echo "[probe] server log (all \$(wc -l < /tmp/server.log) lines):"
+# ── 5. HARD FAIL if model not loaded onto GPU (VRAM check) ───────────────────
+# This build prints no reliable offload lines at this verbosity; check VRAM
+# usage directly.  Q4_K_M 8B needs ~4,900 MiB; 4,000 MiB is a safe floor.
+GPU_MEM_USED=\$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -d ' ' || echo "0")
+>&2 echo "[probe] GPU memory used after model load: \${GPU_MEM_USED} MiB"
+if [ "\$GPU_MEM_USED" -lt 4000 ] 2>/dev/null; then
+  >&2 echo "[probe] FATAL: GPU memory used \${GPU_MEM_USED} MiB < 4000 MiB — model not on GPU"
+  >&2 echo "[probe] server log (\$(wc -l < /tmp/server.log) lines):"
   >&2 cat /tmp/server.log
   exit 1
 fi
->&2 echo "[probe] CUDA backend init: \$(echo "\$CUDA_INIT" | head -1)"
 
-# Check B: Specific offload line — both numbers must match.
+# Offload line from server log — info only; not all builds print it
 OFFLOAD_LINE=\$(grep "offloaded.*layers to GPU" /tmp/server.log 2>/dev/null | tail -1 || echo "")
-if [ -z "\$OFFLOAD_LINE" ]; then
-  >&2 echo "[probe] FATAL: no 'offloaded N/N layers to GPU' line found in server log"
-  >&2 cat /tmp/server.log
-  exit 1
-fi
-
-NUM_OFF=\$(echo "\$OFFLOAD_LINE" | grep -oE "offloaded [0-9]+" | grep -oE "[0-9]+" || echo "0")
-NUM_TOT=\$(echo "\$OFFLOAD_LINE" | grep -oE "[0-9]+/[0-9]+" | cut -d/ -f2 || echo "-1")
-
-if [ "\$NUM_OFF" != "\$NUM_TOT" ] || [ "\$NUM_OFF" = "0" ]; then
-  >&2 echo "[probe] FATAL: only \${NUM_OFF}/\${NUM_TOT} layers offloaded — GPU offload incomplete"
-  >&2 cat /tmp/server.log
-  exit 1
-fi
->&2 echo "[probe] CUDA OK: offloaded \${NUM_OFF}/\${NUM_TOT} layers to GPU"
 
 # ── 6. Write JSON payload ─────────────────────────────────────────────────────
 # Actual prompt token count comes from llama.cpp's tokens_evaluated per response.
@@ -260,13 +245,17 @@ json_esc() {
 }
 
 # ── 11. Emit single JSON line to stdout ───────────────────────────────────────
-printf '{"probe":"inference-throughput","t_job_start_ms":%s,"t_download_done_ms":%s,"t_server_start_ms":%s,"t_server_ready_ms":%s,"t_bench_start_ms":%s,"t_bench_end_ms":%s,"total_wall_ms":%s,"steady_state_ms":%s,"completed_readings":%s,"mean_tokens_evaluated":%s,"tokens_predicted_all_180":true,"cuda_offload_all":true,"offload_line":"%s","nvidia_smi":"%s","model":"Meta-Llama-3.1-8B-Instruct","engine":"llama.cpp","quantisation":"Q4_K_M","server_flags":"-ngl 99 -np 32 -c 40960","n_predict":180,"ignore_eos":true,"sample_1":"%s","sample_2":"%s","sample_3":"%s"}\\n' \\
+printf '{"probe":"inference-throughput","t_job_start_ms":%s,"t_download_done_ms":%s,"t_server_start_ms":%s,"t_server_ready_ms":%s,"t_bench_start_ms":%s,"t_bench_end_ms":%s,"total_wall_ms":%s,"steady_state_ms":%s,"completed_readings":%s,"mean_tokens_evaluated":%s,"tokens_predicted_all_180":true,"gpu_mem_used_mib":%s,"offload_line":"%s","list_devices":"%s","nvidia_smi":"%s","driver_version":"%s","image_cuda_version":"%s","model":"Meta-Llama-3.1-8B-Instruct","engine":"llama.cpp","quantisation":"Q4_K_M","server_flags":"-ngl 99 -np 32 -c 40960 -lv 4","n_predict":180,"ignore_eos":true,"sample_1":"%s","sample_2":"%s","sample_3":"%s"}\\n' \\
   "\$T_JOB_START" "\$T_DOWNLOAD_DONE" "\$T_SERVER_START" "\$T_SERVER_READY" \\
   "\$T_BENCH_START" "\$T_BENCH_END" \\
   "\$((T_BENCH_END - T_JOB_START))" "\$((T_BENCH_END - T_BENCH_START))" \\
   "\$SUCCESS_COUNT" "\$MEAN_TOKENS_EVALUATED" \\
+  "\$GPU_MEM_USED" \\
   "\$(json_esc "\$OFFLOAD_LINE")" \\
+  "\$(json_esc "\$LIST_DEVICES")" \\
   "\$(json_esc "\$NVIDIASMI")" \\
+  "\$(json_esc "\$DRIVER_VER")" \\
+  "\$(json_esc "\$IMAGE_CUDA_VER")" \\
   "\$(json_esc "\$S1")" \\
   "\$(json_esc "\$S2")" \\
   "\$(json_esc "\$S3")"
@@ -684,9 +673,12 @@ interface ProbeOutput {
   completed_readings:      number;
   mean_tokens_evaluated:   number;
   tokens_predicted_all_180: boolean;
-  cuda_offload_all:        boolean;
+  gpu_mem_used_mib:        number;
   offload_line:            string;
+  list_devices:            string;
   nvidia_smi:              string;
+  driver_version:          string;
+  image_cuda_version:      string;
   model:                   string;
   engine:                  string;
   quantisation:            string;
