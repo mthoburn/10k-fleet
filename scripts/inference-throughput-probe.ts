@@ -371,24 +371,47 @@ async function main() {
   const totalMs        = probeOutput.total_wall_ms;
   const readings       = probeOutput.completed_readings;
   const meanPromptToks = probeOutput.mean_tokens_evaluated;
+  // Use actual measured token count per Reading (not the fixed 1,130 baseline)
+  const tokensPerReading = meanPromptToks + 180;
   const readingsPerSec = (readings / steadyMs) * 1000;
-  const tokensPerSec   = readingsPerSec * TOKENS_PER_READING;
-
-  const gpuHoursPerDay = RUNG4_WAKES_DAY1 / readingsPerSec / 3600;
-  const nosRawPerDay   = gpuHoursPerDay * 3600 * marketPriceRaw;
-  const nosPerDay      = nosRawPerDay / NOS_RAW_PER_NOS;
-  const usdPerDay      = nosPerDay * NOS_USD_PRICE;
+  const tokensPerSec   = readingsPerSec * tokensPerReading;
 
   const jobDurationSec = (receipt.settled_at && receipt.claimed_at)
     ? (new Date(receipt.settled_at).getTime() - new Date(receipt.claimed_at).getTime()) / 1000
     : null;
 
-  const toNos = (raw: number) => (raw / NOS_RAW_PER_NOS).toFixed(6);
-  const toUsd = (nos: number) => (nos * NOS_USD_PRICE).toFixed(4);
-
   const depositRaw = costBreakdown.deposit_raw;
   const refundRaw  = costBreakdown.refund_raw;
   const netRaw     = costBreakdown.net_raw;
+
+  // Effective rate actually paid = net_raw ÷ job duration in seconds.
+  // This captures any network fee or escrow rounding not visible in chain jobPrice.
+  // Chain jobPrice (marketPriceRaw) is the base rate; effective rate is what left the wallet.
+  const effectiveRateRaw: number | null =
+    (jobDurationSec !== null && jobDurationSec > 0 && netRaw > 0)
+      ? netRaw / jobDurationSec
+      : null;
+  // Use effective rate for the demand projection if we have it; fall back to chain jobPrice.
+  const demandRateRaw  = effectiveRateRaw ?? marketPriceRaw;
+  const rateSource     = effectiveRateRaw !== null ? 'effective (net ÷ duration)' : 'chain jobPrice (fallback)';
+  const rateDiscrepancy = effectiveRateRaw !== null
+    ? Math.abs(effectiveRateRaw - marketPriceRaw) / marketPriceRaw
+    : 0;
+
+  const gpuHoursPerDay = RUNG4_WAKES_DAY1 / readingsPerSec / 3600;
+  const nosRawPerDay   = gpuHoursPerDay * 3600 * demandRateRaw;
+  const nosPerDay      = nosRawPerDay / NOS_RAW_PER_NOS;
+  const usdPerDay      = nosPerDay * NOS_USD_PRICE;
+
+  const toNos = (raw: number) => (raw / NOS_RAW_PER_NOS).toFixed(6);
+  const toUsd = (nos: number) => (nos * NOS_USD_PRICE).toFixed(4);
+
+  // Resolved market name for display
+  const MARKET_NAMES: Record<string, string> = {
+    '97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf': 'NVIDIA 4090 (PREMIUM)',
+    'Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8': 'NVIDIA 4090 Community (COMMUNITY)',
+  };
+  const marketName = MARKET_NAMES[MARKET] ?? 'unknown';
 
   // ── Write nosana-priced-demand.md ─────────────────────────────────────────
   const md = `# Nosana-Priced Demand Estimate
@@ -424,8 +447,11 @@ async function main() {
 | Tokens per Reading | ${meanPromptToks} + 180 = ${meanPromptToks + 180} |
 | GPU | ${probeOutput.nvidia_smi} |
 | CUDA offload | ${probeOutput.offload_line} |
-| Market | \`${MARKET}\` |
-| Market price (on-chain) | ${marketPriceRaw} raw/s = **${marketPriceNosPerHour.toFixed(4)} NOS/GPU-hour** (slot ${marketSlot}, ${NOS_USD_DATE}) |
+| Market | \`${MARKET}\` — ${marketName} |
+| Market (chain jobPrice) | ${marketPriceRaw} raw/s = ${marketPriceNosPerHour.toFixed(4)} NOS/GPU-hour (slot ${marketSlot}) |
+| Public API price | 0.000275 NOS/s = 275 raw/s (network fee included) |
+| Effective rate paid | ${effectiveRateRaw !== null ? `${effectiveRateRaw.toFixed(1)} raw/s (net ${netRaw} raw ÷ ${jobDurationSec!.toFixed(0)} s)` : 'n/a — computed after run'} |
+| Rate used for demand projection | **${demandRateRaw.toFixed(1)} raw/s** (${rateSource}) |
 
 ---
 
@@ -438,6 +464,7 @@ async function main() {
 | Readings completed (tokens_predicted=180) | ${readings} / 200 |
 | **Readings/sec (steady-state)** | **${readingsPerSec.toFixed(3)}** |
 | Tokens/sec (steady-state) | ${tokensPerSec.toFixed(1)} |
+| Tokens per Reading (measured) | ${meanPromptToks} + 180 = ${tokensPerReading}${tokensPerReading !== TOKENS_PER_READING ? ` ⚠ differs from production baseline (${TOKENS_PER_READING})` : ''} |
 ${jobDurationSec !== null ? `| Job duration (claimed → settled) | ${jobDurationSec.toFixed(0)} s |` : ''}
 
 ---
@@ -456,17 +483,24 @@ Rung-4 baseline: **${RUNG4_WAKES_DAY1.toLocaleString()} wakes** (first day after
 | Wakes per day | measured, rung 4 | ${RUNG4_WAKES_DAY1.toLocaleString()} |
 | Readings/sec (this probe) | measured | ${readingsPerSec.toFixed(3)} |
 | **GPU-hours/day** | ${RUNG4_WAKES_DAY1.toLocaleString()} ÷ ${readingsPerSec.toFixed(3)} ÷ 3600 | **${gpuHoursPerDay.toFixed(2)} GPU-h** |
-| NOS raw/day | ${gpuHoursPerDay.toFixed(2)} h × 3600 × ${marketPriceRaw} raw/s | ${nosRawPerDay.toFixed(0)} |
+| NOS raw/day | ${gpuHoursPerDay.toFixed(2)} h × 3600 × ${demandRateRaw.toFixed(1)} raw/s | ${nosRawPerDay.toFixed(0)} |
 | **NOS/day** | ÷ ${NOS_RAW_PER_NOS.toLocaleString()} | **${nosPerDay.toFixed(4)} NOS** |
 | **USD/day** | ${nosPerDay.toFixed(4)} NOS × \$${NOS_USD_PRICE} (CoinGecko, ${NOS_USD_DATE}) | **\$${usdPerDay.toFixed(4)}** |
 
-> NOS price: \$${NOS_USD_PRICE} (point-in-time snapshot, ${NOS_USD_DATE}, CoinGecko).
+> **Rate note:** chain \`jobPrice\` = ${marketPriceRaw} raw/s; public API = 275 raw/s (10% network fee on top).
+> ${effectiveRateRaw !== null
+  ? `Effective rate from wallet tx history = **${effectiveRateRaw.toFixed(1)} raw/s** (net ${netRaw} raw ÷ ${jobDurationSec!.toFixed(0)} s). Demand figure uses the effective rate.${rateDiscrepancy > 0.01 ? ` Discrepancy vs chain jobPrice: ${(rateDiscrepancy * 100).toFixed(1)}%.` : ''}`
+  : 'Effective rate will be computed from wallet tx history after the run; demand figure will be updated.'}
+>
+> NOS price: \$${NOS_USD_PRICE} (point-in-time snapshot, ${NOS_USD_DATE}, CoinGecko).${tokensPerReading !== TOKENS_PER_READING ? `\n>\n> **Prompt size note:** This probe measured ${meanPromptToks} prompt tokens (mean \`tokens_evaluated\`), giving ${tokensPerReading} tokens/Reading. Production Readings are 950 prompt + 180 completion = 1,130 tokens/Reading (rung 1 measured). The projection above assumes Readings of the measured size (${tokensPerReading} tokens). GPU-hours/day at production size would be ${(RUNG4_WAKES_DAY1 / readingsPerSec / 3600 * (TOKENS_PER_READING / tokensPerReading)).toFixed(2)} h (scaled by ${(TOKENS_PER_READING / tokensPerReading).toFixed(3)}×).` : ''}
 
 ---
 
 ## Probe job cost — deposit / refund / net
 
-Figures from wallet ATA transaction history (source: ${costBreakdown.source}).
+Figures from wallet ATA transaction history (source: ${costBreakdown.source}${costBreakdown.source !== 'ata-history' ? ' — **fallback**: ATA query returned no transactions in window; net from receipt.cost_nos used instead' : ''}).
+
+> This job ran on **${marketName}** (\`${MARKET}\`), not the NVIDIA 4090 PREMIUM market used in the 5 Nov 2026 GEMM receipt (\`97G9…odAf\`). Both are RTX 4090 class, same on-chain jobPrice.
 
 | | NOS raw | NOS | USD (@ \$${NOS_USD_PRICE}, ${NOS_USD_DATE}) |
 |-|---------|-----|------|
@@ -499,8 +533,10 @@ JSON escape sequences unescaped. Full text — no artificial character limit.
 ## Methodology notes
 
 - Engine: llama.cpp Q4_K_M. A faster engine (vLLM, TensorRT-LLM) or higher precision would yield different Readings/sec.
-- Prompt: synthetic English prose. Actual token count reported by llama.cpp's own tokeniser (mean \`tokens_evaluated\` = ${meanPromptToks}), not a heuristic estimate.
+- Prompt: synthetic English prose. Token count from llama.cpp's own tokeniser (mean \`tokens_evaluated\` = ${meanPromptToks}), not a heuristic estimate.
 - Throughput: steady-state only (excludes model download/load). Daily projection uses steady-state.
+- Rate: chain \`jobPrice\` = ${marketPriceRaw} raw/s; public API = 275 raw/s (network fee). Demand projection uses effective rate from wallet tx history (${demandRateRaw.toFixed(1)} raw/s).
+- Market: ${marketName} (\`${MARKET}\`). The 5 Nov 2026 GEMM receipt used the PREMIUM market; both are RTX 4090 class with the same jobPrice.
 - Fleet: 580,551 twins, 594 ecoregions (rung 4). First-day wakes (178,757) are a measured baseline.
 `;
 
