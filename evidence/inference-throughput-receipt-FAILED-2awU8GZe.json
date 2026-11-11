@@ -1,0 +1,60 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "2awU8GZePnEN83YURKEMSshshih1KtfMUTWaoy3Hf8KH",
+  "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+  "market_name": "NVIDIA 4090 Community (COMMUNITY)",
+  "host": null,
+  "gpu_class": null,
+  "posted_at": null,
+  "claimed_at": null,
+  "started_at": null,
+  "settled_at": null,
+  "result_hash": null,
+  "ipfs_cid": "QmNUykw3FzrUPejutY419JxLWXuydjpB4fcrTU6VKYBffC",
+  "cost_nos": 62750,
+  "chain_state": "COMPLETED",
+  "outcome_code": "job_error",
+  "market_price_raw_per_sec": 250,
+  "cost_breakdown": {
+    "deposit_raw": 225000,
+    "refund_raw": 162250,
+    "net_raw": 62750,
+    "source": "ata-history"
+  },
+  "inference_probe": null,
+  "_failure_analysis": {
+    "root_cause": "CUDA backend not loaded — zero ggml_cuda_init messages in 393-line server log",
+    "probe_fatal_line": "[probe] FATAL: no 'offloaded N/N layers to GPU' line found in server log",
+    "cuda_evidence_in_log": [
+      "[probe] gpu: NVIDIA GeForce RTX 4090, 24564 MiB",
+      "[probe] starting /app/llama-server -ngl 99 -np 32 -c 40960...",
+      "[probe] FATAL: no 'offloaded N/N layers to GPU' line found in server log",
+      "0.00.135.024 W srv  server_setup: security: no API key is set..."
+    ],
+    "cuda_init_lines": 0,
+    "server_log_lines": 393,
+    "model_load_time_sec": 1.4,
+    "model_load_verdict": "1.4s for 4.9 GB = CPU mmap (GPU offload would take far longer)",
+    "fix_applied": "ldconfig pre-flight (step 1b) + ggml_cuda_init check (step 5 check A) added to probe script",
+    "ipfs_cid": "QmNUykw3FzrUPejutY419JxLWXuydjpB4fcrTU6VKYBffC",
+    "cost_nos_raw": 62750,
+    "cost_nos": 0.062750,
+    "session_table": {
+      "job1_BufJNa": {
+        "outcome": "timeout/delist",
+        "deposit_raw": 225000,
+        "refund_raw": 225000,
+        "net_raw": 0
+      },
+      "job2_2awU8GZe": {
+        "outcome": "job_error",
+        "deposit_raw": 225000,
+        "refund_raw": 162250,
+        "net_raw": 62750
+      },
+      "session_net_raw": 62750,
+      "session_net_nos": 0.062750
+    }
+  }
+}

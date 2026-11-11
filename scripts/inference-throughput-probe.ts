@@ -85,6 +85,16 @@ T_JOB_START=\$(date +%s%3N)
 NVIDIASMI=\$(nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>/dev/null || echo "unavailable")
 >&2 echo "[probe] gpu: \$NVIDIASMI"
 
+# ── 1b. CUDA library pre-flight ─────────────────────────────────────────────
+# If libcuda.so isn't in ldconfig, llama.cpp won't load the CUDA backend even
+# though nvidia-smi shows the GPU.  Catch this before the 4.9 GB model download.
+LIBCUDA_CHECK=\$(ldconfig -p 2>/dev/null | grep libcuda || echo "")
+>&2 echo "[probe] ldconfig libcuda: \$(echo "\$LIBCUDA_CHECK" | head -3 | tr '\\n' '|' || echo 'none')"
+if [ -z "\$LIBCUDA_CHECK" ]; then
+  >&2 echo "[probe] FATAL: libcuda.so not in ldconfig — CUDA backend unavailable on this host"
+  exit 1
+fi
+
 # ── 2. Download model (~4.9 GB) ──────────────────────────────────────────────
 MODEL_URL="https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
 >&2 echo "[probe] downloading model..."
@@ -125,8 +135,19 @@ T_SERVER_READY=\$(date +%s%3N)
 >&2 echo "[probe] server ready in \$(( (T_SERVER_READY - T_SERVER_START) / 1000 ))s"
 
 # ── 5. HARD FAIL if not all layers offloaded to GPU ──────────────────────────
-# llama-server logs: "llm_load_tensors: offloaded N/N layers to GPU"
-# Both numbers must match; if not, the run is CPU-only and invalid.
+# Check A: CUDA backend must have initialized.  llama.cpp logs "ggml_cuda_init:"
+# in both old plain-text and new structured-log formats.  Absence means the CUDA
+# runtime was not linked even though the GPU is visible to nvidia-smi.
+CUDA_INIT=\$(grep -E "ggml_cuda_init|ggml-cuda|CUDA device" /tmp/server.log 2>/dev/null | head -3 || echo "")
+if [ -z "\$CUDA_INIT" ]; then
+  >&2 echo "[probe] FATAL: no CUDA initialization messages in server log — CUDA backend not loaded"
+  >&2 echo "[probe] server log (all \$(wc -l < /tmp/server.log) lines):"
+  >&2 cat /tmp/server.log
+  exit 1
+fi
+>&2 echo "[probe] CUDA backend init: \$(echo "\$CUDA_INIT" | head -1)"
+
+# Check B: Specific offload line — both numbers must match.
 OFFLOAD_LINE=\$(grep "offloaded.*layers to GPU" /tmp/server.log 2>/dev/null | tail -1 || echo "")
 if [ -z "\$OFFLOAD_LINE" ]; then
   >&2 echo "[probe] FATAL: no 'offloaded N/N layers to GPU' line found in server log"
@@ -311,16 +332,8 @@ async function main() {
 
   console.log('\nJob', receipt.job_id, '→', receipt.outcome_code);
 
-  if (receipt.outcome_code !== 'ok') {
-    console.error('Job did not succeed:', receipt.outcome_code);
-    writeFileSync(
-      join(ROOT, 'evidence', 'inference-throughput-receipt.json'),
-      JSON.stringify({ ...receipt, market_price_raw_per_sec: marketPriceRaw, market_price_slot: marketSlot }, null, 2),
-    );
-    process.exit(1);
-  }
-
-  // ── Fetch IPFS result to extract probe stdout ─────────────────────────────
+  // ── Fetch IPFS result regardless of outcome ───────────────────────────────
+  // Always retrieve so failed runs preserve the full server log.
   let probeOutput: ProbeOutput | null = null;
 
   if (receipt.ipfs_cid) {
@@ -332,12 +345,16 @@ async function main() {
         .map((l: any) => l.log as string);
       const stdout = stdoutLines.join('').trim();
       if (stdout) {
-        probeOutput = JSON.parse(stdout) as ProbeOutput;
-        console.log('Probe output parsed — completed_readings:', probeOutput.completed_readings,
-          'mean_tokens_evaluated:', probeOutput.mean_tokens_evaluated);
+        try {
+          probeOutput = JSON.parse(stdout) as ProbeOutput;
+          console.log('Probe output parsed — completed_readings:', probeOutput.completed_readings,
+            'mean_tokens_evaluated:', probeOutput.mean_tokens_evaluated);
+        } catch {
+          console.warn('Could not parse probe stdout as JSON');
+        }
       }
     } catch (err) {
-      console.warn('Could not parse IPFS stdout:', String(err));
+      console.warn('Could not fetch IPFS result:', String(err));
     }
   }
 
@@ -346,7 +363,9 @@ async function main() {
   console.log(`Cost breakdown (${costBreakdown.source}):`,
     `deposit=${costBreakdown.deposit_raw} refund=${costBreakdown.refund_raw} net=${costBreakdown.net_raw}`);
 
-  // ── Write receipt ─────────────────────────────────────────────────────────
+  // ── Write receipt (always; job-specific filename for non-ok outcomes) ─────
+  // Success → canonical evidence/inference-throughput-receipt.json (overwrites previous ok).
+  // Any failure → evidence/inference-throughput-receipt-FAILED-<jobid8>.json (never overwritten).
   const fullReceipt: InferenceReceipt = {
     ...receipt,
     market_price_raw_per_sec: marketPriceRaw,
@@ -355,11 +374,22 @@ async function main() {
     inference_probe:          probeOutput,
   };
 
+  const jobPrefix = receipt.job_id.slice(0, 8);
+  const outcome   = receipt.outcome_code ?? 'unknown';
+  const receiptFilename = outcome === 'ok'
+    ? 'inference-throughput-receipt.json'
+    : `inference-throughput-receipt-FAILED-${jobPrefix}.json`;
+
   writeFileSync(
-    join(ROOT, 'evidence', 'inference-throughput-receipt.json'),
+    join(ROOT, 'evidence', receiptFilename),
     JSON.stringify(fullReceipt, null, 2),
   );
-  console.log('Wrote evidence/inference-throughput-receipt.json');
+  console.log(`Wrote evidence/${receiptFilename}`);
+
+  if (receipt.outcome_code !== 'ok') {
+    console.error('Job did not succeed:', receipt.outcome_code);
+    process.exit(1);
+  }
 
   if (!probeOutput) {
     console.error('No probe output — cannot write demand estimate');
