@@ -116,16 +116,16 @@ T_DOWNLOAD_DONE=\$(date +%s%3N)
 >&2 echo "[probe] download done in \$(( (T_DOWNLOAD_DONE - T_JOB_START) / 1000 ))s"
 
 # ── 3. Start llama-server ────────────────────────────────────────────────────
-# -lv 4 enables verbose logging so backend/offload lines are captured if printed.
+# Default verbosity — VRAM check (step 5) proves GPU use; -lv 4 is unnecessary
+# and its log file (/tmp/server.log) is never retrieved on a clean exit anyway.
 # LD_LIBRARY_PATH already set in pre-flight block above.
->&2 echo "[probe] starting /app/llama-server -ngl 99 -np 32 -c 40960 -lv 4..."
+>&2 echo "[probe] starting /app/llama-server -ngl 99 -np 32 -c 40960..."
 /app/llama-server \\
   -m /tmp/model.gguf \\
   -ngl 99 \\
   -np 32 \\
   -c 40960 \\
   --port 8080 \\
-  -lv 4 \\
   > /tmp/server.log 2>&1 &
 SRV_PID=\$!
 T_SERVER_START=\$(date +%s%3N)
@@ -252,7 +252,7 @@ json_esc() {
 }
 
 # ── 11. Emit single JSON line to stdout ───────────────────────────────────────
-printf '{"probe":"inference-throughput","t_job_start_ms":%s,"t_download_done_ms":%s,"t_server_start_ms":%s,"t_server_ready_ms":%s,"t_bench_start_ms":%s,"t_bench_end_ms":%s,"total_wall_ms":%s,"steady_state_ms":%s,"completed_readings":%s,"mean_tokens_evaluated":%s,"tokens_predicted_all_180":true,"gpu_mem_used_mib":%s,"offload_line":"%s","list_devices":"%s","nvidia_smi":"%s","driver_version":"%s","image_cuda_version":"%s","model":"Meta-Llama-3.1-8B-Instruct","engine":"llama.cpp","quantisation":"Q4_K_M","server_flags":"-ngl 99 -np 32 -c 40960 -lv 4","n_predict":180,"ignore_eos":true,"sample_1":"%s","sample_2":"%s","sample_3":"%s"}\\n' \\
+printf '{"probe":"inference-throughput","t_job_start_ms":%s,"t_download_done_ms":%s,"t_server_start_ms":%s,"t_server_ready_ms":%s,"t_bench_start_ms":%s,"t_bench_end_ms":%s,"total_wall_ms":%s,"steady_state_ms":%s,"completed_readings":%s,"mean_tokens_evaluated":%s,"tokens_predicted_all_180":true,"gpu_mem_used_mib":%s,"offload_line":"%s","list_devices":"%s","nvidia_smi":"%s","driver_version":"%s","image_cuda_version":"%s","model":"Meta-Llama-3.1-8B-Instruct","engine":"llama.cpp","quantisation":"Q4_K_M","server_flags":"-ngl 99 -np 32 -c 40960","n_predict":180,"ignore_eos":true,"sample_1":"%s","sample_2":"%s","sample_3":"%s"}\\n' \\
   "\$T_JOB_START" "\$T_DOWNLOAD_DONE" "\$T_SERVER_START" "\$T_SERVER_READY" \\
   "\$T_BENCH_START" "\$T_BENCH_END" \\
   "\$((T_BENCH_END - T_JOB_START))" "\$((T_BENCH_END - T_BENCH_START))" \\
