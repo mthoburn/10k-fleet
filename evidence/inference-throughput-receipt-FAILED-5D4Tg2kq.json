@@ -34,8 +34,8 @@
     ]
   },
   "_failure_analysis": {
-    "verdict": "host_error — same pattern as job 3 (5R7c11Vy): opStates empty, host failed to publish result; bash entrypoint never ran",
-    "probe_lines": "none — opStates is empty; container never started",
+    "verdict": "host_error — same pattern as job 3 (5R7c11Vy): opStates empty, host failed to publish result; what ran during the ~886 billed seconds is unknown",
+    "probe_lines": "none — opStates is empty; no container output was recorded in the IPFS result",
     "node_error_verbatim": "Failed to publish the job result: fetch failed",
     "ipfs_duration_sec": 875,
     "ipfs_start_utc_approx": "2026-11-12T00:15:21Z",

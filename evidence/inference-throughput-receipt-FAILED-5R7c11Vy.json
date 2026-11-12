@@ -37,8 +37,8 @@
       "opStates_length": 0,
       "errors": ["Failed to publish the job result: fetch failed"]
     },
-    "probe_lines": "none — opStates is empty; no container output was recorded",
-    "step_reached": "unknown — 179 s were billed but opStates is empty and the only recorded output is the node-level publish error",
+    "probe_lines": "none — opStates is empty; no container output was recorded in the IPFS result",
+    "step_reached": "unknown — 179 s were billed; result was not published so what ran is unknown",
     "outcome_code_correction": "wrapNosanaJob assigned job_error (from status=failed); corrected to host_error because opStates=[] with a node-level publish error indicates a host-side failure",
     "session_cost_table": {
       "job1_BufJNa": { "outcome": "timeout/delist", "deposit_raw": 225000, "refund_raw": 225000, "net_raw": 0, "net_nos": 0.0 },
