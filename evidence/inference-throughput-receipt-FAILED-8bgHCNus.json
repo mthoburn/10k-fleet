@@ -1,0 +1,57 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "8bgHCNuspuB1z3c8rG85gL7UJMuvUGXNJW9oRy52sj5T",
+  "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+  "market_name": "NVIDIA 4090 Community (COMMUNITY)",
+  "host": "AW2NkHXFrCz9Ron7ztbTzaDGyZTuNjADxdVY6FzTnxhT",
+  "endpoint": "https://cR3MH1ni3SQPebFFehnbssTqjwQpPM9Diiu7gXoAp1k6.node.k8s.prd.nos.ci",
+  "endpoint_derivation": "bs58(sha512(\"0:8000:8bgHCNuspuB1z3c8rG85gL7UJMuvUGXNJW9oRy52sj5T\")).slice(0,44).node.k8s.prd.nos.ci",
+  "endpoint_source": "@nosana/sdk dist/utils/expose.js getExposeIdHash + @nosana/cli dist/.env.prd",
+  "posted_at": "2026-11-12T01:24:14.166Z",
+  "claimed_at": "2026-11-12T01:24:22.037Z",
+  "started_at": null,
+  "settled_at": "2026-11-12T01:24:22.593Z",
+  "ipfs_cid": "QmdSgqd25gsqa5UURAmfJXXvifLFj4XdSV8P38QdPjY5qX",
+  "cost_breakdown": {
+    "net_raw": 1265,
+    "source": "ata-delta"
+  },
+  "outcome_code": "validation-error",
+  "engine": "vllm 0.5.4",
+  "quantization": "awq-int4",
+  "inference_probe": null,
+  "_job_def_source": "https://learn.nosana.com/inference/examples/vllm.html (verbatim, Llama 3.1 8B AWQ 4 section)",
+  "_failure_analysis": {
+    "verdict": "validation-error \u2014 node rejected job def at ops[0].id='VLLM-llama3.1'; dot in id string failed node-side TagBase<operationId> validator. Container never started.",
+    "ipfs_result_cid": "QmdSgqd25gsqa5UURAmfJXXvifLFj4XdSV8P38QdPjY5qX",
+    "ipfs_job_def_cid": "QmVyuHSwF559NotjaKsyCLr5jZwq9BTggPe4L5cMisKqZu",
+    "opStates": "empty \u2014 validation-error fires before any container starts; no op ran",
+    "node_error_verbatim": {
+      "path": "$input.ops[0].id",
+      "expected": "string & TagBase<__type>",
+      "value": "VLLM-llama3.1"
+    },
+    "root_cause": "op id 'VLLM-llama3.1' contains a dot. The node's SDK validator (version unknown, stricter than local 0.4.87) rejects dots in operationId. Local SDK only checks !includes(' '). Working jobs used 'inference-throughput' (alphanumeric + dash only). Fix: rename id to 'vllm-llama31'.",
+    "billed_sec": 5,
+    "note": "timeStart=1794446655, timeEnd=1794446660 \u2014 5 s elapsed, 1,265 raw billed (minimum charge / settlement overhead)",
+    "s3_cache_signal": "unknown \u2014 container never started",
+    "cuda_signal": "unknown \u2014 container never started"
+  },
+  "_ipfs_raw": {
+    "status": "validation-error",
+    "startTime": 1794446657982,
+    "endTime": 1794446657982,
+    "secrets": {},
+    "opStates": [],
+    "errors": [
+      [
+        {
+          "path": "$input.ops[0].id",
+          "expected": "string & TagBase<__type>",
+          "value": "VLLM-llama3.1"
+        }
+      ]
+    ]
+  }
+}

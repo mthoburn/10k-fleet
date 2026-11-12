@@ -79,7 +79,7 @@ const VLLM_JOB_DEF = {
   meta:    { trigger: 'cli' },
   ops: [{
     type: 'container/run',
-    id:   'VLLM-llama3.1',
+    id:   'vllm-llama31',   // no dot — node-side TagBase<operationId> validator rejects dots (job 8)
     args: {
       cmd: [
         '--model',
@@ -294,18 +294,32 @@ async function main() {
     if (jobEnded) return;
     jobEnded = true;
     console.log(`\nEnding job (${reason})...`);
-    try {
-      await client.jobs.end(job_id);
-      settled_at = nowIso();
-      console.log(`Job ended OK at ${settled_at}`);
-    } catch (e) {
-      console.error(`client.jobs.end failed: ${e}`);
-    }
+    // Check current chain state first — don't call jobs.end on an already-COMPLETED job
+    let currentState = '';
     try {
       const job = await client.jobs.get(job_id);
-      console.log(`Chain state after end: ${job.state}`);
+      currentState = String(job.state).toUpperCase();
+      console.log(`Chain state: ${currentState}`);
     } catch (e) {
-      console.error(`Could not verify chain state: ${e}`);
+      console.error(`Could not fetch chain state: ${e}`);
+    }
+    if (currentState === 'COMPLETED' || currentState === 'STOPPED') {
+      console.log('Job already settled on-chain — skipping jobs.end()');
+      settled_at ??= nowIso();
+    } else {
+      try {
+        await client.jobs.end(job_id);
+        settled_at = nowIso();
+        console.log(`Job ended OK at ${settled_at}`);
+      } catch (e) {
+        console.error(`client.jobs.end failed: ${e}`);
+      }
+      try {
+        const job = await client.jobs.get(job_id);
+        console.log(`Chain state after end: ${job.state}`);
+      } catch (e) {
+        console.error(`Could not verify chain state: ${e}`);
+      }
     }
     // Write receipt even on abrupt exit paths
     try {
@@ -363,7 +377,22 @@ async function main() {
         break;
       }
       if (jobState === 'COMPLETED' || jobState === 'STOPPED') {
-        throw new Error(`Job terminated prematurely: ${jobState}`);
+        // Job already settled on-chain — do NOT call jobs.end(); fetch IPFS logs instead.
+        outcome_code = 'job_error';
+        let ipfsLog: unknown = null;
+        try {
+          const completedJob = await client.jobs.get(job_id);
+          if (completedJob.ipfsResult) {
+            console.log(`  IPFS result CID: ${completedJob.ipfsResult}`);
+            ipfsLog = await client.ipfs.retrieve(completedJob.ipfsResult);
+            console.log('  IPFS result:', JSON.stringify(ipfsLog, null, 2));
+          }
+        } catch (e) {
+          console.error(`  Could not fetch IPFS result: ${e}`);
+        }
+        probe = { premature_completion: true, chain_state: jobState, ipfs_log: ipfsLog };
+        jobEnded = true; // prevent finally from calling jobs.end on an already-settled job
+        throw new Error(`Job ${jobState} prematurely before RUNNING (validation-error or node crash)`);
       }
     }
 
