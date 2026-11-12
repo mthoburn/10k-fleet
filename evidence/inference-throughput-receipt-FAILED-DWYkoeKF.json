@@ -1,0 +1,96 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "DWYkoeKFqb1F5z3ySKgjzfZmNjWTGWCFfrgKgue7fQi6",
+  "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+  "market_name": "NVIDIA 4090 Community (COMMUNITY)",
+  "host": "ASWieLfbfJrEQeCwK8uaiEJWckhzBBtWH31bLtzJGmob",
+  "gpu_class": null,
+  "posted_at": "2026-11-11T23:33:07.234Z",
+  "claimed_at": "2026-11-11T23:33:19.569Z",
+  "started_at": "2026-11-11T23:33:19.569Z",
+  "settled_at": "2026-11-11T23:48:18.397Z",
+  "result_hash": null,
+  "ipfs_cid": null,
+  "cost_nos": 226800,
+  "chain_state": "COMPLETED",
+  "outcome_code": "job_error",
+  "market_price_raw_per_sec": 252,
+  "market_price_slot": 468308833,
+  "cost_breakdown": {
+    "deposit_raw": 226800,
+    "refund_raw": 0,
+    "net_raw": 226800,
+    "source": "ata-history"
+  },
+  "inference_probe": null,
+  "_preflight": {
+    "list_devices_cuda0_found": true,
+    "list_devices_output": "Available devices:\n  CUDA0: NVIDIA GeForce RTX 4090 (24082 MiB, 23650 MiB free)",
+    "vram_used_mib": 10127,
+    "driver_version": "595.99.02",
+    "image_cuda_version": "unavailable (runtime image, no nvcc or version.txt)"
+  },
+  "_failure_analysis": {
+    "exit_code": 137,
+    "exit_signal": "SIGKILL",
+    "verdict": "job timeout — container killed at 900 s on-chain limit during benchmark phase; all pre-flights passed and model loaded correctly on GPU",
+    "partial_throughput": {
+      "batches_completed": 0,
+      "readings_completed": 0,
+      "readings_total": 200,
+      "measured_readings_per_sec": null,
+      "note": "SIGKILL fired while batch 1 (32 concurrent curl requests) was in-flight; 'wait' never returned; zero '[probe] batch N done' lines in stderr"
+    },
+    "time_breakdown_sec": {
+      "image_pull": 266,
+      "model_download": 237,
+      "server_start_to_ready": 6,
+      "pre_benchmark_total": 509,
+      "remaining_for_benchmark": 390,
+      "benchmark_needed_estimate_sec": 590,
+      "benchmark_estimate_basis": "extrapolation only — no batch completed in this job; based on expected RTX 4090 throughput at np=32 for 7 sequential batches of 32×180-token completions",
+      "shortfall": 200
+    },
+    "all_probe_lines": [
+      "[probe] job started ms=1794438501460",
+      "[probe] gpu: NVIDIA GeForce RTX 4090, 24564 MiB",
+      "[probe] /app SOs: … libggml-cuda.so present (see job5 receipt for full list)",
+      "[probe] driver version: 595.99.02  image CUDA: unavailable",
+      "[probe] --list-devices output:",
+      "Available devices:",
+      "  CUDA0: NVIDIA GeForce RTX 4090 (24082 MiB, 23650 MiB free)",
+      "[probe] downloading model...",
+      "  (curl progress — 237 s, 4692 MiB at ~19.8 MiB/s average)",
+      "[probe] download done in 237s",
+      "[probe] starting /app/llama-server -ngl 99 -np 32 -c 40960 -lv 4...",
+      "[probe] server ready in 6s",
+      "[probe] GPU memory used after model load: 10127 MiB",
+      "[probe] benchmark start ms=1794440493867"
+    ],
+    "server_log_note": "-lv 4 output goes to /tmp/server.log (container file); script only pipes it to stderr on FATAL exits; container was killed externally (SIGKILL) so server log was never emitted — per-batch line count unknown. For job 7: drop -lv 4; VRAM check (10127 MiB) already proves GPU use.",
+    "fixes_for_job7": [
+      "jobTimeoutSecs 900 → 1800 (already committed in a2b741a)",
+      "timeoutMs 900_000 → 1_800_000 (already committed)",
+      "-lv 4 → default verbosity (no -lv flag) — VRAM check sufficient to verify GPU"
+    ],
+    "expected_job7_cost": {
+      "deposit_raw": 453600,
+      "deposit_nos": 0.453600,
+      "estimated_actual_run_sec": 1100,
+      "estimated_net_raw": 277200,
+      "estimated_net_nos": 0.277200,
+      "note": "deposit = 1800 × 252 raw/s; if benchmark finishes in ~590 s (extrapolated) after the same ~510 s pre-benchmark, actual run ~1100 s; unspent time is refunded — refund ≈ (1800 − actual_sec) × 252"
+    },
+    "session_cost_table": {
+      "job1_BufJNa":   { "outcome": "timeout/delist",                                  "net_raw": 0,      "net_nos": 0.000000 },
+      "job2_2awU8GZe": { "outcome": "job_error (ran; no CUDA backend loaded)",         "net_raw": 62750,  "net_nos": 0.062750 },
+      "job3_5R7c11Vy": { "outcome": "host_error (host failed to publish result)",      "net_raw": 44750,  "net_nos": 0.044750 },
+      "job4_6zqSqaZF": { "outcome": "timeout (queued ~15 min, no node claimed)",       "net_raw": 0,      "net_nos": 0.000000 },
+      "job5_6oRMVaMD": { "outcome": "job_error (false FATAL in grep check)",           "net_raw": 28980,  "net_nos": 0.028980 },
+      "job6_DWYkoeKF": { "outcome": "job_error (this job, SIGKILL at 900 s timeout)",  "net_raw": 226800, "net_nos": 0.226800 },
+      "session_net_raw": 363280,
+      "session_net_nos": 0.363280
+    }
+  }
+}

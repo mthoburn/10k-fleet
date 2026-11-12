@@ -1,0 +1,39 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "6zqSqaZFgnThPomCNXLXYoZyVj8kXVUhvr4y4StwCiBm",
+  "market": "97G9NnvBDQ2WpKu6fasoMsAKmfj63C9rhysJnkeWodAf",
+  "host": "11111111111111111111111111111111",
+  "gpu_class": null,
+  "posted_at": "2026-11-11T22:47:24.522Z",
+  "claimed_at": "2026-11-11T22:47:36.588Z",
+  "started_at": null,
+  "settled_at": "2026-11-11T23:02:31.842Z",
+  "result_hash": null,
+  "ipfs_cid": null,
+  "cost_nos": null,
+  "chain_state": null,
+  "outcome_code": "timeout",
+  "market_price_raw_per_sec": 251,
+  "market_price_slot": 468296113,
+  "cost_breakdown": {
+    "deposit_raw": 225900,
+    "refund_raw": 225900,
+    "net_raw": 0,
+    "source": "ata-history"
+  },
+  "inference_probe": null,
+  "_failure_analysis": {
+    "verdict": "queue timeout — no node claimed the job within ~15 min; observer poll window closed and job was delisted",
+    "market_state_at_submission": "unknown — market was checked after the timeout; at the time of this read (slot 468300742) PREMIUM has 4 idle nodes and 0 backlog",
+    "net_raw": 0,
+    "session_cost_table": {
+      "job1_BufJNa":   { "outcome": "timeout/delist",                             "net_raw": 0,     "net_nos": 0.000000 },
+      "job2_2awU8GZe": { "outcome": "job_error (ran; no CUDA backend loaded)",    "net_raw": 62750, "net_nos": 0.062750 },
+      "job3_5R7c11Vy": { "outcome": "host_error (host failed to publish result)", "net_raw": 44750, "net_nos": 0.044750 },
+      "job4_6zqSqaZF": { "outcome": "timeout (this job, queued ~15 min, no node claimed)", "net_raw": 0, "net_nos": 0.000000 },
+      "session_net_raw": 107500,
+      "session_net_nos": 0.107500
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "5R7c11Vy8inozYUptavP4HDitti7vUVpC3PmYWx9JLep",
+  "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+  "market_name": "NVIDIA 4090 Community (COMMUNITY)",
+  "host": "JDyabtgoV4RseZJwhG1NCduH4vcTBXAMZM4VzZMNDZSj",
+  "gpu_class": null,
+  "posted_at": "2026-11-11T20:58:05.772Z",
+  "claimed_at": "2026-11-11T20:58:18.116Z",
+  "started_at": "2026-11-11T20:58:18.116Z",
+  "settled_at": "2026-11-11T21:01:12.795Z",
+  "result_hash": "ffa0ae7611900fa7f29dfb19eb4d15103ce31ee28ca3642a3389cd025bdbd3c2",
+  "ipfs_cid": "QmdkU5FCsevz1Sja8Z4PpNdWVvpi3hLco1DyygRd7yS2aF",
+  "cost_nos": 44750,
+  "chain_state": "COMPLETED",
+  "outcome_code": "host_error",
+  "market_price_raw_per_sec": 250,
+  "market_price_slot": 468265669,
+  "cost_breakdown": {
+    "deposit_raw": 225000,
+    "refund_raw": 180250,
+    "net_raw": 44750,
+    "source": "ata-history"
+  },
+  "inference_probe": null,
+  "_chain": {
+    "startTime": 1794430689639,
+    "endTime": 1794430847158,
+    "duration_sec": 157,
+    "node": "JDyabtgoV4RseZJwhG1NCduH4vcTBXAMZM4VzZMNDZSj"
+  },
+  "_failure_analysis": {
+    "verdict": "host_error — host failed to publish the job result; what ran during the 179 billed seconds is unknown",
+    "ipfs_flow_state": {
+      "status": "failed",
+      "opStates_length": 0,
+      "errors": ["Failed to publish the job result: fetch failed"]
+    },
+    "probe_lines": "none — opStates is empty; no container output was recorded in the IPFS result",
+    "step_reached": "unknown — 179 s were billed; result was not published so what ran is unknown",
+    "outcome_code_correction": "wrapNosanaJob assigned job_error (from status=failed); corrected to host_error because opStates=[] with a node-level publish error indicates a host-side failure",
+    "session_cost_table": {
+      "job1_BufJNa": { "outcome": "timeout/delist", "deposit_raw": 225000, "refund_raw": 225000, "net_raw": 0, "net_nos": 0.0 },
+      "job2_2awU8GZe": { "outcome": "job_error (bash exited 1, CPU-only server)", "deposit_raw": 225000, "refund_raw": 162250, "net_raw": 62750, "net_nos": 0.062750 },
+      "job3_5R7c11Vy": { "outcome": "host_error (this job; result not published, what ran unknown)", "deposit_raw": 225000, "refund_raw": 180250, "net_raw": 44750, "net_nos": 0.044750 },
+      "session_net_raw": 107500,
+      "session_net_nos": 0.107500
+    }
+  }
+}

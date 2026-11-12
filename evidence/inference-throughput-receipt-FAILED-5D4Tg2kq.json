@@ -1,0 +1,58 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "5D4Tg2kqK2AsXm9p4caQSATrwu49XVUWURf271fgsmkN",
+  "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+  "market_name": "NVIDIA 4090 Community (COMMUNITY)",
+  "host": "BKgDT7Ewuyt9LKuM91MpDSbaiqCMwAArFeJjXmbmxz5C",
+  "gpu_class": null,
+  "posted_at": "2026-11-12T00:15:17.041Z",
+  "claimed_at": "2026-11-12T00:15:29.364Z",
+  "started_at": "2026-11-12T00:15:29.364Z",
+  "settled_at": "2026-11-12T00:44:45.478Z",
+  "result_hash": "7a0197804f76b0a8872e88de50cf7cef43a0a3fbf544d33cd9d5581d9d8f15fc",
+  "ipfs_cid": "QmaogfATtrjGEUhycGNfDuzusSdUodeufqEe1d33eADxw7",
+  "cost_nos": 225044,
+  "chain_state": "COMPLETED",
+  "outcome_code": "host_error",
+  "market_price_raw_per_sec": 254,
+  "market_price_slot": 468320599,
+  "cost_breakdown": {
+    "deposit_raw": 457200,
+    "refund_raw": 232156,
+    "net_raw": 225044,
+    "source": "ata-history"
+  },
+  "inference_probe": null,
+  "_ipfs_raw": {
+    "status": "failed",
+    "startTime": 1794442520976,
+    "endTime": 1794443395967,
+    "opStates": [],
+    "errors": [
+      "Failed to publish the job result: fetch failed"
+    ]
+  },
+  "_failure_analysis": {
+    "verdict": "host_error — same pattern as job 3 (5R7c11Vy): opStates empty, host failed to publish result; what ran during the ~886 billed seconds is unknown",
+    "probe_lines": "none — opStates is empty; no container output was recorded in the IPFS result",
+    "node_error_verbatim": "Failed to publish the job result: fetch failed",
+    "ipfs_duration_sec": 875,
+    "ipfs_start_utc_approx": "2026-11-12T00:15:21Z",
+    "ipfs_end_utc_approx": "2026-11-12T00:29:56Z",
+    "wall_time_sec": 1756,
+    "billed_sec_approx": 886,
+    "wall_vs_billed_explanation": "Nosana bills from job claim to when the host submits its result (~886 s). The remaining ~870 s (00:29:56 → 00:44:45) is on-chain settlement lag — block confirmation, observer detection — during which the meter is not running. Billed ≈ IPFS duration (875 s); 11 s difference is slot-based rounding.",
+    "session_cost_table": {
+      "job1_BufJNa":   { "outcome": "timeout/delist",                                  "net_raw": 0,      "net_nos": 0.000000 },
+      "job2_2awU8GZe": { "outcome": "job_error (ran; no CUDA backend loaded)",         "net_raw": 62750,  "net_nos": 0.062750 },
+      "job3_5R7c11Vy": { "outcome": "host_error (host failed to publish result)",      "net_raw": 44750,  "net_nos": 0.044750 },
+      "job4_6zqSqaZF": { "outcome": "timeout (queued ~15 min, no node claimed)",       "net_raw": 0,      "net_nos": 0.000000 },
+      "job5_6oRMVaMD": { "outcome": "job_error (false FATAL in grep check)",           "net_raw": 28980,  "net_nos": 0.028980 },
+      "job6_DWYkoeKF": { "outcome": "job_error (SIGKILL at 900 s timeout)",            "net_raw": 226800, "net_nos": 0.226800 },
+      "job7_5D4Tg2kq": { "outcome": "host_error (this job, failed to publish result)", "net_raw": 225044, "net_nos": 0.225044 },
+      "session_net_raw": 588324,
+      "session_net_nos": 0.588324
+    }
+  }
+}

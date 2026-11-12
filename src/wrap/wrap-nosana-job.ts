@@ -294,6 +294,11 @@ function deriveOutcomeCode(ipfsContent: unknown): OutcomeCode {
     }>;
   };
 
+  // Empty opStates + status=failed = node infrastructure failure before container ran
+  if (result.status === 'failed' && Array.isArray(result.opStates) && result.opStates.length === 0) {
+    return 'host_error';
+  }
+
   // Check for SDK-level host/infra failure signal
   const hostShutDown = result.opStates?.some(
     op => op.diagnostics?.reason?.hostShutDown === true,
