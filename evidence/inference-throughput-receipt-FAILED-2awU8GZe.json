@@ -6,7 +6,7 @@
   "market_name": "NVIDIA 4090 Community (COMMUNITY)",
   "host": "EkEEjgQuZnmyu6jmGdgsQtWgyGJFi83NQcg6pqrMhhGY",
   "gpu_class": null,
-  "posted_at": null,
+  "posted_at": "2026-11-11T00:00:00.000Z",
   "claimed_at": null,
   "started_at": "2026-11-11T20:33:42.000Z",
   "settled_at": "2026-11-11T20:37:53.000Z",
@@ -47,10 +47,10 @@
       "0.01.552.488 I srv  server_run_i: model loaded",
       "0.01.552.507 I srv  server_on_li: listening on http://0.0.0.0:8080"
     ],
-    "cpu_evidence": "llama threadpool init, n_threads = 6 — CPU thread pool; no GPU thread pool message",
+    "cpu_evidence": "llama threadpool init, n_threads = 6 \u2014 CPU thread pool; no GPU thread pool message",
     "fixes_applied_for_job3": [
-      "Pre-flight step 1b: ldconfig -p | grep libcuda — exits FATAL if libcuda.so absent",
-      "Pre-flight step 1c: ls /app/*.so* — enumerates dynamic backends present in image",
+      "Pre-flight step 1b: ldconfig -p | grep libcuda \u2014 exits FATAL if libcuda.so absent",
+      "Pre-flight step 1c: ls /app/*.so* \u2014 enumerates dynamic backends present in image",
       "Pre-flight step 1d: nvidia-smi driver version for CUDA 12.8.1 compatibility check",
       "Server launch: explicit LD_LIBRARY_PATH=/app:${LD_LIBRARY_PATH:-} covers dynamic backend SO in /app",
       "CUDA init check (step 5A): grep for ggml_cuda_init before the offload-line check"
@@ -68,10 +68,10 @@
         "deposit_raw": 225000,
         "refund_raw": 162250,
         "net_raw": 62750,
-        "net_nos": 0.062750
+        "net_nos": 0.06275
       },
       "session_net_raw": 62750,
-      "session_net_nos": 0.062750
+      "session_net_nos": 0.06275
     }
   }
 }

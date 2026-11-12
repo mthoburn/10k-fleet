@@ -17,7 +17,7 @@
     "net_raw": 1265,
     "source": "ata-delta"
   },
-  "outcome_code": "validation-error",
+  "outcome_code": "job_error",
   "engine": "vllm 0.5.4",
   "quantization": "awq-int4",
   "inference_probe": null,
@@ -36,7 +36,8 @@
     "billed_sec": 5,
     "note": "timeStart=1794446655, timeEnd=1794446660 \u2014 5 s elapsed, 1,265 raw billed (minimum charge / settlement overhead)",
     "s3_cache_signal": "unknown \u2014 container never started",
-    "cuda_signal": "unknown \u2014 container never started"
+    "cuda_signal": "unknown \u2014 container never started",
+    "outcome_code_detail": "validation-error"
   },
   "_ipfs_raw": {
     "status": "validation-error",
@@ -53,5 +54,9 @@
         }
       ]
     ]
-  }
+  },
+  "gpu_class": null,
+  "result_hash": null,
+  "cost_nos": 1265,
+  "chain_state": "COMPLETED"
 }

@@ -1,0 +1,1901 @@
+{
+  "receipt_version": "0.1.0",
+  "provider": "nosana",
+  "job_id": "C31VmBHox5BcRpiJrR1xQkWC1qAL5MPkcPdrtRphjs8n",
+  "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+  "market_name": "NVIDIA 4090 Community (COMMUNITY)",
+  "host": "2K99EF9VircbjeH4dNZp8ZKH2QbgJvPioxrPSgbNtadr",
+  "endpoint": "https://2fQjhUq8p4nPU9nE93iE7bkhhr39K6mXU8CdooBbhNQE.node.k8s.prd.nos.ci",
+  "endpoint_derivation": "bs58(sha512(\"0:8000:C31VmBHox5BcRpiJrR1xQkWC1qAL5MPkcPdrtRphjs8n\")).slice(0,44).node.k8s.prd.nos.ci",
+  "endpoint_source": "@nosana/sdk dist/utils/expose.js getExposeIdHash + @nosana/cli dist/.env.prd",
+  "posted_at": "2026-11-12T01:32:01.432Z",
+  "claimed_at": "2026-11-12T01:32:09.335Z",
+  "started_at": "2026-11-12T01:32:09.335Z",
+  "settled_at": "2026-11-12T01:41:31Z",
+  "ipfs_cid": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
+  "cost_breakdown": {
+    "deposit_raw": 455400,
+    "refund_raw": 311443,
+    "net_raw": 143957,
+    "billed_sec": 569,
+    "market_price_raw_per_sec": 253,
+    "effective_raw_per_sec": 253.0,
+    "source": "ata-delta + chain (timeEnd-timeStart=569s \u00d7 253 raw/s = 143957 raw)"
+  },
+  "outcome_code": "ok",
+  "engine": "vllm 0.5.4",
+  "quantization": "awq-int4",
+  "inference_probe": {
+    "t_healthy": "2026-11-12T01:40:29.876Z",
+    "t_healthy_ms": 500541,
+    "s3_cache_signal": "likely-fresh-pull",
+    "models_response": {
+      "object": "list",
+      "data": [
+        {
+          "id": "llama3.1",
+          "object": "model",
+          "created": 1794447630,
+          "owned_by": "vllm",
+          "root": "llama3.1",
+          "parent": null,
+          "max_model_len": 2176,
+          "permission": [
+            {
+              "id": "modelperm-4df297adb9164726997fb41893ef4f96",
+              "object": "model_permission",
+              "created": 1794447630,
+              "allow_create_engine": false,
+              "allow_sampling": true,
+              "allow_logprobs": true,
+              "allow_search_indices": false,
+              "allow_view": true,
+              "allow_fine_tuning": false,
+              "organization": "*",
+              "group": null,
+              "is_blocking": false
+            }
+          ]
+        }
+      ]
+    },
+    "warmup_latency_ms": 2251,
+    "warmup_prompt_tokens": 952,
+    "warmup_completion_tokens": 180,
+    "bench_wall_ms": 57898,
+    "readings_ok": 200,
+    "readings_attempted": 200,
+    "readings_total_target": 200,
+    "readings_per_sec": 3.4544,
+    "latency_p50_ms": 8807,
+    "latency_p95_ms": 9105,
+    "latency_p99_ms": 9110,
+    "avg_completion_tokens": 180,
+    "max_tokens_requested": 180,
+    "ignore_eos": true,
+    "ok_criterion": "completion_tokens == 180",
+    "prompt_tokens_range": "900\u20131000",
+    "watchdog_fired": false,
+    "engine": "vllm 0.5.4",
+    "quantization": "awq-int4",
+    "model": "hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4",
+    "timing_source": "local-machine-network",
+    "per_reading_results": [
+      {
+        "idx": 1,
+        "t_start_ms": 1794447632847,
+        "t_end_ms": 1794447641036,
+        "latency_ms": 8189,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 2,
+        "t_start_ms": 1794447632848,
+        "t_end_ms": 1794447641348,
+        "latency_ms": 8500,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 3,
+        "t_start_ms": 1794447632848,
+        "t_end_ms": 1794447641347,
+        "latency_ms": 8499,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 4,
+        "t_start_ms": 1794447632849,
+        "t_end_ms": 1794447641653,
+        "latency_ms": 8804,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 5,
+        "t_start_ms": 1794447632849,
+        "t_end_ms": 1794447641656,
+        "latency_ms": 8807,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 6,
+        "t_start_ms": 1794447632850,
+        "t_end_ms": 1794447641350,
+        "latency_ms": 8500,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 7,
+        "t_start_ms": 1794447632853,
+        "t_end_ms": 1794447641661,
+        "latency_ms": 8808,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 8,
+        "t_start_ms": 1794447632853,
+        "t_end_ms": 1794447641662,
+        "latency_ms": 8809,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 9,
+        "t_start_ms": 1794447632853,
+        "t_end_ms": 1794447641970,
+        "latency_ms": 9117,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 10,
+        "t_start_ms": 1794447632854,
+        "t_end_ms": 1794447641964,
+        "latency_ms": 9110,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 11,
+        "t_start_ms": 1794447632854,
+        "t_end_ms": 1794447641653,
+        "latency_ms": 8799,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 12,
+        "t_start_ms": 1794447632854,
+        "t_end_ms": 1794447641660,
+        "latency_ms": 8806,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 13,
+        "t_start_ms": 1794447632855,
+        "t_end_ms": 1794447641658,
+        "latency_ms": 8803,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 14,
+        "t_start_ms": 1794447632855,
+        "t_end_ms": 1794447641659,
+        "latency_ms": 8804,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 15,
+        "t_start_ms": 1794447632855,
+        "t_end_ms": 1794447641652,
+        "latency_ms": 8797,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 16,
+        "t_start_ms": 1794447632856,
+        "t_end_ms": 1794447641656,
+        "latency_ms": 8800,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 17,
+        "t_start_ms": 1794447632856,
+        "t_end_ms": 1794447641962,
+        "latency_ms": 9106,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 18,
+        "t_start_ms": 1794447632857,
+        "t_end_ms": 1794447641965,
+        "latency_ms": 9108,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 19,
+        "t_start_ms": 1794447632858,
+        "t_end_ms": 1794447641655,
+        "latency_ms": 8797,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 20,
+        "t_start_ms": 1794447632858,
+        "t_end_ms": 1794447641966,
+        "latency_ms": 9108,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 21,
+        "t_start_ms": 1794447632858,
+        "t_end_ms": 1794447641967,
+        "latency_ms": 9109,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 22,
+        "t_start_ms": 1794447632859,
+        "t_end_ms": 1794447641654,
+        "latency_ms": 8795,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 23,
+        "t_start_ms": 1794447632859,
+        "t_end_ms": 1794447641960,
+        "latency_ms": 9101,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 24,
+        "t_start_ms": 1794447632860,
+        "t_end_ms": 1794447641655,
+        "latency_ms": 8795,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 25,
+        "t_start_ms": 1794447632862,
+        "t_end_ms": 1794447641661,
+        "latency_ms": 8799,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 26,
+        "t_start_ms": 1794447632862,
+        "t_end_ms": 1794447641969,
+        "latency_ms": 9107,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 27,
+        "t_start_ms": 1794447632863,
+        "t_end_ms": 1794447641659,
+        "latency_ms": 8796,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 28,
+        "t_start_ms": 1794447632863,
+        "t_end_ms": 1794447641660,
+        "latency_ms": 8797,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 29,
+        "t_start_ms": 1794447632863,
+        "t_end_ms": 1794447641967,
+        "latency_ms": 9104,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 30,
+        "t_start_ms": 1794447632863,
+        "t_end_ms": 1794447641968,
+        "latency_ms": 9105,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 31,
+        "t_start_ms": 1794447632863,
+        "t_end_ms": 1794447641961,
+        "latency_ms": 9098,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 32,
+        "t_start_ms": 1794447632864,
+        "t_end_ms": 1794447641958,
+        "latency_ms": 9094,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 33,
+        "t_start_ms": 1794447641970,
+        "t_end_ms": 1794447650839,
+        "latency_ms": 8869,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 34,
+        "t_start_ms": 1794447641971,
+        "t_end_ms": 1794447650354,
+        "latency_ms": 8383,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 35,
+        "t_start_ms": 1794447641971,
+        "t_end_ms": 1794447650354,
+        "latency_ms": 8383,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 36,
+        "t_start_ms": 1794447641971,
+        "t_end_ms": 1794447650662,
+        "latency_ms": 8691,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 37,
+        "t_start_ms": 1794447641972,
+        "t_end_ms": 1794447650663,
+        "latency_ms": 8691,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 38,
+        "t_start_ms": 1794447641972,
+        "t_end_ms": 1794447650664,
+        "latency_ms": 8692,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 39,
+        "t_start_ms": 1794447641972,
+        "t_end_ms": 1794447650661,
+        "latency_ms": 8689,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 40,
+        "t_start_ms": 1794447641972,
+        "t_end_ms": 1794447650669,
+        "latency_ms": 8697,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 41,
+        "t_start_ms": 1794447641973,
+        "t_end_ms": 1794447650672,
+        "latency_ms": 8699,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 42,
+        "t_start_ms": 1794447641973,
+        "t_end_ms": 1794447650665,
+        "latency_ms": 8692,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 43,
+        "t_start_ms": 1794447641973,
+        "t_end_ms": 1794447650664,
+        "latency_ms": 8691,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 44,
+        "t_start_ms": 1794447641973,
+        "t_end_ms": 1794447650668,
+        "latency_ms": 8695,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 45,
+        "t_start_ms": 1794447641973,
+        "t_end_ms": 1794447650670,
+        "latency_ms": 8697,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 46,
+        "t_start_ms": 1794447641974,
+        "t_end_ms": 1794447650669,
+        "latency_ms": 8695,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 47,
+        "t_start_ms": 1794447641974,
+        "t_end_ms": 1794447650666,
+        "latency_ms": 8692,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 48,
+        "t_start_ms": 1794447641974,
+        "t_end_ms": 1794447650667,
+        "latency_ms": 8693,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 49,
+        "t_start_ms": 1794447641976,
+        "t_end_ms": 1794447650670,
+        "latency_ms": 8694,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 50,
+        "t_start_ms": 1794447641976,
+        "t_end_ms": 1794447650665,
+        "latency_ms": 8689,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 51,
+        "t_start_ms": 1794447641976,
+        "t_end_ms": 1794447650668,
+        "latency_ms": 8692,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 52,
+        "t_start_ms": 1794447641976,
+        "t_end_ms": 1794447650838,
+        "latency_ms": 8862,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 53,
+        "t_start_ms": 1794447641976,
+        "t_end_ms": 1794447650835,
+        "latency_ms": 8859,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 54,
+        "t_start_ms": 1794447641977,
+        "t_end_ms": 1794447650837,
+        "latency_ms": 8860,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 55,
+        "t_start_ms": 1794447641977,
+        "t_end_ms": 1794447650837,
+        "latency_ms": 8860,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 56,
+        "t_start_ms": 1794447641977,
+        "t_end_ms": 1794447650833,
+        "latency_ms": 8856,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 57,
+        "t_start_ms": 1794447641977,
+        "t_end_ms": 1794447650840,
+        "latency_ms": 8863,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 58,
+        "t_start_ms": 1794447641977,
+        "t_end_ms": 1794447650843,
+        "latency_ms": 8866,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 59,
+        "t_start_ms": 1794447641978,
+        "t_end_ms": 1794447650844,
+        "latency_ms": 8866,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 60,
+        "t_start_ms": 1794447641978,
+        "t_end_ms": 1794447650845,
+        "latency_ms": 8867,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 61,
+        "t_start_ms": 1794447641978,
+        "t_end_ms": 1794447650846,
+        "latency_ms": 8868,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 62,
+        "t_start_ms": 1794447641980,
+        "t_end_ms": 1794447650842,
+        "latency_ms": 8862,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 63,
+        "t_start_ms": 1794447641980,
+        "t_end_ms": 1794447650845,
+        "latency_ms": 8865,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 64,
+        "t_start_ms": 1794447641980,
+        "t_end_ms": 1794447650846,
+        "latency_ms": 8866,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 65,
+        "t_start_ms": 1794447650847,
+        "t_end_ms": 1794447659574,
+        "latency_ms": 8727,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 66,
+        "t_start_ms": 1794447650847,
+        "t_end_ms": 1794447659263,
+        "latency_ms": 8416,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 67,
+        "t_start_ms": 1794447650847,
+        "t_end_ms": 1794447659263,
+        "latency_ms": 8416,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 68,
+        "t_start_ms": 1794447650848,
+        "t_end_ms": 1794447659264,
+        "latency_ms": 8416,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 69,
+        "t_start_ms": 1794447650848,
+        "t_end_ms": 1794447659575,
+        "latency_ms": 8727,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 70,
+        "t_start_ms": 1794447650848,
+        "t_end_ms": 1794447659574,
+        "latency_ms": 8726,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 71,
+        "t_start_ms": 1794447650848,
+        "t_end_ms": 1794447659573,
+        "latency_ms": 8725,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 72,
+        "t_start_ms": 1794447650848,
+        "t_end_ms": 1794447659576,
+        "latency_ms": 8728,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 73,
+        "t_start_ms": 1794447650849,
+        "t_end_ms": 1794447659578,
+        "latency_ms": 8729,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 74,
+        "t_start_ms": 1794447650850,
+        "t_end_ms": 1794447659881,
+        "latency_ms": 9031,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 75,
+        "t_start_ms": 1794447650850,
+        "t_end_ms": 1794447659883,
+        "latency_ms": 9033,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 76,
+        "t_start_ms": 1794447650851,
+        "t_end_ms": 1794447659572,
+        "latency_ms": 8721,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 77,
+        "t_start_ms": 1794447650851,
+        "t_end_ms": 1794447659579,
+        "latency_ms": 8728,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 78,
+        "t_start_ms": 1794447650851,
+        "t_end_ms": 1794447659580,
+        "latency_ms": 8729,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 79,
+        "t_start_ms": 1794447650851,
+        "t_end_ms": 1794447659575,
+        "latency_ms": 8724,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 80,
+        "t_start_ms": 1794447650851,
+        "t_end_ms": 1794447659573,
+        "latency_ms": 8722,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 81,
+        "t_start_ms": 1794447650852,
+        "t_end_ms": 1794447659580,
+        "latency_ms": 8728,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 82,
+        "t_start_ms": 1794447650852,
+        "t_end_ms": 1794447659880,
+        "latency_ms": 9028,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 83,
+        "t_start_ms": 1794447650852,
+        "t_end_ms": 1794447659880,
+        "latency_ms": 9028,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 84,
+        "t_start_ms": 1794447650852,
+        "t_end_ms": 1794447659576,
+        "latency_ms": 8724,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 85,
+        "t_start_ms": 1794447650852,
+        "t_end_ms": 1794447659880,
+        "latency_ms": 9028,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 86,
+        "t_start_ms": 1794447650853,
+        "t_end_ms": 1794447659882,
+        "latency_ms": 9029,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 87,
+        "t_start_ms": 1794447650853,
+        "t_end_ms": 1794447659579,
+        "latency_ms": 8726,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 88,
+        "t_start_ms": 1794447650853,
+        "t_end_ms": 1794447659884,
+        "latency_ms": 9031,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 89,
+        "t_start_ms": 1794447650853,
+        "t_end_ms": 1794447659884,
+        "latency_ms": 9031,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 90,
+        "t_start_ms": 1794447650853,
+        "t_end_ms": 1794447659579,
+        "latency_ms": 8726,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 91,
+        "t_start_ms": 1794447650854,
+        "t_end_ms": 1794447659883,
+        "latency_ms": 9029,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 92,
+        "t_start_ms": 1794447650854,
+        "t_end_ms": 1794447659885,
+        "latency_ms": 9031,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 93,
+        "t_start_ms": 1794447650856,
+        "t_end_ms": 1794447659879,
+        "latency_ms": 9023,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 94,
+        "t_start_ms": 1794447650856,
+        "t_end_ms": 1794447659881,
+        "latency_ms": 9025,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 95,
+        "t_start_ms": 1794447650857,
+        "t_end_ms": 1794447659882,
+        "latency_ms": 9025,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 96,
+        "t_start_ms": 1794447650857,
+        "t_end_ms": 1794447659878,
+        "latency_ms": 9021,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 97,
+        "t_start_ms": 1794447659885,
+        "t_end_ms": 1794447668379,
+        "latency_ms": 8494,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 98,
+        "t_start_ms": 1794447659886,
+        "t_end_ms": 1794447668380,
+        "latency_ms": 8494,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 99,
+        "t_start_ms": 1794447659887,
+        "t_end_ms": 1794447668381,
+        "latency_ms": 8494,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 100,
+        "t_start_ms": 1794447659888,
+        "t_end_ms": 1794447668550,
+        "latency_ms": 8662,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 101,
+        "t_start_ms": 1794447659889,
+        "t_end_ms": 1794447668552,
+        "latency_ms": 8663,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 102,
+        "t_start_ms": 1794447659891,
+        "t_end_ms": 1794447668545,
+        "latency_ms": 8654,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 103,
+        "t_start_ms": 1794447659892,
+        "t_end_ms": 1794447668547,
+        "latency_ms": 8655,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 104,
+        "t_start_ms": 1794447659892,
+        "t_end_ms": 1794447668556,
+        "latency_ms": 8664,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 105,
+        "t_start_ms": 1794447659892,
+        "t_end_ms": 1794447668557,
+        "latency_ms": 8665,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 106,
+        "t_start_ms": 1794447659893,
+        "t_end_ms": 1794447668551,
+        "latency_ms": 8658,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 107,
+        "t_start_ms": 1794447659893,
+        "t_end_ms": 1794447668555,
+        "latency_ms": 8662,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 108,
+        "t_start_ms": 1794447659893,
+        "t_end_ms": 1794447668554,
+        "latency_ms": 8661,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 109,
+        "t_start_ms": 1794447659893,
+        "t_end_ms": 1794447668555,
+        "latency_ms": 8662,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 110,
+        "t_start_ms": 1794447659893,
+        "t_end_ms": 1794447668549,
+        "latency_ms": 8656,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 111,
+        "t_start_ms": 1794447659894,
+        "t_end_ms": 1794447668555,
+        "latency_ms": 8661,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 112,
+        "t_start_ms": 1794447659894,
+        "t_end_ms": 1794447668548,
+        "latency_ms": 8654,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 113,
+        "t_start_ms": 1794447659894,
+        "t_end_ms": 1794447668558,
+        "latency_ms": 8664,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 114,
+        "t_start_ms": 1794447659894,
+        "t_end_ms": 1794447668556,
+        "latency_ms": 8662,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 115,
+        "t_start_ms": 1794447659895,
+        "t_end_ms": 1794447668553,
+        "latency_ms": 8658,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 116,
+        "t_start_ms": 1794447659895,
+        "t_end_ms": 1794447668822,
+        "latency_ms": 8927,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 117,
+        "t_start_ms": 1794447659895,
+        "t_end_ms": 1794447668830,
+        "latency_ms": 8935,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 118,
+        "t_start_ms": 1794447659896,
+        "t_end_ms": 1794447668821,
+        "latency_ms": 8925,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 119,
+        "t_start_ms": 1794447659896,
+        "t_end_ms": 1794447668823,
+        "latency_ms": 8927,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 120,
+        "t_start_ms": 1794447659896,
+        "t_end_ms": 1794447668825,
+        "latency_ms": 8929,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 121,
+        "t_start_ms": 1794447659898,
+        "t_end_ms": 1794447668819,
+        "latency_ms": 8921,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 122,
+        "t_start_ms": 1794447659898,
+        "t_end_ms": 1794447668828,
+        "latency_ms": 8930,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 123,
+        "t_start_ms": 1794447659899,
+        "t_end_ms": 1794447668824,
+        "latency_ms": 8925,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 124,
+        "t_start_ms": 1794447659899,
+        "t_end_ms": 1794447668822,
+        "latency_ms": 8923,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 125,
+        "t_start_ms": 1794447659899,
+        "t_end_ms": 1794447668829,
+        "latency_ms": 8930,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 126,
+        "t_start_ms": 1794447659900,
+        "t_end_ms": 1794447668829,
+        "latency_ms": 8929,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 127,
+        "t_start_ms": 1794447659900,
+        "t_end_ms": 1794447668827,
+        "latency_ms": 8927,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 128,
+        "t_start_ms": 1794447659901,
+        "t_end_ms": 1794447668827,
+        "latency_ms": 8926,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 129,
+        "t_start_ms": 1794447668830,
+        "t_end_ms": 1794447677388,
+        "latency_ms": 8558,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 130,
+        "t_start_ms": 1794447668831,
+        "t_end_ms": 1794447677700,
+        "latency_ms": 8869,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 131,
+        "t_start_ms": 1794447668831,
+        "t_end_ms": 1794447677389,
+        "latency_ms": 8558,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 132,
+        "t_start_ms": 1794447668831,
+        "t_end_ms": 1794447677696,
+        "latency_ms": 8865,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 133,
+        "t_start_ms": 1794447668832,
+        "t_end_ms": 1794447677697,
+        "latency_ms": 8865,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 134,
+        "t_start_ms": 1794447668832,
+        "t_end_ms": 1794447677697,
+        "latency_ms": 8865,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 135,
+        "t_start_ms": 1794447668832,
+        "t_end_ms": 1794447677695,
+        "latency_ms": 8863,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 136,
+        "t_start_ms": 1794447668832,
+        "t_end_ms": 1794447677705,
+        "latency_ms": 8873,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 137,
+        "t_start_ms": 1794447668833,
+        "t_end_ms": 1794447677706,
+        "latency_ms": 8873,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 138,
+        "t_start_ms": 1794447668833,
+        "t_end_ms": 1794447677940,
+        "latency_ms": 9107,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 139,
+        "t_start_ms": 1794447668833,
+        "t_end_ms": 1794447677938,
+        "latency_ms": 9105,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 140,
+        "t_start_ms": 1794447668835,
+        "t_end_ms": 1794447677700,
+        "latency_ms": 8865,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 141,
+        "t_start_ms": 1794447668835,
+        "t_end_ms": 1794447677701,
+        "latency_ms": 8866,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 142,
+        "t_start_ms": 1794447668836,
+        "t_end_ms": 1794447677700,
+        "latency_ms": 8864,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 143,
+        "t_start_ms": 1794447668836,
+        "t_end_ms": 1794447677702,
+        "latency_ms": 8866,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 144,
+        "t_start_ms": 1794447668836,
+        "t_end_ms": 1794447677699,
+        "latency_ms": 8863,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 145,
+        "t_start_ms": 1794447668836,
+        "t_end_ms": 1794447677707,
+        "latency_ms": 8871,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 146,
+        "t_start_ms": 1794447668836,
+        "t_end_ms": 1794447677933,
+        "latency_ms": 9097,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 147,
+        "t_start_ms": 1794447668837,
+        "t_end_ms": 1794447677935,
+        "latency_ms": 9098,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 148,
+        "t_start_ms": 1794447668837,
+        "t_end_ms": 1794447677698,
+        "latency_ms": 8861,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 149,
+        "t_start_ms": 1794447668837,
+        "t_end_ms": 1794447677931,
+        "latency_ms": 9094,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 150,
+        "t_start_ms": 1794447668837,
+        "t_end_ms": 1794447677941,
+        "latency_ms": 9104,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 151,
+        "t_start_ms": 1794447668837,
+        "t_end_ms": 1794447677930,
+        "latency_ms": 9093,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 152,
+        "t_start_ms": 1794447668838,
+        "t_end_ms": 1794447677936,
+        "latency_ms": 9098,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 153,
+        "t_start_ms": 1794447668838,
+        "t_end_ms": 1794447677941,
+        "latency_ms": 9103,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 154,
+        "t_start_ms": 1794447668838,
+        "t_end_ms": 1794447677706,
+        "latency_ms": 8868,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 155,
+        "t_start_ms": 1794447668838,
+        "t_end_ms": 1794447677938,
+        "latency_ms": 9100,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 156,
+        "t_start_ms": 1794447668839,
+        "t_end_ms": 1794447677941,
+        "latency_ms": 9102,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 157,
+        "t_start_ms": 1794447668840,
+        "t_end_ms": 1794447677942,
+        "latency_ms": 9102,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 158,
+        "t_start_ms": 1794447668840,
+        "t_end_ms": 1794447677934,
+        "latency_ms": 9094,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 159,
+        "t_start_ms": 1794447668841,
+        "t_end_ms": 1794447677933,
+        "latency_ms": 9092,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 160,
+        "t_start_ms": 1794447668841,
+        "t_end_ms": 1794447677929,
+        "latency_ms": 9088,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 161,
+        "t_start_ms": 1794447677942,
+        "t_end_ms": 1794447686400,
+        "latency_ms": 8458,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 162,
+        "t_start_ms": 1794447677943,
+        "t_end_ms": 1794447686666,
+        "latency_ms": 8723,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 163,
+        "t_start_ms": 1794447677943,
+        "t_end_ms": 1794447686401,
+        "latency_ms": 8458,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 164,
+        "t_start_ms": 1794447677944,
+        "t_end_ms": 1794447686662,
+        "latency_ms": 8718,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 165,
+        "t_start_ms": 1794447677944,
+        "t_end_ms": 1794447686665,
+        "latency_ms": 8721,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 166,
+        "t_start_ms": 1794447677947,
+        "t_end_ms": 1794447686662,
+        "latency_ms": 8715,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 167,
+        "t_start_ms": 1794447677947,
+        "t_end_ms": 1794447686666,
+        "latency_ms": 8719,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 168,
+        "t_start_ms": 1794447677948,
+        "t_end_ms": 1794447686669,
+        "latency_ms": 8721,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 169,
+        "t_start_ms": 1794447677948,
+        "t_end_ms": 1794447686669,
+        "latency_ms": 8721,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 170,
+        "t_start_ms": 1794447677949,
+        "t_end_ms": 1794447686669,
+        "latency_ms": 8720,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 171,
+        "t_start_ms": 1794447677949,
+        "t_end_ms": 1794447686667,
+        "latency_ms": 8718,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 172,
+        "t_start_ms": 1794447677950,
+        "t_end_ms": 1794447686668,
+        "latency_ms": 8718,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 173,
+        "t_start_ms": 1794447677951,
+        "t_end_ms": 1794447686668,
+        "latency_ms": 8717,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 174,
+        "t_start_ms": 1794447677951,
+        "t_end_ms": 1794447686670,
+        "latency_ms": 8719,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 175,
+        "t_start_ms": 1794447677951,
+        "t_end_ms": 1794447686667,
+        "latency_ms": 8716,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 176,
+        "t_start_ms": 1794447677951,
+        "t_end_ms": 1794447686668,
+        "latency_ms": 8717,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 177,
+        "t_start_ms": 1794447677952,
+        "t_end_ms": 1794447686943,
+        "latency_ms": 8991,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 178,
+        "t_start_ms": 1794447677952,
+        "t_end_ms": 1794447686943,
+        "latency_ms": 8991,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 179,
+        "t_start_ms": 1794447677952,
+        "t_end_ms": 1794447686669,
+        "latency_ms": 8717,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 180,
+        "t_start_ms": 1794447677953,
+        "t_end_ms": 1794447686941,
+        "latency_ms": 8988,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 181,
+        "t_start_ms": 1794447677953,
+        "t_end_ms": 1794447686670,
+        "latency_ms": 8717,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 182,
+        "t_start_ms": 1794447677954,
+        "t_end_ms": 1794447686938,
+        "latency_ms": 8984,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 183,
+        "t_start_ms": 1794447677954,
+        "t_end_ms": 1794447686940,
+        "latency_ms": 8986,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 184,
+        "t_start_ms": 1794447677955,
+        "t_end_ms": 1794447686942,
+        "latency_ms": 8987,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 185,
+        "t_start_ms": 1794447677955,
+        "t_end_ms": 1794447686944,
+        "latency_ms": 8989,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 186,
+        "t_start_ms": 1794447677955,
+        "t_end_ms": 1794447686942,
+        "latency_ms": 8987,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 187,
+        "t_start_ms": 1794447677959,
+        "t_end_ms": 1794447686937,
+        "latency_ms": 8978,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 188,
+        "t_start_ms": 1794447677959,
+        "t_end_ms": 1794447686946,
+        "latency_ms": 8987,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 189,
+        "t_start_ms": 1794447677960,
+        "t_end_ms": 1794447686944,
+        "latency_ms": 8984,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 190,
+        "t_start_ms": 1794447677960,
+        "t_end_ms": 1794447686945,
+        "latency_ms": 8985,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 191,
+        "t_start_ms": 1794447677960,
+        "t_end_ms": 1794447686947,
+        "latency_ms": 8987,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 192,
+        "t_start_ms": 1794447677961,
+        "t_end_ms": 1794447686945,
+        "latency_ms": 8984,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 193,
+        "t_start_ms": 1794447686947,
+        "t_end_ms": 1794447690444,
+        "latency_ms": 3497,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 194,
+        "t_start_ms": 1794447686949,
+        "t_end_ms": 1794447690468,
+        "latency_ms": 3519,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 195,
+        "t_start_ms": 1794447686949,
+        "t_end_ms": 1794447690724,
+        "latency_ms": 3775,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 196,
+        "t_start_ms": 1794447686949,
+        "t_end_ms": 1794447690722,
+        "latency_ms": 3773,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 197,
+        "t_start_ms": 1794447686950,
+        "t_end_ms": 1794447690723,
+        "latency_ms": 3773,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 198,
+        "t_start_ms": 1794447686950,
+        "t_end_ms": 1794447690721,
+        "latency_ms": 3771,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 199,
+        "t_start_ms": 1794447686950,
+        "t_end_ms": 1794447690719,
+        "latency_ms": 3769,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      },
+      {
+        "idx": 200,
+        "t_start_ms": 1794447686950,
+        "t_end_ms": 1794447690743,
+        "latency_ms": 3793,
+        "prompt_tokens": 952,
+        "completion_tokens": 180,
+        "ok": true
+      }
+    ]
+  },
+  "_job_def_source": "https://learn.nosana.com/inference/examples/vllm.html (verbatim, Llama 3.1 8B AWQ 4 section)",
+  "_ipfs_raw": {
+    "status": "success",
+    "startTime": 1794447125041,
+    "endTime": 1794447696218,
+    "opStates": [],
+    "note": "opStates empty \u2014 service-mode job; probe ran from local machine against exposed endpoint, not inside container. status=success confirms node settled cleanly.",
+    "errors": [
+      "Failed to publish the job result: fetch failed"
+    ]
+  },
+  "chain_state": "COMPLETED",
+  "gpu_class": null,
+  "result_hash": null,
+  "cost_nos": 143957
+}
