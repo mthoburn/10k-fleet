@@ -170,42 +170,92 @@ fi
 # Offload line from server log — info only; not all builds print it
 OFFLOAD_LINE=\$(grep "offloaded.*layers to GPU" /tmp/server.log 2>/dev/null | tail -1 || echo "")
 
-# ── 6. Write JSON payload ─────────────────────────────────────────────────────
-# Actual prompt token count comes from llama.cpp's tokens_evaluated per response.
+# ── 6. Stream server log to stderr live ──────────────────────────────────────
+# tail -F follows the file even as the server appends; killed with the server.
+tail -F /tmp/server.log >&2 &
+TAIL_PID=\$!
+
+# ── 7. Write JSON payload ─────────────────────────────────────────────────────
 cat > /tmp/payload.json << 'PAYLOAD_END'
 ${PAYLOAD_JSON}
 PAYLOAD_END
 
-# ── 7. Run 200 Readings in batches of 32 ─────────────────────────────────────
+# ── 8. Single-reading warm-up: time one request before the full batch ─────────
+>&2 echo "[probe] warm-up single reading start ms=\$(date +%s%3N)"
+curl -sf -X POST http://127.0.0.1:8080/completion \\
+  -H "Content-Type: application/json" \\
+  -d @/tmp/payload.json \\
+  -o /tmp/out_warmup.json
+T_WARMUP_DONE=\$(date +%s%3N)
+WARMUP_TP=\$(awk -F'"tokens_predicted":' 'NF>1{split(\$2,a,","); gsub(/[^0-9]/,"",a[1]); print a[1]; exit}' /tmp/out_warmup.json 2>/dev/null || echo "0")
+>&2 echo "[probe] single reading ms=\$T_WARMUP_DONE tokens_predicted=\$WARMUP_TP"
+if [ "\$WARMUP_TP" != "180" ]; then
+  >&2 echo "[probe] FATAL: warm-up reading returned tokens_predicted=\$WARMUP_TP (expected 180)"
+  >&2 echo "[probe] server log tail (last 40 lines):"
+  >&2 tail -40 /tmp/server.log
+  kill "\$SRV_PID" "\$TAIL_PID" 2>/dev/null || true
+  exit 1
+fi
+
+# ── 9. Watchdog: kill benchmark if it exceeds 480 s ──────────────────────────
+# Fires before the 1800 s platform timeout; ensures we always get diagnostics.
+BENCH_WATCHDOG_SECS=480
+BENCH_DONE_FLAG=/tmp/bench_done
+rm -f "\$BENCH_DONE_FLAG"
+
+(
+  sleep \$BENCH_WATCHDOG_SECS
+  if [ ! -f "\$BENCH_DONE_FLAG" ]; then
+    >&2 echo "[probe] WATCHDOG: benchmark exceeded \${BENCH_WATCHDOG_SECS} s — killing"
+    kill -TERM \$\$ 2>/dev/null || true
+  fi
+) &
+WATCHDOG_PID=\$!
+
+# ── 10. Run 200 Readings in batches of 32 ────────────────────────────────────
+# Each request logs its own completion line before the batch-done summary.
 T_BENCH_START=\$(date +%s%3N)
 >&2 echo "[probe] benchmark start ms=\$T_BENCH_START"
+
+BENCH_KILLED=0
+trap 'BENCH_KILLED=1' TERM
+
+run_reading() {
+  local batch_id=\$1 i=\$2
+  local out="/tmp/out_\${batch_id}_\${i}.json"
+  curl -sf -X POST http://127.0.0.1:8080/completion \\
+    -H "Content-Type: application/json" \\
+    -d @/tmp/payload.json \\
+    -o "\$out"
+  local tp
+  tp=\$(awk -F'"tokens_predicted":' 'NF>1{split(\$2,a,","); gsub(/[^0-9]/,"",a[1]); print a[1]; exit}' "\$out" 2>/dev/null || echo "0")
+  >&2 echo "[probe] reading \${batch_id}/\${i} done ms=\$(date +%s%3N) tokens_predicted=\$tp"
+}
 
 run_batch() {
   local batch_id=\$1 count=\$2
   for i in \$(seq 1 \$count); do
-    curl -sf -X POST http://127.0.0.1:8080/completion \\
-      -H "Content-Type: application/json" \\
-      -d @/tmp/payload.json \\
-      -o "/tmp/out_\${batch_id}_\${i}.json" &
+    run_reading "\$batch_id" "\$i" &
   done
   wait
   >&2 echo "[probe] batch \$batch_id done (\$count reqs)"
 }
 
-run_batch 1 32
-run_batch 2 32
-run_batch 3 32
-run_batch 4 32
-run_batch 5 32
-run_batch 6 32
-run_batch 7 8
+run_batch 1 32; [ "\$BENCH_KILLED" -eq 1 ] && { >&2 echo "[probe] WATCHDOG fired after batch 1"; T_BENCH_END=\$(date +%s%3N); } || true
+[ "\$BENCH_KILLED" -eq 0 ] && run_batch 2 32 || true
+[ "\$BENCH_KILLED" -eq 0 ] && run_batch 3 32 || true
+[ "\$BENCH_KILLED" -eq 0 ] && run_batch 4 32 || true
+[ "\$BENCH_KILLED" -eq 0 ] && run_batch 5 32 || true
+[ "\$BENCH_KILLED" -eq 0 ] && run_batch 6 32 || true
+[ "\$BENCH_KILLED" -eq 0 ] && run_batch 7 8  || true
 
 T_BENCH_END=\$(date +%s%3N)
->&2 echo "[probe] benchmark done in \$(( (T_BENCH_END - T_BENCH_START) / 1000 ))s"
+touch "\$BENCH_DONE_FLAG"
+kill "\$WATCHDOG_PID" 2>/dev/null || true
 
-# ── 8. Count real successes and extract per-response token counts ─────────────
-# A success = output file exists and tokens_predicted == 180.
-# tokens_evaluated = actual prompt token count (llama.cpp's own tokeniser).
+>&2 echo "[probe] benchmark end ms=\$T_BENCH_END elapsed=\$(( (T_BENCH_END - T_BENCH_START) / 1000 ))s"
+
+# ── 11. Collect results (partial OK if watchdog fired) ───────────────────────
 SUCCESS_COUNT=0
 SUM_TOKENS_EVALUATED=0
 
@@ -224,34 +274,37 @@ for b in 1 2 3 4 5 6 7; do
   done
 done
 
-if [ "\$SUCCESS_COUNT" -lt 200 ]; then
-  >&2 echo "[probe] FATAL: only \$SUCCESS_COUNT/200 Readings completed with tokens_predicted=180"
-  exit 1
-fi
-MEAN_TOKENS_EVALUATED=\$((SUM_TOKENS_EVALUATED / SUCCESS_COUNT))
->&2 echo "[probe] SUCCESS_COUNT=\$SUCCESS_COUNT MEAN_TOKENS_EVALUATED=\$MEAN_TOKENS_EVALUATED"
+MEAN_TOKENS_EVALUATED=0
+[ "\$SUCCESS_COUNT" -gt 0 ] && MEAN_TOKENS_EVALUATED=\$((SUM_TOKENS_EVALUATED / SUCCESS_COUNT))
+>&2 echo "[probe] completed \$SUCCESS_COUNT/200 Readings MEAN_TOKENS_EVALUATED=\$MEAN_TOKENS_EVALUATED"
 
-# ── 9. Extract 3 full sample completions ─────────────────────────────────────
-# sed extracts text between "content":" and ","stop":, then unescapes \n → space.
-# A "full" extraction — no artificial char limit beyond the JSON field boundary.
-# May truncate at embedded quote in content (prose text; unlikely for 180 tok completions).
+# If watchdog fired, dump server log tail + exit non-zero after emitting JSON
+if [ "\$BENCH_KILLED" -eq 1 ]; then
+  >&2 echo "[probe] PARTIAL: watchdog fired — \$SUCCESS_COUNT/200 Readings completed"
+  >&2 echo "[probe] server log tail (last 60 lines):"
+  >&2 tail -60 /tmp/server.log
+fi
+
+# ── 12. Extract 3 sample completions ─────────────────────────────────────────
 get_sample() {
   sed -n 's/.*"content":"\\(.*\\)","stop":.*/\\1/p' "\$1" 2>/dev/null \\
     | sed 's/\\\\n/ /g; s/\\\\t/ /g; s/\\\\"/'"'"'/g' \\
     | tr -d '\\r\\n' || echo ""
 }
-S1=\$(get_sample /tmp/out_1_1.json)
-S2=\$(get_sample /tmp/out_1_2.json)
-S3=\$(get_sample /tmp/out_1_3.json)
+# Prefer batch 1 outputs; fall back to warm-up if batch 1 didn't complete
+S1=\$(get_sample /tmp/out_1_1.json 2>/dev/null || get_sample /tmp/out_warmup.json)
+S2=\$(get_sample /tmp/out_1_2.json 2>/dev/null || echo "")
+S3=\$(get_sample /tmp/out_1_3.json 2>/dev/null || echo "")
 
-kill "\$SRV_PID" 2>/dev/null || true
+kill "\$SRV_PID" "\$TAIL_PID" 2>/dev/null || true
 
-# ── 10. JSON escape helper ────────────────────────────────────────────────────
+# ── 13. JSON escape helper ────────────────────────────────────────────────────
 json_esc() {
   printf '%s' "\$1" | sed 's/\\\\/\\\\\\\\/g; s/"/\\\\"/g' | tr -d '\\r\\n'
 }
 
-# ── 11. Emit single JSON line to stdout ───────────────────────────────────────
+# ── 14. Emit single JSON line to stdout ───────────────────────────────────────
+# completed_readings < 200 signals PARTIAL run to the TypeScript layer.
 printf '{"probe":"inference-throughput","t_job_start_ms":%s,"t_download_done_ms":%s,"t_server_start_ms":%s,"t_server_ready_ms":%s,"t_bench_start_ms":%s,"t_bench_end_ms":%s,"total_wall_ms":%s,"steady_state_ms":%s,"completed_readings":%s,"mean_tokens_evaluated":%s,"tokens_predicted_all_180":true,"gpu_mem_used_mib":%s,"offload_line":"%s","list_devices":"%s","nvidia_smi":"%s","driver_version":"%s","image_cuda_version":"%s","model":"Meta-Llama-3.1-8B-Instruct","engine":"llama.cpp","quantisation":"Q4_K_M","server_flags":"-ngl 99 -np 32 -c 40960","n_predict":180,"ignore_eos":true,"sample_1":"%s","sample_2":"%s","sample_3":"%s"}\\n' \\
   "\$T_JOB_START" "\$T_DOWNLOAD_DONE" "\$T_SERVER_START" "\$T_SERVER_READY" \\
   "\$T_BENCH_START" "\$T_BENCH_END" \\
@@ -266,6 +319,9 @@ printf '{"probe":"inference-throughput","t_job_start_ms":%s,"t_download_done_ms"
   "\$(json_esc "\$S1")" \\
   "\$(json_esc "\$S2")" \\
   "\$(json_esc "\$S3")"
+
+# Non-zero exit if partial so the receipt records outcome_code=job_error (not ok)
+[ "\$BENCH_KILLED" -eq 0 ] && [ "\$SUCCESS_COUNT" -eq 200 ] || exit 1
 `;
 
 export const INFERENCE_THROUGHPUT_JOB_DEF = {
