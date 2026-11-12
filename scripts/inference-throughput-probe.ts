@@ -181,12 +181,22 @@ ${PAYLOAD_JSON}
 PAYLOAD_END
 
 # ── 8. Single-reading warm-up: time one request before the full batch ─────────
+# --max-time 300: if the server accepts but never responds, we exit cleanly
+# rather than waiting for the 1800 s platform kill (which would cost full deposit).
 >&2 echo "[probe] warm-up single reading start ms=\$(date +%s%3N)"
-curl -sf -X POST http://127.0.0.1:8080/completion \\
+WARMUP_CURL_EXIT=0
+curl -sf --max-time 300 -X POST http://127.0.0.1:8080/completion \\
   -H "Content-Type: application/json" \\
   -d @/tmp/payload.json \\
-  -o /tmp/out_warmup.json
+  -o /tmp/out_warmup.json || WARMUP_CURL_EXIT=\$?
 T_WARMUP_DONE=\$(date +%s%3N)
+if [ "\$WARMUP_CURL_EXIT" -ne 0 ]; then
+  >&2 echo "[probe] FATAL: warm-up curl failed (exit \$WARMUP_CURL_EXIT, e.g. 28=timeout, 7=refused)"
+  >&2 echo "[probe] server log tail (last 40 lines):"
+  >&2 tail -40 /tmp/server.log
+  kill "\$SRV_PID" "\$TAIL_PID" 2>/dev/null || true
+  exit 1
+fi
 WARMUP_TP=\$(awk -F'"tokens_predicted":' 'NF>1{split(\$2,a,","); gsub(/[^0-9]/,"",a[1]); print a[1]; exit}' /tmp/out_warmup.json 2>/dev/null || echo "0")
 >&2 echo "[probe] single reading ms=\$T_WARMUP_DONE tokens_predicted=\$WARMUP_TP"
 if [ "\$WARMUP_TP" != "180" ]; then
@@ -223,13 +233,17 @@ trap 'BENCH_KILLED=1' TERM
 run_reading() {
   local batch_id=\$1 i=\$2
   local out="/tmp/out_\${batch_id}_\${i}.json"
-  curl -sf -X POST http://127.0.0.1:8080/completion \\
+  # --max-time 470: each request times out before the 480 s watchdog fires,
+  # so no single hung curl can outlive the watchdog.
+  # Capture exit code without triggering errexit in this subshell.
+  local curl_exit=0
+  curl -sf --max-time 470 -X POST http://127.0.0.1:8080/completion \\
     -H "Content-Type: application/json" \\
     -d @/tmp/payload.json \\
-    -o "\$out"
+    -o "\$out" || curl_exit=\$?
   local tp
   tp=\$(awk -F'"tokens_predicted":' 'NF>1{split(\$2,a,","); gsub(/[^0-9]/,"",a[1]); print a[1]; exit}' "\$out" 2>/dev/null || echo "0")
-  >&2 echo "[probe] reading \${batch_id}/\${i} done ms=\$(date +%s%3N) tokens_predicted=\$tp"
+  >&2 echo "[probe] reading \${batch_id}/\${i} done ms=\$(date +%s%3N) tokens_predicted=\$tp curl_exit=\$curl_exit"
 }
 
 run_batch() {
@@ -237,7 +251,10 @@ run_batch() {
   for i in \$(seq 1 \$count); do
     run_reading "\$batch_id" "\$i" &
   done
-  wait
+  # wait || true: when the watchdog sends TERM, bash delivers the signal to the
+  # trap handler (setting BENCH_KILLED=1) and wait returns 143. Without || true,
+  # set -e would kill the script here before the PARTIAL path runs.
+  wait || true
   >&2 echo "[probe] batch \$batch_id done (\$count reqs)"
 }
 
