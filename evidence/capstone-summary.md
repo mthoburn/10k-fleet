@@ -70,6 +70,8 @@ NOS price: $0.4026 (CoinGecko 2026-11-11, **ESTIMATE**).
 
 All extrapolations labelled ESTIMATE. See `evidence/nosana-priced-demand.md` for methodology and caveats.
 
+> **Samples are raw and unedited**, exactly as returned by the job — including visible defects: one echoes its prompt scaffolding ("Here is a Reading for the wake…"), two stop mid-sentence (the probe harness enforces a fixed 180-token completion), and ecological specifics are not fact-checked (the 8B model invents plausible detail). This is deliberate: the capstone demonstrates the COORDINATION LOOP and its economics, not Reading quality. Production Readings run through Eden's Reading pipeline (archetypes, guardrails, review), which this demo intentionally bypassed. Raw output is shown because this evidence ladder does not curate.
+
 ## Sample Readings
 
 ### Reading 1 — Ceratias holboelli / Earthquake
@@ -116,7 +118,7 @@ Note: The Reading assesses the impact of the earthquake on the copepod Clausocal
 
 - **DEMONSTRATION:** no Reading records were written to production tables.
 - **190 wakes vs 178,757 in rung 4 — these count different things.** 190 is the number of individually recorded `wake_decisions` rows written during the coordinator's non-shadow phases (Oct 12 – Nov 9, 2026). The 178,757 in rung 4 are shadow-mode aggregate counters (`event_summaries.woken_shadow`), which by design do not write per-twin rows — they count wakes that would have fired had shadow mode been off. This batch uses every per-twin record that exists; at scale, shadow counters become per-twin records and batches grow accordingly.
-- **Quality not evaluated.** The 8B AWQ INT4 model generates plausible ecological text but quality has not been reviewed by a domain expert.
+- **Quality not evaluated** — and visibly imperfect in the raw samples above (prompt echo, token-limit truncation, unverified ecological specifics). Reading quality is a separate, pipeline-level concern.
 - **Same caveats as probe** (single node, single run, one community 4090): see `evidence/nosana-priced-demand.md#caveats`.
 
 ---

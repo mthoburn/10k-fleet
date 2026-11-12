@@ -1,6 +1,6 @@
 # evidence/
 
-Evidence for the 10k coordinator Nosana grant application: live pilot data, a production shadow run, and a synthetic-at-scale benchmark. No mocked or concept items.
+Evidence for the 10k coordinator Nosana grant application: live pilot data, a production shadow run, a synthetic-at-scale benchmark, the full-fleet registration, Nosana inference measurements and an end-to-end demonstration run. No mocked or concept items; the rung 5 run is labelled DEMONSTRATION because its Readings were not written to production.
 
 **On verification:** the notes below show the exact queries and sources each file was produced from — for transparency. Several require production access reviewers will not have; the team will re-run any of them on request. The GPU receipts in `../examples/` verify independently against the chain.
 
@@ -67,7 +67,7 @@ Per-ecoregion count of all render-eligible images (no per-region cap). 591 ecore
 ---
 
 ### `ladder-summary.md`
-Four-rung narrative with all numbers: pilot live fleet, shadow run, scale test and full-fleet registration.
+Five-rung narrative with all numbers: pilot live fleet, shadow run, scale test, full-fleet registration and the end-to-end demonstration.
 
 ---
 
@@ -80,6 +80,18 @@ Rung 4: the 9 Nov 2026 registration of 580,551 twins across 594 ecoregions in `e
 Rung 4 raw export for `eden-prod`: every event since registration finished (2026-11-09 16:47:36 UTC), queried 2026-11-10 16:32 UTC. 35 events, one row each, with per-event wakes and the coordinator's shadow cost estimate. Totals: 178,757 wakes recorded, 0 live wakes, 0 jobs, $0 spend. `shadow_est_usd` ($2,413.22) is an **estimate** of model spend had every wake been a paid Reading, not a measured cost. Per-event rows sum exactly to the totals.
 
 **Provenance (production access — re-run on request):** `coordinator.event_summaries`, `coordinator.jobs` and `coordinator.lineage` for `namespace = 'eden-prod'`, `evaluated_at >= '2026-11-09T16:47:36Z'`.
+
+---
+
+### `capstone-summary.md` · `capstone-receipt.json` · `capstone-readings.json` · `capstone-wakes.json`
+Rung 5, **end-to-end demonstrated**: real fleet wakes to Readings on decentralised compute, chain-reconciled, $0.0255. 190 real wake records from `eden-prod` (pulled live 2026-11-12) sent to one Nosana vLLM job (`ECb5Way3…`, NVIDIA 4090 Community); 190/190 Readings at 7.58 Readings/sec; net 63,404 raw (0.0634 NOS ≈ $0.0255), reconciled from the chain's billed seconds. **DEMONSTRATION:** Readings are evidence files, not written to production. The 190 per-twin wake records and rung 4's 178,757 shadow counters count different things; see the reconciliation note in `capstone-summary.md`. Reading quality not evaluated.
+
+**Provenance (production access — re-run on request):** `coordinator.wake_decisions` JOIN `coordinator.twins` JOIN `coordinator.events` JOIN eden-prod `unified_events` / `event_spawns` / `botanical_entities`. The receipt verifies against the chain.
+
+---
+
+### `nosana-priced-demand.md` · `inference-probe-log.md` · `inference-throughput-receipt-*.json`
+Nosana inference throughput probe (vLLM, Llama 3.1 8B AWQ INT4, 952-token prompts): 3.45 Readings/sec, and the ESTIMATE of GPU-hours, NOS and USD for rung 4's first day of wakes, with caveats. `inference-probe-log.md` lists all 9 probe jobs (8 FAILED receipts kept) with per-job cost.
 
 ---
 
