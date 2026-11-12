@@ -10,7 +10,7 @@
   "claimed_at": "2026-11-12T16:06:39.363Z",
   "started_at": "2026-11-12T16:06:39.363Z",
   "settled_at": "2026-11-12T16:10:35.060Z",
-  "result_hash": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
+  "result_hash": null,
   "ipfs_cid": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
   "cost_nos": 63404,
   "chain_state": "COMPLETED",

@@ -115,7 +115,7 @@ Note: The Reading assesses the impact of the earthquake on the copepod Clausocal
 ## Caveats
 
 - **DEMONSTRATION:** no Reading records were written to production tables.
-- **190 wakes = all coordinator history to date.** The fleet registered ~580k twins but active wake policies are early-stage; 190 wakes across 4 events is the full production record. At scale the batch per event would be much larger.
+- **190 wakes vs 178,757 in rung 4 — these count different things.** 190 is the number of individually recorded `wake_decisions` rows written during the coordinator's non-shadow phases (Oct 12 – Nov 9, 2026). The 178,757 in rung 4 are shadow-mode aggregate counters (`event_summaries.woken_shadow`), which by design do not write per-twin rows — they count wakes that would have fired had shadow mode been off. This batch uses every per-twin record that exists; at scale, shadow counters become per-twin records and batches grow accordingly.
 - **Quality not evaluated.** The 8B AWQ INT4 model generates plausible ecological text but quality has not been reviewed by a domain expert.
 - **Same caveats as probe** (single node, single run, one community 4090): see `evidence/nosana-priced-demand.md#caveats`.
 
