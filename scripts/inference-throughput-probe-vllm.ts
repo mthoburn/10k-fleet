@@ -114,10 +114,13 @@ const PROMPT_MAX_TOKENS  = 1_000;
 // NOS mint for ATA balance checks
 const NOS_MINT = 'nosXBVoaCTtYdLvKY6Csb4AC8JCdQKKAaWYtx2ZMoo7';
 
-// ── Prompt (~950 tokens by char/4 estimate; exact count verified at warm-up) ─
-// Identical to the original llama.cpp probe's sensor-report prompt.
-// char/4 estimate: 3854 chars / 4 ≈ 964 tokens. Warm-up aborts if
-// usage.prompt_tokens is outside 900–1,000.
+// ── Prompt — 951 tokens without BOS, 952 with BOS ───────────────────────────
+// Measured with hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4 tokenizer.json
+// via the `tokenizers` Python package (Tokenizer.from_file, add_special_tokens=True/False).
+// vLLM reports usage.prompt_tokens including BOS → expect 952.
+// Based on the original llama.cpp probe's sensor-report prompt, padded with a
+// Hydrological Data paragraph (+130 tokens) to reach range.
+// Warm-up aborts if usage.prompt_tokens is outside 900–1,000.
 const PROMPT =
   'You are an expert ecological intelligence system tasked with interpreting environmental sensor data and generating comprehensive assessments of natural phenomena for conservation management authorities. ' +
   'Sensor Report ID: ECO-2026-11-10-047. Location: Pacific Northwest Temperate Rainforest Zone. Coordinates: 47.6062 N, 122.3321 W. Elevation: 847 meters above sea level. Timestamp: 2026-11-10T14:32:17Z. ' +
@@ -131,6 +134,7 @@ const PROMPT =
   'Epiphyte coverage measured at 68 percent of available substrate area including Selaginella oregana, Lobaria pulmonaria lichen colonies, and Polypodium glycyrrhiza. Mycorrhizal network activity index currently at 7.2 on a scale of 10 based on soil carbon dioxide efflux mapping and stable isotope tracer measurements. Phenological stage classified as late autumn senescence entering pre-dormancy transition. ' +
   'Anomaly Flags requiring immediate professional assessment: Elevated soil carbon dioxide efflux detected at 18 percent above established seasonal baseline. Partial structural collapse of aerial root mass identified in northwest monitoring sector grid squares G7 through G9. Unusual bioluminescence phenomena reported by field observer at 02:17 local time. Accelerometer array shows asymmetric mechanical stress patterns in root zone suggesting subsurface hydrological change. ' +
   'Historical Context: This site was established as a permanent long-term ecological research station in 1987. Previous events with similar multi-sensor signatures were recorded on 1991-03-15, 2003-07-22, and 2019-11-04. Carbon sequestration rate estimated at 4.2 tonnes of carbon dioxide equivalent per hectare per year. ' +
+  'Hydrological Data from stream gauges and groundwater monitoring wells: Stream flow rate in primary drainage channel measured at 2.84 cubic meters per second, representing 134 percent of seasonal median. Groundwater table depth recorded at 0.73 meters below surface across upslope monitoring transect. Dissolved oxygen in stream at 10.2 milligrams per liter. Turbidity elevated at 4.8 nephelometric turbidity units following recent precipitation events. Canopy interception estimated at 22 percent of gross precipitation based on throughfall collectors. Atmospheric carbon dioxide concentration measured at 418.3 parts per million at canopy height sensor array. ' +
   'Task: Provide a comprehensive ecological assessment including primary phenomena identification, contributing environmental factors, expected ecological cascade effects, recommended monitoring protocols for the next 30 and 90 day periods, and specific conservation management actions suitable for immediate implementation.';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
