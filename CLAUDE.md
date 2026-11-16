@@ -25,3 +25,6 @@ This file is loaded by every Claude Code session in this repo. Follow it without
 - All receipt files validate against their schema; run the test suite and report counts.
 - Close every background shell; confirm zero remain.
 - npm publish and version tags only on Mark's explicit go.
+
+## Review
+- PRs in this repo merge only after sup's review (sup = the Eden reviewer, Claude web).
