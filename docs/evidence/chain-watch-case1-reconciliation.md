@@ -15,9 +15,30 @@ the on-chain NOS net below.
 | service_url_host | `55fe7fvawrkwwzbshrxfq5ybaxym2nyiypbftuxada9q.node.k8s.prd.nos.ci` |
 | post_tx | `5GHBgaQCTDDPoDA5Du7SCAE1Crv3oxVFyRtqJpTbW3SK3NfXbQbhHkSQK68RDtbWXfXZa6VFpoPY8L8W7b26ePjt` |
 | end_tx | `2iy71Q9SpLzLJ9xB9uedUgM2z5svQPFxDwRVVjPt54srZFspw2mvTzH8Ttw3pVN79gZjgY54tZyogfDB6y7mo1X9` |
-| explorer_job_url | https://explorer.nosana.io/jobs/GYxWJKo86rXAuTHiJ6sV4bA7huYXzPHUfHnAtiisEorh |
+| explorer_job_url | https://explorer.nosana.io/jobs/GYxWJKo86rXAuTHiJ6sV4bA7huYXzPHUfHnAtiisEorh (secondary; Nosana explorer does not resolve Ended jobs at this path) |
 
 Receipt's `nosana` block matches the posted job (`job_address` and `post_tx` identical).
+
+## Verifiable pointers (headline)
+
+The Nosana explorer `/jobs/` route does not resolve for Ended jobs — expected, not
+a failure. The headline verification is the Solana mainnet tx + job account, both
+permanent:
+
+- Post tx (Solana):
+  - https://explorer.solana.com/tx/5GHBgaQCTDDPoDA5Du7SCAE1Crv3oxVFyRtqJpTbW3SK3NfXbQbhHkSQK68RDtbWXfXZa6VFpoPY8L8W7b26ePjt
+  - https://solscan.io/tx/5GHBgaQCTDDPoDA5Du7SCAE1Crv3oxVFyRtqJpTbW3SK3NfXbQbhHkSQK68RDtbWXfXZa6VFpoPY8L8W7b26ePjt
+- Job account (Solana):
+  - https://explorer.solana.com/address/GYxWJKo86rXAuTHiJ6sV4bA7huYXzPHUfHnAtiisEorh
+  - https://solscan.io/account/GYxWJKo86rXAuTHiJ6sV4bA7huYXzPHUfHnAtiisEorh
+- End tx (Solana):
+  - https://explorer.solana.com/tx/2iy71Q9SpLzLJ9xB9uedUgM2z5svQPFxDwRVVjPt54srZFspw2mvTzH8Ttw3pVN79gZjgY54tZyogfDB6y7mo1X9
+
+The receipt's `explorer_job_url` is retained as a cosmetic/secondary field. The
+authoritative reviewer checks are `post_tx` and `job_address` against Solana.
+
+Grant/writeup copy: "ran on a verifiable Nosana job — posting transaction on Solana
+mainnet", linking the Solana tx. Never "proof of computation".
 
 ## Wallets and accounts
 
