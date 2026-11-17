@@ -1,0 +1,210 @@
+{
+  "generated_at_utc": "2026-11-17T15:26:12.128434Z",
+  "purpose": "Per-event golden decode fixtures for Issue D (on-chain event watcher). Each entry pins a known historical tx/log to the expected subject-wallet the decoder must produce. CI compares decode(fixture) == expected_wallet.",
+  "decode_paths": {
+    "topics1": "address from topics[1] (last 20 bytes). Used when the event's address param is `indexed`.",
+    "data_word0": "address from the first 32-byte word of data (last 20 bytes). Used when the event's address param is non-indexed.",
+    "trongrid_abi_named_param": "read the parameter by its ABI name from TronGrid's decoded `result` object. Position-free; works for all Tron events given a correct ABI vendoring."
+  },
+  "fixtures": [
+    {
+      "chain": "eth",
+      "contract": "ETH_USDT",
+      "contract_address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "event": "AddedBlackList(address)",
+      "topic0": "0x42e160154868087d6bfdc0ca23d96a1c1cfa32f1b72ba9ba27b69b98a0d819dc",
+      "tx_hash": "0x17ce88e3e2417f6c13db93f619423cc4c5f51e89660587631dc34c823fac54a8",
+      "block": 4638805,
+      "log_index": 65,
+      "topics_count": 1,
+      "data_length_hex": 64,
+      "expected_wallet": "0x9faf5515f177f3a8a845d48c19032b33cc54c09c",
+      "decode_path": "data_word0",
+      "note": "golden fixture: decoder must yield expected_wallet"
+    },
+    {
+      "chain": "eth",
+      "contract": "ETH_USDT",
+      "contract_address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "event": "RemovedBlackList(address)",
+      "topic0": "0xd7e9ec6e6ecd65492dce6bf513cd6867560d49544421d0783ddf06e76c24470c",
+      "tx_hash": "0x520a66112467b4b79016c2a62658b56e8f78049bae8bf6f4ce4bf39ec2d75ba8",
+      "block": 4638882,
+      "log_index": 87,
+      "topics_count": 1,
+      "data_length_hex": 64,
+      "expected_wallet": "0x9faf5515f177f3a8a845d48c19032b33cc54c09c",
+      "decode_path": "data_word0",
+      "note": "golden fixture: decoder must yield expected_wallet"
+    },
+    {
+      "chain": "eth",
+      "contract": "ETH_USDT",
+      "contract_address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "event": "DestroyedBlackFunds(address,uint256)",
+      "topic0": "0x61e6e66b0d6339b2980aecc6ccc0039736791f0ccde9ed512e789a7fbdd698c6",
+      "tx_hash": "0x7e71021f951ee3210c126b54026832c6429aa9879841d7e14d911888a5ccb7c9",
+      "block": 4638848,
+      "log_index": 6,
+      "topics_count": 1,
+      "data_length_hex": 128,
+      "expected_wallet": "0x9faf5515f177f3a8a845d48c19032b33cc54c09c",
+      "decode_path": "data_word0",
+      "note": "golden fixture: decoder must yield expected_wallet"
+    },
+    {
+      "chain": "eth",
+      "contract": "ETH_USDC",
+      "contract_address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "event": "Blacklisted(address)",
+      "topic0": "0xffa4e6181777692565cf28528fc88fd1516ea86b56da075235fa575af6a4b855",
+      "tx_hash": "0x15cbde1b9bf285db50e22eeff1a7d04ea267dd94726df8ecabdb4cb6c2b590cb",
+      "block": 10274701,
+      "log_index": 78,
+      "topics_count": 2,
+      "data_length_hex": 0,
+      "expected_wallet": "0xaa05f7c7eb9af63d6cc03c36c4f4ef6c37431ee0",
+      "decode_path": "topics1",
+      "note": "golden fixture: decoder must yield expected_wallet"
+    },
+    {
+      "chain": "eth",
+      "contract": "ETH_USDC",
+      "contract_address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "event": "UnBlacklisted(address)",
+      "topic0": "0x117e3210bb9aa7d9baff172026820255c6f6c30ba8999d1c2fd88e2848137c4e",
+      "tx_hash": "0xde4f3db710b2bdd9f696a61b26ec2e9ec4c89716394bc9fcd88d82c92b448488",
+      "block": 13864421,
+      "log_index": 32,
+      "topics_count": 2,
+      "data_length_hex": 0,
+      "expected_wallet": "0x35663b9a8e4563eefdf852018548b4947b20fce6",
+      "decode_path": "topics1",
+      "note": "golden fixture: decoder must yield expected_wallet"
+    },
+    {
+      "chain": "eth",
+      "contract": "BUSD",
+      "contract_address": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+      "event": "AddressFrozen(address)",
+      "topic0": "0x90811a8edd3b3c17eeaefffc17f639cc69145d41a359c9843994dc2538203690",
+      "tx_hash": "0x163de4667da540e36e94182ea724220c1441f4f2cd855da184aacfa99cca01ce",
+      "block": 9815715,
+      "log_index": 25,
+      "topics_count": 2,
+      "data_length_hex": 0,
+      "expected_wallet": "0x5c27cc68fe01a3994807b60a6c81d8ba638b4ba1",
+      "decode_path": "topics1",
+      "note": "golden fixture: decoder must yield expected_wallet"
+    },
+    {
+      "chain": "eth",
+      "contract": "BUSD",
+      "contract_address": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+      "event": "AddressUnfrozen(address)",
+      "topic0": "0xc3776b472ebf54114339eec9e4dc924e7ce307a97f5c1ee72b6d474e6e5e8b7c",
+      "tx_hash": "0x051e3a632ab86ae249c5b91271f219f6379603a58ce2d379367f4ed9ff390044",
+      "block": 21618122,
+      "log_index": 288,
+      "topics_count": 2,
+      "data_length_hex": 0,
+      "expected_wallet": "0xf85b473f6a97366c296a30ea3410f194c57c9c0b",
+      "decode_path": "topics1",
+      "note": "golden fixture: decoder must yield expected_wallet"
+    },
+    {
+      "chain": "eth",
+      "contract": "USDP",
+      "contract_address": "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
+      "event": "FreezeAddress(address)",
+      "topic0": "0x1aa660498c83ea285bc55e4cfc00afcaa7120798db87b74f3c0d7c6e001bc392",
+      "tx_hash": "0x33abe5ab2b527edb2eeb6718ddacc4d15144f3c6fddac0efc264e59f50778e5c",
+      "block": 21947626,
+      "log_index": 250,
+      "topics_count": 2,
+      "data_length_hex": 0,
+      "expected_wallet": "0x09278b36863be4ccd3d0c22d643e8062d7a11377",
+      "decode_path": "topics1",
+      "note": "golden fixture: decoder must yield expected_wallet"
+    },
+    {
+      "chain": "eth",
+      "contract": "ETH_USDT",
+      "contract_address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "event": "AddedBlackList(address)",
+      "topic0": "0x42e160154868087d6bfdc0ca23d96a1c1cfa32f1b72ba9ba27b69b98a0d819dc",
+      "tx_hash": "0x26e2265c66d7de39bdf0570a74118bbeec782ea11b10b9b075f3ef3866d70722",
+      "block": 6969269,
+      "expected_wallet": "0x0000000000000000000000000000000000000000",
+      "decode_path": "data_word0",
+      "live_isblacklisted_check": true,
+      "note": "near-zero sentinel fixture: decoder MUST yield 0x0 here. USDT.isBlackListed(0x0)==true on-chain, proving the log value is what the contract recorded (not a decoder bug)."
+    },
+    {
+      "chain": "tron",
+      "contract": "TRON_USDT",
+      "contract_address_base58": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+      "event": "AddedBlackList",
+      "tx_hash": "af4bc4d793f82ca5ba500cf13cf93ca3e7a56fccc2aabf8b09e55fc756500ea8",
+      "block": 20972943,
+      "event_index": 0,
+      "expected_wallet": "0xa614f803b6fd780986a42c78ec9c7f77e6ded13c",
+      "decode_path": "trongrid_abi_named_param",
+      "result_keys": [
+        "0",
+        "_user"
+      ],
+      "note": "golden fixture: watcher reads named param by ABI, not positionally"
+    },
+    {
+      "chain": "tron",
+      "contract": "TRON_USDT",
+      "contract_address_base58": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+      "event": "RemovedBlackList",
+      "tx_hash": "736870f36759d9f75174569222061e63708057c4d5607ed537454d9c95fc2303",
+      "block": 32451121,
+      "event_index": 1,
+      "expected_wallet": "0xe3b4d2395929bb60bad8e16c0001adfce5eb71ab",
+      "decode_path": "trongrid_abi_named_param",
+      "result_keys": [
+        "0",
+        "_user"
+      ],
+      "note": "golden fixture: watcher reads named param by ABI, not positionally"
+    },
+    {
+      "chain": "tron",
+      "contract": "TRON_USDT",
+      "contract_address_base58": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+      "event": "DestroyedBlackFunds",
+      "tx_hash": "0dd60d70bb509edd2523127fd4b9f1e0f0855d23ffc7de6535271580d8778730",
+      "block": 20973041,
+      "event_index": 0,
+      "expected_wallet": "0xa614f803b6fd780986a42c78ec9c7f77e6ded13c",
+      "decode_path": "trongrid_abi_named_param",
+      "result_keys": [
+        "0",
+        "1",
+        "_balance",
+        "_blackListedUser"
+      ],
+      "note": "golden fixture: watcher reads named param by ABI, not positionally"
+    },
+    {
+      "chain": "tron",
+      "contract": "TRON_USDC",
+      "contract_address_base58": "TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8",
+      "event": "Blacklisted",
+      "tx_hash": "df36b1ff7347acbee1d0d3129871ff7fb769b3e3e80fb57ac09e81132847013c",
+      "block": 39354219,
+      "event_index": 0,
+      "expected_wallet": "0x7db418b5d567a4e0e8c59ad71be1fce48f3e6107",
+      "decode_path": "trongrid_abi_named_param",
+      "result_keys": [
+        "0",
+        "_account"
+      ],
+      "note": "golden fixture: watcher reads named param by ABI, not positionally"
+    }
+  ]
+}

@@ -96,6 +96,44 @@ The 02:10 UTC lane post on #648 cited N = 400 with Tron USDT at 237. The first i
 
 Repo therefore stands behind **N = 519 (distinct 518)**, with the 237 (and the derived 400) retracted as undercounts, not as "estimates at a different timestamp".
 
+### Sentinel-address note (post-merge addendum)
+
+**Status**: resolved. Decoder confirmed correct; entries are real on-chain blacklistings.
+
+The currently-frozen sets include a small number of near-zero addresses: **17** on ETH USDT (`0x0000…0000`, `0x0000…0018`, `0x0000…0019`, `0x0000…001a`, …) and **8** on Tron USDT (`0x0000…1896`, `0x0000…2053`, `0x0000…234a`, …) under the leading-10-bytes-zero filter — total **25**. A wider leading-8-bytes-zero filter catches one more ETH entry (18+8 = 26). The initial concern ("~50", decoder grabbed the wrong 32-byte word) resolves to:
+
+1. **The count is 25–26, not ~50.** Reviewer / sup estimate was roughly 2× the actual.
+2. **The decoder is correct, verified three ways:**
+   - **Structural**: `AddedBlackList(address)` is a single-parameter event. Every one of the 17 ETH_USDT logs has `topics.length == 1` and `data.length == 32 bytes` — a single word. There is no "other 32-byte word" for the decoder to have picked wrongly. Example: tx `0x26e2265c66d7de39bdf0570a74118bbeec782ea11b10b9b075f3ef3866d70722` at block 6,969,269, raw `data = 0x0000000000000000000000000000000000000000000000000000000000000000`.
+   - **On-chain live state**: `USDT.isBlackListed(address)` returns **true for all 17** near-zero addresses today — the live storage of the Tether contract records these addresses as blacklisted. If the decoder had grabbed a wrong word, we would be retrieving a different address than the one the contract has in state, and `isBlackListed()` would return `false`. It returns `true` 17/17.
+   - **Fixture-pinned**: `docs/evidence/decode-fixtures.json` includes an explicit near-zero fixture (ETH USDT tx above → expected `0x0`) so a future decoder regression would fail CI loudly.
+3. **How they got there**: all 17 ETH_USDT near-zero logs were emitted from Tether's **Gnosis multisig admin** (senders `0xf4b51b14…`, `0x61d5a4d5…`, `0xac3b242e…` using `confirmTransaction(uint256)` → the multisig's internal `execTransaction` → `USDT.addBlackList(X)`). Several are sequential small integers (0x0, 0x18, 0x19, 0x1a) — the pattern is consistent with issuer sentinel / test additions in the early life of the blacklist feature, with a few where the stored address in the multisig pendingTx apparently got set to a small uint value (possibly txId leakage). Either way, the on-chain state is what it is.
+
+They count toward on-chain totals but should NOT be fed into the fleet seed as substantive wallets. Exclusion rule for fleet seeding: **addresses with the leading 10 bytes zero** (first 20 hex chars of the body are `0`). Applying the wider 8-byte filter adds 1 more ETH entry; the fleet-seedable total differs by 1 depending on choice (12,732 vs 12,731).
+
+Resulting counts after exclusion (fleet-seedable only), lead-10-byte filter:
+
+```
+ETH USDT currently_frozen seedable = 2,868 − 17 = 2,851
+Tron USDT currently_frozen seedable = 8,238 −  8 = 8,230
+Others unchanged.
+Seedable live-frozen fleet total    = 12,732  (vs 12,757 on-chain total)
+```
+
+Grant text should use **12,732** (seedable) when describing the fleet, and note the on-chain 12,757 with the 25 sentinels explained when describing the raw census.
+
+### Decoder golden fixtures
+
+To prevent silent decoder regressions in Issue D's watcher (per that issue's Definition of Done), `docs/evidence/decode-fixtures.json` pins a known historical `(tx_hash, log_index)` to an expected wallet for every qualifying event-type on both chains that has at least one firing:
+
+- 3 fixtures on the `data_word0` path (ETH USDT `AddedBlackList` / `RemovedBlackList` / `DestroyedBlackFunds` — all non-indexed, wallet in `data`).
+- 4 fixtures on the `topics1` path (ETH USDC `Blacklisted` / `UnBlacklisted`, BUSD `AddressFrozen` / `AddressUnfrozen`, USDP `FreezeAddress` — all with `address indexed`).
+- 4 fixtures on the `trongrid_abi_named_param` path (Tron USDT `AddedBlackList` / `RemovedBlackList` / `DestroyedBlackFunds`, Tron USDC `Blacklisted` — read by ABI parameter name, position-free).
+- 1 explicit near-zero sentinel fixture (ETH USDT tx `0x26e2265c…d70722` → expected `0x0`, cross-verified by `isBlackListed` live-state).
+- 1 live-state proof flag on the near-zero fixture so a future reader knows the expected value is not a bug.
+
+The watcher's unit tests (Issue D) must load this file at startup and assert `decode(tx, log_index) == expected_wallet` for every entry. A future contract added to the watchlist whose wallet is NOT parameter 0, or an event whose signature rev-upgrades, will fail these fixtures loudly.
+
 ### Fleet-size read
 
 The live frozen address population across the seven contracts is **~12,757 addresses — thousands, not hundreds.** Breakdown:
