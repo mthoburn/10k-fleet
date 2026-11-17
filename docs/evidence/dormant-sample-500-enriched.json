@@ -1,0 +1,4361 @@
+{
+  "generated_at_utc": "2026-11-17T16:33:49.255328Z",
+  "source_file": "docs/evidence/dormant-sample-500.json",
+  "enrichment": {
+    "freeze_tx": "hash of the earliest AddedBlackList / Blacklisted / AddressFrozen / FreezeAddress event emitted by the source contract that names this wallet. Tron txs are hex (as TronGrid returns).",
+    "freeze_block": "block number of that event.",
+    "frozen_at": "ISO 8601 UTC timestamp of the freeze block. Omitted (null) if the on-chain record did not supply a timestamp; such rows are also listed in `unresolved` with a reason."
+  },
+  "method": "Full-history paginated event scan per source contract (Etherscan V2 logs/getLogs for ETH, TronGrid v1/contracts/{addr}/events for Tron); wallet-indexed; earliest timestamp kept.",
+  "sample_size": 500,
+  "resolved_count": 500,
+  "unresolved_count": 0,
+  "unresolved": [],
+  "rows": [
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xebff9038fc52040272cc17d7a99fc903031d8643",
+      "freeze_tx": "0x6f38c4de96433f8ce53952d286495bab3eb5f85110d1f183945aa1b8aed6aac5",
+      "freeze_block": 12057080,
+      "frozen_at": "2021-03-17T15:48:29Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x28cca4a5f1b44517859042df74dc243a34f0bc27",
+      "freeze_tx": "0xdb9edb752e2cb0725fe7e93c456d1fc863e62a0ac07addc70b00fc25bb7e66ee",
+      "freeze_block": 25150511,
+      "frozen_at": "2026-05-22T11:30:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x0847fd9233f1d7b6a34b3e46d2de319f613bb37c",
+      "freeze_tx": "0x0d0f195dd323968cd1b8c01bc30f0220c431da8cd039c8a964d8cd1c4612cbd7",
+      "freeze_block": 23286683,
+      "frozen_at": "2025-09-04T02:12:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x65c9c0db32af99885b5c4fa3ce7bb6d01d9b9a12",
+      "freeze_tx": "0x0584120c32dd3471cfb7e2549e2dbd81069cf31db381d8a223d1c29742db97a2",
+      "freeze_block": 15052141,
+      "frozen_at": "2022-06-30T19:43:33Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x5afaf8b6081eb1fe9beec6dcb01663fa1afb1a91",
+      "freeze_tx": "0xfbbf1b2cf41e6648ba091ae965d2068e12dc47c6db787e0e58077a607bb09991",
+      "freeze_block": 21116271,
+      "frozen_at": "2024-11-04T19:07:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x52ca381e39de2ccaa4db315cbf338e14e9c14bda",
+      "freeze_tx": "0xaff959fb8dcaf1c73d55f17df04232224235fd8f55fc917e930cde95c4755b41",
+      "freeze_block": 21065095,
+      "frozen_at": "2024-10-28T15:42:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x3365cff5e0970fbb2cf744796901002d9987c0dc",
+      "freeze_tx": "0x5bd1bf648cd8b066cad8807e3e23ff0dd5ec62c2799ceccf486a097544469c4d",
+      "freeze_block": 10821889,
+      "frozen_at": "2020-09-08T15:46:38Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x25b31d7320be162b9c96d174116371a6c633192f",
+      "freeze_tx": "0x3cc9eb8b6ed422db6b60031c93be43a40b8e46012c5640839e37d2a7d3d549c3",
+      "freeze_block": 20028172,
+      "frozen_at": "2024-06-05T20:59:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xf92ad00a9185ccf48364e285b875d4e84aa8c917",
+      "freeze_tx": "0x9aeb50bd54487c2a4ba309acfc86ca6d163d07894a7fdb34ca8567e436227f62",
+      "freeze_block": 23920550,
+      "frozen_at": "2025-12-01T18:54:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xc80f27aebe052bd6de08c1816664056714f5c5a2",
+      "freeze_tx": "0x63ee83344e25b2ec0c10996eec4f6880ef3eaec57cee40dfc127a385842b8267",
+      "freeze_block": 24979034,
+      "frozen_at": "2026-04-28T14:03:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x1fa0dc00a9a8634b7d13dd7eceb782e4c58a2af5",
+      "freeze_tx": "0xc5f55dc9a5ec9a3e5ab5bb1f1f6256aa3aeabb2463bf9081980fc01dc8fd3800",
+      "freeze_block": 23290572,
+      "frozen_at": "2025-09-04T15:14:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xd9a330f648dc9073a939774d3f7233ed2a2e79f0",
+      "freeze_tx": "0x8897f0080ca1572dd55fe38b54f3b87413c98e082073894d5f125640ea456221",
+      "freeze_block": 12343665,
+      "frozen_at": "2021-04-30T19:19:18Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x9c220048401fa6819e59a15e67d96ceffb9043ac",
+      "freeze_tx": "0x9e91f0c85b3ce867a7fc67ef3a9fcd0fb30c82c2f7063636ee755fa730db3c74",
+      "freeze_block": 17993422,
+      "frozen_at": "2023-08-25T18:13:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x0a3d2de1f5c7cb6ce301532c0e6146e24da61e77",
+      "freeze_tx": "0x8ad32fd62a6a4403bf70c88084d6e80cc1b324d0cc80ad69ea8c53471e195395",
+      "freeze_block": 19242862,
+      "frozen_at": "2024-02-16T20:34:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x098ae5c5872508f0dc611d72e377709441e5bc1b",
+      "freeze_tx": "0xf5bd5ae2911b008f07f89291b2be800e93774654498a540a046597936ff584f7",
+      "freeze_block": 19865300,
+      "frozen_at": "2024-05-14T02:34:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x227089429231e518c8d278a276d81fb08030e487",
+      "freeze_tx": "0x90c2d316b4a99ee7046ab7b1dba8affa2ef887040da93eccb450bc0d6355052c",
+      "freeze_block": 24578873,
+      "frozen_at": "2026-03-03T18:59:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x5198029e2f40c6893232316b25a5aa0fe9492ee3",
+      "freeze_tx": "0x5e5905353630b7020cf480ec68b8092990b7b2e4efde8834a253afc12a460ce4",
+      "freeze_block": 18715950,
+      "frozen_at": "2023-12-04T22:21:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x5665b926c0ce90f595231683c29ce17fbf33b459",
+      "freeze_tx": "0xa7ef6b851caa6bd4727714846f8eac380ea5428d469da8d912e5a80c1ee11f4e",
+      "freeze_block": 12057005,
+      "frozen_at": "2021-03-17T15:31:40Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xb9e83009aa3e15ac4a6fc255c3642d8f66b9725c",
+      "freeze_tx": "0x129b4aca864eaa4881d6f85668c81ca9929cbb5020eb133e0ef33e2c878a4f11",
+      "freeze_block": 15549182,
+      "frozen_at": "2022-09-16T22:36:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xdd98ec2d39d7e002b4b359ccce0f36243384547b",
+      "freeze_tx": "0xb355ff5e533af1293e4849a9b574cbcbdcbf4b8b054158742b56a090c4344371",
+      "freeze_block": 17694389,
+      "frozen_at": "2023-07-14T21:32:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x08cc05ea9d6e89246f1a3ab152430db7e25f6f92",
+      "freeze_tx": "0x30e6ce7b2e52faebc322250abb5ba2e423c1e61ee3d5159446a93266ce854c00",
+      "freeze_block": 19541325,
+      "frozen_at": "2024-03-29T18:05:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xcceac446f80b29da9d955297f7758cf7cbf95441",
+      "freeze_tx": "0x8d3f86baaa3307acc34d02e1d64623678ba74c80c6d5ac506222d0398aea17a5",
+      "freeze_block": 20514398,
+      "frozen_at": "2024-08-12T18:43:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x4933038d1ab1e8d042c3944fee2c2d4cb2b02fcf",
+      "freeze_tx": "0x29ecb21e126ea61f531fc6383cbc8c7b66efb93dce7e7c5800d042f99e16cac4",
+      "freeze_block": 11132977,
+      "frozen_at": "2020-10-26T15:59:32Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xf0ba44010fda2d14f602c6ae564c6f9c57109069",
+      "freeze_tx": "0xce1131b72a510b5008e683aa710a0d0c4fedbd3df8e642943ff09acf6a153316",
+      "freeze_block": 21567149,
+      "frozen_at": "2025-01-06T18:15:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xc7c8f8284c5360d0086a2f0a05bdd07afde23246",
+      "freeze_tx": "0x3769cb9daa98464d086855d82f2327864778fe7c9b6bb2109d46b2f6d0900d0e",
+      "freeze_block": 18613319,
+      "frozen_at": "2023-11-20T13:32:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x9b6e4aeb0d5118e876e3c8daa45e9446cb937b54",
+      "freeze_tx": "0x704d2e2b918b0f7cf2df82ecbdc9a7659776c0af04351881a5b27fc25ca2561d",
+      "freeze_block": 17636527,
+      "frozen_at": "2023-07-06T18:17:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x520bbe035b3a84cbb63b29d35c51ec7f4f8a0161",
+      "freeze_tx": "0x58f0979550d43d13ca4ccb78aaa83daa2134e4cdb2969ff5ef33d9243369ee06",
+      "freeze_block": 21337610,
+      "frozen_at": "2024-12-05T16:53:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xa5186ed8391315f169f914d84ff0a2b4bd28ed24",
+      "freeze_tx": "0xcbbd78c11392cf09844da37fa0baa64c5e29bc61ed1d0d98d180709531248eaa",
+      "freeze_block": 24141234,
+      "frozen_at": "2026-01-01T17:19:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xd94bb87e0799222fc1e44fa34fd73b6aff220f82",
+      "freeze_tx": "0xf802f60f538f518ee54e554bdbaac5d1b3acb526cf31dc9f14909d3a1a7ab1be",
+      "freeze_block": 11133161,
+      "frozen_at": "2020-10-26T16:36:36Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x678a5b58993927a65db29e2206cf2b321afa2167",
+      "freeze_tx": "0xc890ad91614ed3d5e956fa93f55522021d204a469bbce7183212312ab167b636",
+      "freeze_block": 21065153,
+      "frozen_at": "2024-10-28T15:53:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x019d261481dc09bb3baa9687048d0f04b4d5158d",
+      "freeze_tx": "0x20349f444867153d6dd8d7092c4c074795da3e7704468be29e487986e92293d7",
+      "freeze_block": 21214706,
+      "frozen_at": "2024-11-18T12:48:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x3b00d4664b9921f9f7b3d07f64401cf0a9de7213",
+      "freeze_tx": "0x39f288ea61d0ca284f2fc62ec321b6775cbee1443c10bb8eab5c3fdea9b7c476",
+      "freeze_block": 15690230,
+      "frozen_at": "2022-10-06T16:24:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x9c354a8ef51c24154c03ac495ca6b528a685e0cc",
+      "freeze_tx": "0xb4832f23d55e23581fae67ff61d2fc37facd1644492f3361cfcd62e7aa32d558",
+      "freeze_block": 20011794,
+      "frozen_at": "2024-06-03T14:09:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x7ea4ff532f7c90422cbc4e63250f82acbc0e59b2",
+      "freeze_tx": "0xdf0ab865c45d1e1cd6933fb405982ebf6a3e03e6b2d5b18ed5fe4c75473b60df",
+      "freeze_block": 14405207,
+      "frozen_at": "2022-03-17T16:54:41Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x673c1243844250719262d9950582b39d1726e151",
+      "freeze_tx": "0x4fbdad912a7f9ef0c1827b5cc3ae8029fb92ca828061d472d4d580a9c550793d",
+      "freeze_block": 18487127,
+      "frozen_at": "2023-11-02T21:39:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x399d4bd869012762832996d8817580b20db0669c",
+      "freeze_tx": "0x2fe0f1228f5bc2e2b9969a6dddea280fb0d24647fc0925788737fe3d4f07760b",
+      "freeze_block": 15052072,
+      "frozen_at": "2022-06-30T19:26:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x5018cf5f48a09c46b4833890cc2cf0df2533d16a",
+      "freeze_tx": "0xdf3d518798c7ca8d458ff17b73177cfd75c33962f90939876e6b20bb24cfd9c8",
+      "freeze_block": 18541859,
+      "frozen_at": "2023-11-10T13:31:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x7ca3e3e41c885a47a50bc487a81aacca646fdb2c",
+      "freeze_tx": "0x6074eb0d6ab9773826d7a52a378ec81b1010c6c2b11adc3dbb4c6052b380f2bb",
+      "freeze_block": 19996808,
+      "frozen_at": "2024-06-01T11:55:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x258df00ff88ca8f097fb889230ccd0fa8210ed8c",
+      "freeze_tx": "0x7ff10456940e55e677743098aedbc4f837b826e671c6f9b989e72274cac96a45",
+      "freeze_block": 22869287,
+      "frozen_at": "2025-07-07T19:04:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x224fda0e3a6552d58dcc8bada08ca67b5dc1f826",
+      "freeze_tx": "0xa471469971cf10550354b7ea037a86893839de82decdba46aafddf4e219a2e56",
+      "freeze_block": 22231897,
+      "frozen_at": "2025-04-09T14:18:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x8e5a9922f6427d05af990627b0758f4beed17adf",
+      "freeze_tx": "0x9a538ea3cf2414bf4545edd7e6a08d6801b15cc1b13041276c0ad1bb7cc3e80b",
+      "freeze_block": 15690276,
+      "frozen_at": "2022-10-06T16:33:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x23baa3ad509c575cc1a13773428f9653e1b2397a",
+      "freeze_tx": "0x7ea390e50fe15264aafbfffc5964e99694d57c8e0a5143c5cf3b98e8d70cf74a",
+      "freeze_block": 23721814,
+      "frozen_at": "2025-11-03T22:34:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x86fc3f151ae8432dd9a8e5aaf50ce2f99946dbc8",
+      "freeze_tx": "0xa1455de9809cb0567f3dd1ab95ed0d595d3297996643c2034bd998ca8cb5db37",
+      "freeze_block": 20328553,
+      "frozen_at": "2024-07-17T20:11:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x809de039828e5e690cb1d488bedc1278ad247708",
+      "freeze_tx": "0xce59104a8f52d7a399d4e0886e1d59f10bf00ef981474586c0b0e2f7d3577f17",
+      "freeze_block": 24033107,
+      "frozen_at": "2025-12-17T15:04:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xdec079ee06a851493cb93705f208c37818d28bd0",
+      "freeze_tx": "0xc6d90a0483b40562fdccd780664229f3e640b1a575864400d29de6e9fdb689dc",
+      "freeze_block": 26054284,
+      "frozen_at": "2026-09-25T11:51:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x619148e5753072907beca86c932172ffbcbbd3fa",
+      "freeze_tx": "0x31b4db6a9df932e1f24882f87ac78a74073b9e2104c30c911519d799deceecd5",
+      "freeze_block": 19940883,
+      "frozen_at": "2024-05-24T16:18:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x0e7f7b96e9e75340da4df2252759b192eecb3bee",
+      "freeze_tx": "0xb3b1704f749e0ffef44ca78604eef8c3a23aa6dc6c7cdb41e193cbcc83e8ecd0",
+      "freeze_block": 19915975,
+      "frozen_at": "2024-05-21T04:44:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xa8d106387f639301f6ede90ca7484408a34cc8cb",
+      "freeze_tx": "0xc703ab1400688968d80f176d5998196651a3a6bd3aa37f23e22d20972fd3b8d6",
+      "freeze_block": 19626244,
+      "frozen_at": "2024-04-10T15:53:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xc45afec45feb47b7e0263f5211462cb49e6496a4",
+      "freeze_tx": "0x282af42c0ff25e077c62076cd6be0765f88d54e233fb5248d9ae7d199a92299b",
+      "freeze_block": 19521238,
+      "frozen_at": "2024-03-26T21:22:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x2cedfa2a7f5e1102830b81759b95353c08973386",
+      "freeze_tx": "0x04470123a91330ddd7ccd4c6dd3514143df19808e48534dbed4ddba58afdde72",
+      "freeze_block": 10965314,
+      "frozen_at": "2020-09-30T18:21:21Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x8dce2aac0de82bdcaf6b4373b79f94331b8e4995",
+      "freeze_tx": "0xc396879df46f540f56b3943613fc94c8af4cea26fbb9a64f71a66cea92403bba",
+      "freeze_block": 23141907,
+      "frozen_at": "2025-08-14T21:17:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x1c7f7f7b66d1f6e9c23545c0156a6a1f676c0e1b",
+      "freeze_tx": "0xc1e03b64a7805a83e8602caa74e8314a65e9fc1ff3f907636912af4eb0d34e23",
+      "freeze_block": 19568645,
+      "frozen_at": "2024-04-02T14:16:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xca44101abe4c3215f94942ca707248c7aa40a4db",
+      "freeze_tx": "0x053cc665c877e75d3b90c5a98d5d59d30ebe7cc27e7ca384089fb48317bfd2eb",
+      "freeze_block": 21573975,
+      "frozen_at": "2025-01-07T17:06:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x6c1aea2787cf3e78b519aa3e2f2d87e83b553c65",
+      "freeze_tx": "0xa8dafd10f768b389e069306cdea66b84243253f8ce6b129f5d9170a9e1243c2f",
+      "freeze_block": 26136686,
+      "frozen_at": "2026-10-06T23:40:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xe74f306bfbff84f675fdceb770b157b70b017169",
+      "freeze_tx": "0x97a334123cc0e5863dd7c8eed6dde9f9deed24ac33a8b3024fdd28bd1d6f0cd3",
+      "freeze_block": 9482829,
+      "frozen_at": "2020-02-14T18:43:44Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xe43233ceceb76b745cca1e242d1352a596626358",
+      "freeze_tx": "0x0f746c5d0de2d769eea3dfe6df5607d38d338d2748d219a6a971f1c18987fbcb",
+      "freeze_block": 22047636,
+      "frozen_at": "2025-03-14T20:55:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x87c899a8b71d8ca1b629aa6bb26a2ff0d6c7b2fb",
+      "freeze_tx": "0x637d41368bb6aca368851fa7ceba9b2724cd883254b0d52846c9a8eb3c1a9d5e",
+      "freeze_block": 20897973,
+      "frozen_at": "2024-10-05T07:54:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xd4e7bd8ad8f764e8e6c3c0e24a1dc59633e2bb65",
+      "freeze_tx": "0x962082af0cb94da13ec7564db4446ecb86a976e470d20886c099bce909619b05",
+      "freeze_block": 19464816,
+      "frozen_at": "2024-03-18T23:03:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x474604bcaf36fdf518becfcaebb0c98b5b85a152",
+      "freeze_tx": "0x401b4bd661f30184068023a7a10bf2fb3ded2ee821ef237b1ebe2a0bfccf552b",
+      "freeze_block": 19567353,
+      "frozen_at": "2024-04-02T09:53:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x1967d8af5bd86a497fb3dd7899a020e47560daaf",
+      "freeze_tx": "0xbc81d96b98e0df8145921b3b68c51cfc358fc560d341ead4598e86e49b04f252",
+      "freeze_block": 18749972,
+      "frozen_at": "2023-12-09T16:50:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x0f4c7ffef2ab1f9dd36b6c4e0ebd74cbd6216ac1",
+      "freeze_tx": "0xd31cfa4b4140fbd0723f29a084f4cda5addbe22af9de0a2c0908c100a8618c13",
+      "freeze_block": 23762384,
+      "frozen_at": "2025-11-09T14:45:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xf3e027ee6b96972db76f80d413821d9d0173c29e",
+      "freeze_tx": "0x7bcd6aed028545dc8333f69434111b85a7d4f6673cd8fc5a514eefc4cb67d738",
+      "freeze_block": 24691985,
+      "frozen_at": "2026-03-19T13:58:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x5435ee8414d495d6eb15c79f5b10ed5f6684f448",
+      "freeze_tx": "0x21552e9fc5aa1e0839c53b576d94d909759d594474d06221c600c8b13a18508b",
+      "freeze_block": 11132984,
+      "frozen_at": "2020-10-26T16:01:02Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x6aeb3bda93aa0d6429ba26c8c9ed2b3ef8de4c4d",
+      "freeze_tx": "0xacb16031c621739f44d66c603ced958233de0269524d15e889b9a1c60b364fbb",
+      "freeze_block": 26396146,
+      "frozen_at": "2026-11-12T03:22:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x1cab8177ace78b1b6b1c393371f4f2dcae40cbeb",
+      "freeze_tx": "0x27a2d35c0d4862515a3ab1ae111ce7c22b6b94f7dc82c965495b9b9314a2edb1",
+      "freeze_block": 25827536,
+      "frozen_at": "2026-08-24T20:49:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x56963398a6a6a8ab89ea4a10415f4561f4c0ed7c",
+      "freeze_tx": "0x0afada2da1b2c97bc60d1ac21b0a06a7e3c153e973b4916c3211378424743720",
+      "freeze_block": 23433332,
+      "frozen_at": "2025-09-24T13:55:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x252a8bd2319d8a555b872990601221b3a2053bce",
+      "freeze_tx": "0x34c2bca115ffa17be36f02bd79a1f1fe3cdb710f47c4dcb94dcfeb1e6e835c6f",
+      "freeze_block": 25827529,
+      "frozen_at": "2026-08-24T20:47:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xa680627e73cccc11d9b211f95d2d974ebdf75216",
+      "freeze_tx": "0xb3c16df3a435e3a8a30a0fc237c53cb4b2bd0ac00f5be4cf348b240855dd3926",
+      "freeze_block": 23984052,
+      "frozen_at": "2025-12-10T18:21:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xea8c0cb3766c0e932251304dc29b811f520797a5",
+      "freeze_tx": "0xfcf734777dfd868f8af123b129d3e9e3dccfd7298c2249c0387c7bb77bfcfb4b",
+      "freeze_block": 19865250,
+      "frozen_at": "2024-05-14T02:24:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x88e31cc2abe65bb53ccbe94a7d8cd87aa3830b0e",
+      "freeze_tx": "0xe5d02af69659c10b12c06669dccf9c0a65230e0decf9b444ed6c473595aaadd7",
+      "freeze_block": 21065105,
+      "frozen_at": "2024-10-28T15:44:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x3bf04bd8b60b8f8932c51fc891761eb2454f97de",
+      "freeze_tx": "0x8e4f8124ab6b12ad90fe55c6ff19078f2552acd4f7f76649765f229b27a4c66f",
+      "freeze_block": 25712908,
+      "frozen_at": "2026-08-08T21:23:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x8aebed593fddbee769ddd2776ea5bdd2b8ce0bc4",
+      "freeze_tx": "0xd9522a7e5f42fcd33828ca2e29d0463a3bae2ce7d5f25b0135bcd6038766cd35",
+      "freeze_block": 12057194,
+      "frozen_at": "2021-03-17T16:11:16Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x8569167ee0ba79cfafd2501aeec1c4de5127085c",
+      "freeze_tx": "0x519e7cbeee90ffb25e883112880036874692a95ac1efbffda53e690e0e4fa8ee",
+      "freeze_block": 18515081,
+      "frozen_at": "2023-11-06T19:40:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x4e0c5f78efeeedf31031fcec7bb41330e179a9aa",
+      "freeze_tx": "0x205c028f4defdc476cd1beff8f874244e22426a26608dbc0b7afd58e6954cfa8",
+      "freeze_block": 20791966,
+      "frozen_at": "2024-09-20T13:01:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xf6a25fccf12320873555104465862f0d6e7d57d1",
+      "freeze_tx": "0x3976198e393ff9d45ca30c99a3642241139c6a05279e50e17fceedc1256f8dcd",
+      "freeze_block": 21968925,
+      "frozen_at": "2025-03-03T21:04:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x6239d6cdbd7605b599b79d72004209f12adf0caf",
+      "freeze_tx": "0x6e181a323a77bdbd26e9f3e9ccb288de88b22b0632c8eaeacf91f8851aaf5638",
+      "freeze_block": 11752268,
+      "frozen_at": "2021-01-29T17:56:08Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xfb633cb317bbd5a1a95cf6a13e63cdd15f6481fd",
+      "freeze_tx": "0x1b52dc9e8cdd5f9fd871009c2b1b21c4039ec9313a08880f11a51fffa09880ce",
+      "freeze_block": 19475175,
+      "frozen_at": "2024-03-20T09:59:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xefe301d259f525ca1ba74a7977b80d5b060b3cca",
+      "freeze_tx": "0xa23c3bfdea802a32ae22d784bd7f71657cabe974ca0fe01ec7ffda12fe182a5d",
+      "freeze_block": 18750205,
+      "frozen_at": "2023-12-09T17:38:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x1a0c774942e04c658320e27bfcdc6e7ebffd23fd",
+      "freeze_tx": "0xebcedb9520fab66a643490618e1f43d99483c950bac01e662656de43a59b51b4",
+      "freeze_block": 19079828,
+      "frozen_at": "2024-01-24T23:39:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xe09378e4cc630a8809116b97321f4e014942ede5",
+      "freeze_tx": "0x45c700eb711fa6a2f150cf6f64b97d3e5cca2e64fe6a6fdc66ce6fe0060ea30b",
+      "freeze_block": 11133189,
+      "frozen_at": "2020-10-26T16:43:31Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xea582df503a868b0222da3c849e836b6334e1ef4",
+      "freeze_tx": "0x5b8b53007674272cbc8ccd8dd48ce3a1653427530bf30e2c31064267affb2e2d",
+      "freeze_block": 12058048,
+      "frozen_at": "2021-03-17T19:25:46Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x3ef130a38c6719c578747e2eb4fce5a2e887a151",
+      "freeze_tx": "0x6d82a06dc8e9a6f7aee2328d6a8d6f9688551ad58d30aeacb44a32cb0e9f82c8",
+      "freeze_block": 12057301,
+      "frozen_at": "2021-03-17T16:36:19Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xc3771d47e2ab5a519e2917e61e23078d0c05ed7f",
+      "freeze_tx": "0xf56917842f21dde2df09ef1de0974e3d3028bb0e9c52cae8aee0c4e4e51ebdf9",
+      "freeze_block": 11133266,
+      "frozen_at": "2020-10-26T17:02:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x5ad59bc969beef5afc862ceb2e00f563bcd29ae6",
+      "freeze_tx": "0x9a39d5ca2eff133d96939184ff8434e0606c3e6b565f8a41fd1ebf6017a061a7",
+      "freeze_block": 22791229,
+      "frozen_at": "2025-06-26T21:14:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x3c608f1c9755c1102a95766d8fc2b4dceb1bb15b",
+      "freeze_tx": "0x4d3c322499c7bfbeb53bb298d394e09ae7d8b766b6a802f8b5ad4f6cadef4368",
+      "freeze_block": 20276815,
+      "frozen_at": "2024-07-10T14:51:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xa9c54b177cd4f5b42336ae3ea265a55781beffb1",
+      "freeze_tx": "0x72329100d74e0ba810e009de780c52a36c0b82c5093bc6fc3d53dfcd97414d62",
+      "freeze_block": 22869284,
+      "frozen_at": "2025-07-07T19:03:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x8e2eb468d10e53f99639f02d58a19ab3d60cd07d",
+      "freeze_tx": "0x78b8a103e43fac91a6f71c230a43c4f71cfad5809f233695cfe61fb9e3df52e7",
+      "freeze_block": 19567463,
+      "frozen_at": "2024-04-02T10:16:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x641a67e0583f05e3fb93fce93bd3bdfe47301c3e",
+      "freeze_tx": "0x8ee195f3c9f2b92aa37d8ab1a9ff1366f831c5ad2c301b22f3869b68f4823636",
+      "freeze_block": 11133003,
+      "frozen_at": "2020-10-26T16:04:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xec116f70fc7c214d70d90af0b83417f7e0df2578",
+      "freeze_tx": "0x241d5cc8435582eb9d03ece4f6a56181bc9a39c58307b9b51e7055722b933e99",
+      "freeze_block": 11973147,
+      "frozen_at": "2021-03-04T17:27:50Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xfd2cb3ace5f59cc3c43c967c326b81c01e051bdf",
+      "freeze_tx": "0xa86d9264fda5abdee9460f786870bb9c1393fb427c3ed9438b03def8f5d12b4b",
+      "freeze_block": 11133247,
+      "frozen_at": "2020-10-26T16:57:49Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xcbd03f54be3b8a35a41864c0272becf4839cf35c",
+      "freeze_tx": "0xaf84980a93f100025a6203927703ffde960c3ca2f2076b378fc6b70c3dc515d0",
+      "freeze_block": 20586550,
+      "frozen_at": "2024-08-22T20:31:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x51d5c14c7c90c41b4c49daf0ff9def851cd2a25d",
+      "freeze_tx": "0xeb5882901657e2f0806d1d12ee1f3f81cbacbb5bde79ebcce5847c5925350dc4",
+      "freeze_block": 14328629,
+      "frozen_at": "2022-03-05T18:57:26Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xfba15eae53c5263b9b272cdb76f278ee9f6e0111",
+      "freeze_tx": "0x679adb64cb6e51e457428841940110f16567bb9d5f4d3665caba510be44f5cd0",
+      "freeze_block": 24679130,
+      "frozen_at": "2026-03-17T18:54:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x772f79cf46b3ddda5fb1d69554221ac69e47249b",
+      "freeze_tx": "0xe8eba6bb44fa90da3a850be47c087e13ad45250ac05484fac1eef70f510f8303",
+      "freeze_block": 20277026,
+      "frozen_at": "2024-07-10T15:34:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x1329410051fc114d8050b007717fc7575a221c71",
+      "freeze_tx": "0xf5e0a0577cc200a389ea6147888ee451476bc40fd92b107ae5ce57aa62608dbf",
+      "freeze_block": 11837502,
+      "frozen_at": "2021-02-11T20:41:21Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x54a71549cc3bb5fbfe851226e1bb920ad4f5415e",
+      "freeze_tx": "0xcb16b0d75be4c00b2fc30f1c8735a1c4c5c5f88928bed5af0e87f5336746215e",
+      "freeze_block": 18749902,
+      "frozen_at": "2023-12-09T16:36:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x0a4450d1ead6839f3e9114943dba5e8d3a75bf94",
+      "freeze_tx": "0x387745a13b4b7fcea08203ce853222cbe0d73f1a3d32bf6147ac29b1b9f4bc85",
+      "freeze_block": 23176179,
+      "frozen_at": "2025-08-19T16:01:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x74487eed1e67f4787e8c0570e8d5d168a05254d4",
+      "freeze_tx": "0x3239bd0e775ac483822197012a2db4e65b3352336d43968a1e007d613cc6bba5",
+      "freeze_block": 13557238,
+      "frozen_at": "2021-11-05T14:55:01Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x95f5cec195b5781e09b9bae0731c7d4704bffe4d",
+      "freeze_tx": "0xc590a4e1bfc284b16324831ad5b6ed99a5bdde1388e5d83c81e43d9a6f42d05d",
+      "freeze_block": 24120920,
+      "frozen_at": "2025-12-29T21:15:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x628ca385e006c0d0442e765d6f00ad4c9e4771ea",
+      "freeze_tx": "0x7ba37e6e6a477699a20b5c8723d30890c9fbc514ac1d8d25a3306fdc7c5f7d42",
+      "freeze_block": 25868479,
+      "frozen_at": "2026-08-30T13:46:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x181aa2b4264e4fb20c96a280fd0945218e2a10b9",
+      "freeze_tx": "0xb0082dd4c232d9950a43b894d4f264a6b914721d17c6d2baece7bd7e49b9b464",
+      "freeze_block": 25395702,
+      "frozen_at": "2026-06-25T16:01:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x4e691d92c4615d7cfe927762b657e06422e6b709",
+      "freeze_tx": "0xc6025e1c1db43905832cf2270246d6fd4c853ecbb921c84b078eeab2464afd2b",
+      "freeze_block": 23534160,
+      "frozen_at": "2025-10-08T16:16:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xcfef692fb1735959eaba90993d8dfb5a4e6f0d71",
+      "freeze_tx": "0xc01f5a50b70ba8c5b6cda5461206db9045b4f71033785fb20fe98e1f1c85644e",
+      "freeze_block": 25753872,
+      "frozen_at": "2026-08-14T14:28:11Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x7405a6b74df0952ff97f5d7df5af9fd112eeba98",
+      "freeze_tx": "0xa1891aba5fefe61854c457e7f5568a9d8669abb308d1b17435ed3e2b2e08fc99",
+      "freeze_block": 13462018,
+      "frozen_at": "2021-10-21T16:13:59Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x4eaa957fdded610f13e0bb03416f0b0093b99851",
+      "freeze_tx": "0x129b147a85b7b838b328c8a343a55a2ea17fbd7a2824a17a5c06202949b7a470",
+      "freeze_block": 15690242,
+      "frozen_at": "2022-10-06T16:26:47Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xf2235d55b2950a0b1317469d72d07ae65b2e27cb",
+      "freeze_tx": "0xcc8246761d619c66bdd4dafe6fddd0fa76f0d270ee16a21c307ba62657166cf5",
+      "freeze_block": 25137500,
+      "frozen_at": "2026-05-20T15:59:35Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xb7a62b9729034fecfcab7ee4256a4ba983eecf7b",
+      "freeze_tx": "0x27280a1a1f6262f7492b96a93019341d17530d28dc91cdeff4e420f13700f733",
+      "freeze_block": 15720515,
+      "frozen_at": "2022-10-10T21:54:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x94087a5d6156f3ec9f00900e34378543713015a7",
+      "freeze_tx": "0xaa1b008b6ad278064d568a6e031a89c1d6752c0f83ec3af8ae60aa6011f12e09",
+      "freeze_block": 21983532,
+      "frozen_at": "2025-03-05T22:00:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xed65af79c9a6783563cb40a824d51cb2abbef6c2",
+      "freeze_tx": "0x1d7393441311992715f9adbebcfb0feec9a1d9e1d5b1cb0943ecfaed146cfe82",
+      "freeze_block": 12057300,
+      "frozen_at": "2021-03-17T16:35:56Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0xa855c51cb3eccddae8910567e770407fde498f59",
+      "freeze_tx": "0xe70f0581c76d84b4f840c106c710b1f8a8fbb952155bf5fbaf322d5a3060c257",
+      "freeze_block": 25382576,
+      "frozen_at": "2026-06-23T20:03:23Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x3485fad6dea96f0c6edc86eadfb73e9282f59172",
+      "freeze_tx": "0x01219971f0dc2a6d82a17fb27064c76026ca5f4e247a03836304c02c843bea05",
+      "freeze_block": 12134492,
+      "frozen_at": "2021-03-29T13:42:32Z"
+    },
+    {
+      "source_contract": "ETH_USDT",
+      "chain": "eth",
+      "address": "0x61a16fc2e352647ac9c130be6742ced32c911dee",
+      "freeze_tx": "0x1714d94511ef3d9a91f83706ff84be534c847b12363de6ff9e1dcbf0c84fb0ff",
+      "freeze_block": 11132998,
+      "frozen_at": "2020-10-26T16:03:52Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x290b6ebbdca04ee984fb8617e1b92deea23052e3",
+      "freeze_tx": "0x308ce51acb29b0b2e392d1b5f838227f076d24fbfc6a126c1c95f5788a41841d",
+      "freeze_block": 20746365,
+      "frozen_at": "2024-09-14T04:07:47Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x5051da1c714dbf1183ca015edcd82836d9dbb9af",
+      "freeze_tx": "0xa446b69a9d2f030f4b2254c7ba56a1a8afa115cc04650466649832e4d70dba6a",
+      "freeze_block": 25599513,
+      "frozen_at": "2026-07-24T02:09:11Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xd599ac04a1c786972b81e0fef6fb0c3e7b52f8a7",
+      "freeze_tx": "0x3bcc7e5b888e9ec104eb6d354ffb3dfe47668ef7b8a14a960e9496a665fe12ce",
+      "freeze_block": 23578033,
+      "frozen_at": "2025-10-14T19:30:11Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xcc8b73b5a7b3c88478c1a3d0eb34c7c5dc9f686f",
+      "freeze_tx": "0x244fc264e10e6ef6c4e73eeea17e8b6065e95136479c910543d41970e34cba1e",
+      "freeze_block": 25439422,
+      "frozen_at": "2026-07-01T18:21:59Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x56bf68cd5ad0cafc5e3cb7da826914359592eb62",
+      "freeze_tx": "0x1586e9e49b1822a78b472823150d30acb80dd5cf51e932c346fd98b029a533c4",
+      "freeze_block": 25439143,
+      "frozen_at": "2026-07-01T17:25:59Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xdb7ae6b7a2153fe0062be5d1d90a8be5ec8aaa50",
+      "freeze_tx": "0xea29e144b5a9670fec91fe4db012cc11f6fa0103e92bb0fdbfea8eb68d9d3263",
+      "freeze_block": 23727756,
+      "frozen_at": "2025-11-04T18:31:23Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x9acfa7136bd9ee19fc2c4517e2033705262f938c",
+      "freeze_tx": "0x7e0ae01bbd26391bbd3100686d685b4e1c5ed5f0e896f704b3e44b08edcacafe",
+      "freeze_block": 22183252,
+      "frozen_at": "2025-04-02T19:15:23Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xdb4c819257d1094931cc6d92c79f6cbc068f7523",
+      "freeze_tx": "0x8b65055892ac4fc479ad3d08703114709c4e60a7b728736323243acc28c044db",
+      "freeze_block": 26428894,
+      "frozen_at": "2026-11-16T16:50:11Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x8f75976e97f76823e75d47597eed0c3554360344",
+      "freeze_tx": "0x2d69ca40355dad2a5823ba8a5b98e4e967c89640d2fed5c35ba5cd05eb87113f",
+      "freeze_block": 25826750,
+      "frozen_at": "2026-08-24T18:11:23Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x81c483bf9bcdc0a31864ae7c1762425b67c2c467",
+      "freeze_tx": "0x9e3708bf21090d6d0e24ead022579a47cd6d71a3325124c5aba38d8fc128a008",
+      "freeze_block": 25439621,
+      "frozen_at": "2026-07-01T19:01:59Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x46ef4466249d1eb324b58be21cbadfb852dd6b7c",
+      "freeze_tx": "0x00d537d0d04b20b54f76db2dc09c2e13f79fc27cf2d7d8565c7e0948caa250e9",
+      "freeze_block": 25940675,
+      "frozen_at": "2026-09-09T15:21:11Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x2907a4de925af9434bcf176957dcbfeac49afc46",
+      "freeze_tx": "0xf51839163a6dd912ad26c4c7ee8a15a1e45f68bde3b908e673e403556ee46d7e",
+      "freeze_block": 25439181,
+      "frozen_at": "2026-07-01T17:33:35Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xc06198bd95b602889e5a770c80643b5b292526c3",
+      "freeze_tx": "0xb7068f0c93f01f4ea01a6bcc19e7695b2c10d83e66f2d8b96487505cc484c816",
+      "freeze_block": 25940635,
+      "frozen_at": "2026-09-09T15:13:11Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xbab2b54a76af17a75886762c6f23c88da6c824d8",
+      "freeze_tx": "0x23632846b0b9c88fb77a15e955795db1e61a7bc9740476627f79446d67fc2c68",
+      "freeze_block": 24742422,
+      "frozen_at": "2026-03-26T14:46:35Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x1999ef52700c34de7ec2b68a28aafb37db0c5ade",
+      "freeze_tx": "0xe130f4f5f5c576d2627a8b1553f9e8b9bb4698524cb7080a9e8c1bbf643f25ba",
+      "freeze_block": 21334301,
+      "frozen_at": "2024-12-05T05:47:35Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x0decc02236cd75eb9c9bd63930c7638702e12df5",
+      "freeze_tx": "0x6d46ce13fbd5b498981ecbbd05d00618719f9ad2b0a649c854c7297a7752df3b",
+      "freeze_block": 25941023,
+      "frozen_at": "2026-09-09T16:30:59Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x1f954c350eed5c27569cde6dee83aebb007b346e",
+      "freeze_tx": "0xa90d34e13f6a545a3474595007f22d5ae9f7dcef6b731f83c8a560464f86cfbb",
+      "freeze_block": 24857580,
+      "frozen_at": "2026-04-11T16:05:35Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x2dbdaed0c4344b884f69857cab554c8de83fa4c6",
+      "freeze_tx": "0x075cf4056b4143ae98fe361887cf954800ebd6b01bef3d50aa6cd122b4171fea",
+      "freeze_block": 22691403,
+      "frozen_at": "2025-06-12T22:15:59Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xe942adb085bdc3cd49ad2ddaea53934f12a7e0a5",
+      "freeze_tx": "0x7efd340d6441c5cc2a3a8c8d71e9a472fe1c8d151ab7e0e955ccd6fde67b07b2",
+      "freeze_block": 22183254,
+      "frozen_at": "2025-04-02T19:15:47Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x2f389ce8bd8ff92de3402ffce4691d17fc4f6535",
+      "freeze_tx": "0x1fb7af2604d2441f1c36534be0b94616e748133f7c57882d398ad681fe3c5b88",
+      "freeze_block": 13279135,
+      "frozen_at": "2021-09-23T01:44:56Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xfabfd02cd685b83cc86aea83848d69439b54c720",
+      "freeze_tx": "0xea0bee30148734fdda61024e0439c23c5384783c86059402d69882b8145e11cb",
+      "freeze_block": 25940775,
+      "frozen_at": "2026-09-09T15:41:23Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x97b1043abd9e6fc31681635166d430a458d14f9c",
+      "freeze_tx": "0x9401aa96bdda8b6470abe931dc3d29c03016a1e8a05d1b90103715e2bf3d5b34",
+      "freeze_block": 17322824,
+      "frozen_at": "2023-05-23T15:29:35Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xde787f609e75513a86d53b2a15011db78fb5f2bc",
+      "freeze_tx": "0x7548efeffdb3fbf589ac074056d1a92d7e02628fd16d02e0ec9688ad8f4b7490",
+      "freeze_block": 22341896,
+      "frozen_at": "2025-04-24T22:37:35Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x12de548f79a50d2bd05481c8515c1ef5183666a9",
+      "freeze_tx": "0x878700ce7193e0ad254bbdca6de51e97461082c01da3a4603802f71c97590155",
+      "freeze_block": 23140599,
+      "frozen_at": "2025-08-14T16:54:11Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x8be1904f7e8d196ef670835e2893be5f75c1e63e",
+      "freeze_tx": "0xa296714c7834a7de2561152868b8b3fb9dcdb07a3c9ea7e8076897a8a8bd8293",
+      "freeze_block": 24951634,
+      "frozen_at": "2026-04-24T18:30:59Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0x8a0a9106cd583c9cab28dca615f2dfc75eccc5ae",
+      "freeze_tx": "0x973bef2b46eb28607a007781c4d90a4d4e4480cd6d70ca7db88d06830efaf20f",
+      "freeze_block": 19943488,
+      "frozen_at": "2024-05-25T01:02:47Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xad7878093441e98402a966c47deee528b0a14110",
+      "freeze_tx": "0xcf84c624ab852d8b27cfe692acf96af899d2c893ec42a1d93ec91e8b4736c54c",
+      "freeze_block": 26251090,
+      "frozen_at": "2026-10-22T22:17:35Z"
+    },
+    {
+      "source_contract": "ETH_USDC",
+      "chain": "eth",
+      "address": "0xc73da1e718a4fbd1ce023d412ab34433922fba58",
+      "freeze_tx": "0x196f10dd43ae7c3e4e4c8132ce0a9b81bf1c4a9ae4c05b756df5847b116ab6e1",
+      "freeze_block": 25438706,
+      "frozen_at": "2026-07-01T15:57:47Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0x761edd5e4546229a0bd35ae99b4d3d01cf4a3510",
+      "freeze_tx": "0x1cb2e2f69f340380ebcad03b4cdbad23015f52fc394143e71b8f184e445fe5d5",
+      "freeze_block": 26329967,
+      "frozen_at": "2026-11-02T22:05:11Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0x05e0b5b40b7b66098c2161a5ee11c5740a3a7c45",
+      "freeze_tx": "0xf323f608526083d98ab148b15274f82e311537a4c2fbb413fb50b63a1f2d2774",
+      "freeze_block": 18931251,
+      "frozen_at": "2024-01-04T03:20:47Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0x308ed4b7b49797e1a98d3818bff6fe5385410370",
+      "freeze_tx": "0x93b7ec51a4721a21322daeb50b8bd553f6dc2876d5ddcbbd1774323ddc2c6e6e",
+      "freeze_block": 18931359,
+      "frozen_at": "2024-01-04T03:42:23Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0x7f19720a857f834887fc9a7bc0a0fbe7fc7f8102",
+      "freeze_tx": "0xb127cb581d15e03bc549a20f87dcf4dafdaf4f1e97014974ad3ecea2189dc2c4",
+      "freeze_block": 18931540,
+      "frozen_at": "2024-01-04T04:18:47Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0xa0e1c89ef1a489c9c7de96311ed5ce5d32c20e4b",
+      "freeze_tx": "0x73168e55b9219e9f88c9109143d29a9735db07a2b78f0b11e83003f21c74dc62",
+      "freeze_block": 18931685,
+      "frozen_at": "2024-01-04T04:48:11Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0x2fc93484614a34f26f7970cbb94615ba109bb4bf",
+      "freeze_tx": "0x090062cfa896524edde02e34f931dc0258e57eefa8985615b7f5148283b7dfe0",
+      "freeze_block": 18931349,
+      "frozen_at": "2024-01-04T03:40:23Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0x8ac5381fcd9e7395d14e02986c344aada84b4bc6",
+      "freeze_tx": "0xcdb0e324ad779ef6a53dea2a096075215f30eabd12ce2446c4bc6685eb2785e4",
+      "freeze_block": 25949250,
+      "frozen_at": "2026-09-10T20:02:11Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0xd5b58cf7813c1edc412367b97876bd400ea5c489",
+      "freeze_tx": "0xa3165f0315deeb6d5869987aec17f185d284f7147924924b731f41cf3d46793b",
+      "freeze_block": 21949977,
+      "frozen_at": "2025-03-01T05:38:35Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0x4c198b3b5f3a4b1aa706dac73d826c2b795ccd67",
+      "freeze_tx": "0xff429bed52e41d8b7a1818ffd84a1a47187ba48878c9aa1651d84e138c8d6e85",
+      "freeze_block": 21949883,
+      "frozen_at": "2025-03-01T05:19:35Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0xd96f2b1c14db8458374d9aca76e26c3d18364307",
+      "freeze_tx": "0x9701bcb63a5e804a79629b42f07dc9f5c538291c884a84723ae81825e1115951",
+      "freeze_block": 18931754,
+      "frozen_at": "2024-01-04T05:01:59Z"
+    },
+    {
+      "source_contract": "BUSD",
+      "chain": "eth",
+      "address": "0x0330070fd38ec3bb94f58fa55d40368271e9e54a",
+      "freeze_tx": "0x4c68241514f5fed221aa89348f3911c0fa823f802dcf8cf828c55cc3f6df522b",
+      "freeze_block": 24685614,
+      "frozen_at": "2026-03-18T16:38:23Z"
+    },
+    {
+      "source_contract": "USDP",
+      "chain": "eth",
+      "address": "0xe9bc552fdfa54b30296d95f147e3e0280ff7f7e6",
+      "freeze_tx": "0x33abe5ab2b527edb2eeb6718ddacc4d15144f3c6fddac0efc264e59f50778e5c",
+      "freeze_block": 21947626,
+      "frozen_at": "2025-02-28T21:46:47Z"
+    },
+    {
+      "source_contract": "USDP",
+      "chain": "eth",
+      "address": "0x5a356f037e05f3a26199b147865d91f85bc6d589",
+      "freeze_tx": "0x7e02a93cb06342939ec8630c0d29c4f91a7e6a1270c5807fb7307e26a7a16c2f",
+      "freeze_block": 26394442,
+      "frozen_at": "2026-11-11T21:41:47Z"
+    },
+    {
+      "source_contract": "USDP",
+      "chain": "eth",
+      "address": "0xa97bf7836f8a08f9ed91d41453d371493fae8d10",
+      "freeze_tx": "0x0227e7234c812c0c352d6a90c42bfeb75f8a06978977f85b958021cac61abcae",
+      "freeze_block": 26301890,
+      "frozen_at": "2026-10-30T00:09:23Z"
+    },
+    {
+      "source_contract": "USDP",
+      "chain": "eth",
+      "address": "0xf0a16603289eaf35f64077ba3681af41194a1c09",
+      "freeze_tx": "0x33abe5ab2b527edb2eeb6718ddacc4d15144f3c6fddac0efc264e59f50778e5c",
+      "freeze_block": 21947626,
+      "frozen_at": "2025-02-28T21:46:47Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5996729ff9a3a3ee717b8ee709772ff4880484d8",
+      "tron_base58": "TJ8uNRcDwM7Jz8Fzhbb4JsNrHeiE457bU7",
+      "freeze_tx": "b2790b50e8fbd150e6a27570660ba9135b2a0483313b2264468731246b9ab011",
+      "freeze_block": 76015226,
+      "frozen_at": "2025-09-24T09:23:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3561db5301b2d629cb90cf3d0b7ecdb1b343d4d3",
+      "tron_base58": "TEqU3Rxk9axNqzZ1GjMwXvJhjp4voQRaTE",
+      "freeze_tx": "d0fd0756280aab7666ce507b8acc7ca0de33147df807bacf3acdc543f5b9d226",
+      "freeze_block": 85931755,
+      "frozen_at": "2026-09-03T20:22:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x989359bec54030087571db76eeb5f14f9e6e3be4",
+      "tron_base58": "TPsxEKAwZnNcenkchJK84YbYHjvnboemD7",
+      "freeze_tx": "acddf093f0a9dafaca219360a86539d5c8cdcde0ae2814666fd477d9e04efec4",
+      "freeze_block": 75977648,
+      "frozen_at": "2025-09-23T02:04:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x63ebbea1f8b5f3bc7deb78e45995c1ed74929b16",
+      "tron_base58": "TK5YJsn3TecMNyCntgzQiSFv9tr3Kjfg4D",
+      "freeze_tx": "56444a37a63d346180eeb17cf615cb6fe834b81fc70f227015aba7c926f22ad1",
+      "freeze_block": 86526336,
+      "frozen_at": "2026-09-24T12:02:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4ca70077481b5d2192ba41f2f97debfa6996b453",
+      "tron_base58": "TGxWR8NpshHueun7scZzneJLPJz8p7q8n9",
+      "freeze_tx": "36039fd308f71763abba9ca4aab9838154fe0318a3bbe2347f1657fa6660a441",
+      "freeze_block": 73882830,
+      "frozen_at": "2025-07-12T07:52:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xbfef6e748933f790102a0d252a04570c667a0693",
+      "tron_base58": "TTU4tgtMEpWGp2i4iSiqSrShJhxEGd9ay8",
+      "freeze_tx": "791d5b8e47c198b53fb9d2e7fd1bcfd648edd6faedf2eaab21a9651a20cb6474",
+      "freeze_block": 85269484,
+      "frozen_at": "2026-08-11T20:18:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5100972c931f0a0406bdd5f628f24f59ff2696d7",
+      "tron_base58": "THMWSdMSmRhCtm7vTpSaqwetUqdA9fjJAA",
+      "freeze_tx": "4562c355986a30dd33b8ce7f82b0e3e6c9d01e4a6c742d22fac2897fa8c9035a",
+      "freeze_block": 71050913,
+      "frozen_at": "2025-04-04T22:36:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x007016912433ed405f96398679513bca184fedb6",
+      "tron_base58": "TA1XH5cYApGKkdSuxuRDWzzkFD1fjJ3W6L",
+      "freeze_tx": "cc9f33678104c1cea47c6ee2188543347d4336763f952a8bfa82a7c5e18487c2",
+      "freeze_block": 82161741,
+      "frozen_at": "2026-04-25T21:39:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa5cd596728ac03d62b1ee0883e79cd8d41cc6511",
+      "tron_base58": "TR5tVdF2R4bTmixJ5fMPcoTFtPKoqD5RGh",
+      "freeze_tx": "855ac1117c089a9dee9a65d493c067e3c8960b2913248582ed0ba925d5eb09d9",
+      "freeze_block": 84086425,
+      "frozen_at": "2026-07-01T18:04:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf8a97f13b5aaeeafd9b30a632ce1d748182c02c2",
+      "tron_base58": "TYe1dSzLMWVT6pyt1fQ98YZ2HLnMsfL2aR",
+      "freeze_tx": "266cfc69c4e9b664c090cadc090337be685dfc48c82eb5d95a40b9365ef64b8f",
+      "freeze_block": 82476394,
+      "frozen_at": "2026-05-06T19:56:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x09e880b60038c598ce067995ca41693433105364",
+      "tron_base58": "TAsbcMvo8SDNG6K5rT3eo2LvZBTtXVabZ2",
+      "freeze_tx": "8bfccfa54de112569c92d0ca1dddf0e12ede2e20ae3d51c8af5407381b33022f",
+      "freeze_block": 77499430,
+      "frozen_at": "2025-11-14T22:34:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x38dcd77f44252afa62211cdfee07e3c04e3c7cc7",
+      "tron_base58": "TF9sQA71jifU2U2Qcs6n9wNVfodDS8HXYM",
+      "freeze_tx": "e142bee932e2f314c2f4611eee40ce487028c8bb7a13517dddfd11ab1bd54206",
+      "freeze_block": 64995753,
+      "frozen_at": "2024-09-06T15:01:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xba48bac49e4fc51460d35f4f255ef2a4535c2034",
+      "tron_base58": "TSxBp5UrV7HDp7Zu5EJc1ijDWGWhwsfBFK",
+      "freeze_tx": "78a4c53a2c2416b1a1241ec7e17cf9d92c6d37d06967fb154512cb228fa7fa47",
+      "freeze_block": 70847041,
+      "frozen_at": "2025-03-28T20:39:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9d043fec05b6b5359edf65900ab63d7d16e7de3e",
+      "tron_base58": "TQHSBT5JcJAGTtpyUtwJitt37yqJubnDKr",
+      "freeze_tx": "83233f966ab0c37dc554ef887771cb9b141cf1293c96ded5e8c5ff6665a8d277",
+      "freeze_block": 76488815,
+      "frozen_at": "2025-10-10T20:09:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x791c68827e1f0401e42ee5dc6b043c6ec8b66e5f",
+      "tron_base58": "TM1ao7KDV7FmDwoj342APGJJA5mM51vrp6",
+      "freeze_tx": "1d0fafb5036b176ed845bf90ec193eddb29b730a240d44480f0b63744591be8a",
+      "freeze_block": 59751279,
+      "frozen_at": "2024-03-08T09:17:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1c1dee058b1a3c2c7a7ee4c692062bce8a4dc77f",
+      "tron_base58": "TCXsmzDSQt6fVduLpwECZ8nSS2NDJSt6wg",
+      "freeze_tx": "31ab049be52a5dc29844171a800ee4dce63bf9f28ff930f34f6b708c4810cae3",
+      "freeze_block": 75430800,
+      "frozen_at": "2025-09-04T02:12:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x79b5206b2b61dd644a4571d87768e286f962491f",
+      "tron_base58": "TM4jkAoDVF461G2jhfruCVTLNdUPmSfooA",
+      "freeze_tx": "90a82fa7f07b86d5781b59a271d639f756deb13d90d365100b450f3126427569",
+      "freeze_block": 79595905,
+      "frozen_at": "2026-01-26T18:21:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x26daac4d5a4eac9a1afefbe9a8b6d8debee9efd3",
+      "tron_base58": "TDWee23VzkYh56NpPMJFVNEAuBANh65UGk",
+      "freeze_tx": "6488af5edb67b8bd32bb8142a4b99275e5232b413fde90c3a48ec87c529bd8e7",
+      "freeze_block": 73882309,
+      "frozen_at": "2025-07-12T07:26:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x2a027d98e49eba365a9bb5c4dbfce979a56190a0",
+      "tron_base58": "TDoLNAdKftysUtMz7y5CybdZqX2Dga4Htd",
+      "freeze_tx": "f2a3cdf7e0665bf210e09d58d4da01e4b0ddf828f73b984061d5a075cdf878f4",
+      "freeze_block": 83426741,
+      "frozen_at": "2026-06-08T20:10:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf73f113a4985d3a0d307c230f65c32c1a6c292ac",
+      "tron_base58": "TYWXTS71CUvxuKZJqzwEDnPy81czymhTic",
+      "freeze_tx": "9401285c40b025a36ba0021b23a862f803bc0a748a2f50f008809b2acf24c9d9",
+      "freeze_block": 77466138,
+      "frozen_at": "2025-11-13T18:49:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x21e797bdbfd2a8d615c22413e1f3fff159069069",
+      "tron_base58": "TD4Ujjar4RwbNuxWNg5NqXKSF1XNDXSfTD",
+      "freeze_tx": "f5a604bdda26e57d1a6fc17d3098b6b2e63b9c0dde9ce4ee8c05b3fc96f5149c",
+      "freeze_block": 64728905,
+      "frozen_at": "2024-08-28T08:35:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3f8b177cc928455bddb7641ecff3e016d94628b1",
+      "tron_base58": "TFmCCQe3gxi8TPJFzDbVRjyBZgc5LUtUvz",
+      "freeze_tx": "aa4393c8c9a8a7de595c826fe6630cf5790942e04746b2965a542164f92d9169",
+      "freeze_block": 83218653,
+      "frozen_at": "2026-06-01T14:40:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x40a4831dc50ea543be37fa34dc1677f8479fdb00",
+      "tron_base58": "TFs1KqoojE2gSwhrY8wSt2oR5zAtUVVpBc",
+      "freeze_tx": "6a8979f6be9dce52d560ea49f207b66c4941272414f5185e982332cbf6d6dfb4",
+      "freeze_block": 82009998,
+      "frozen_at": "2026-04-20T15:10:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf172584249ce9749c1aab5fd9f04c369b894867a",
+      "tron_base58": "TXyrq6xE49dJhBGBYRH4pZzq9QdXNKWUQa",
+      "freeze_tx": "d41d6a4c7a5ad1830688429b5d4231fa435233f3f4906a78822f362af613f261",
+      "freeze_block": 23189014,
+      "frozen_at": "2020-09-11T16:39:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x528cb0ae29a40aa6853b0da31a1133e3557d1f97",
+      "tron_base58": "THVgx7V5LxnenqsqK1XdtXZZ1fQCMAvEuN",
+      "freeze_tx": "3061dabb8c8855f1e3aeed1b69b5e7addf5cdf9c935cf18c6ebece39a3763b6d",
+      "freeze_block": 74010791,
+      "frozen_at": "2025-07-16T18:32:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x86f2121fd1664930a36e3bfcb17ce0b5789d3b3e",
+      "tron_base58": "TNGjY8y75y7pRhkrhbCmaY9wrMFShQoQ4S",
+      "freeze_tx": "e88d34cd51d86ec038baacd1c5ebc30d46cb43a344cd1c0a6d1832b3edf02b50",
+      "freeze_block": 60219345,
+      "frozen_at": "2024-03-24T16:50:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd7b05027d50c68c26caff14ac3d62bf9f05c290c",
+      "tron_base58": "TVdfVka6UVZa3eahCVSFD7YcNY9RPoxtQ8",
+      "freeze_tx": "fb1aa48f642117b9b3c2904681f8dda46c27d5ff23a85c33b3453686aaf9ec5c",
+      "freeze_block": 68780764,
+      "frozen_at": "2025-01-16T02:14:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6c128a7d2df12bbe3cad3d09df3c0101ca954273",
+      "tron_base58": "TKpeC2TsGnjwC8kRNBJG7h64DYwTjFLGoz",
+      "freeze_tx": "33256affef22870c164fd92867aaf81e8edfa8575b72e586c2ee09e8a449ad3a",
+      "freeze_block": 82009983,
+      "frozen_at": "2026-04-20T15:09:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6556da8cfefd8ef571d1848a9b265d75e9d1147a",
+      "tron_base58": "TKD3J8pnWJs2ttsK3eBWkM8Z7M6uUvimRw",
+      "freeze_tx": "e3679be6d6e7d8459f8627e9896a009655bdd908dd5a029e7265f37853e2d7af",
+      "freeze_block": 70808744,
+      "frozen_at": "2025-03-27T12:44:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9faf6a16256b62a7c15c464c630032a292886bb3",
+      "tron_base58": "TQXYaZo7Ngw8kFdohJ8i23j3PvEay2vCrL",
+      "freeze_tx": "186c2143cd2764b58cf5723e494bcf20d9474a5c4a10a288cf0532ddcb36d6c1",
+      "freeze_block": 71737723,
+      "frozen_at": "2025-04-28T19:24:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xcc9dce062679c947bf81d057ffacfe36506d0749",
+      "tron_base58": "TUd7tfHJ6xgUGaerBuncWohqta54nEmpKU",
+      "freeze_tx": "5034bbff14f5e7ab3ddf2ddd2b46ce01450454f1ced00e4e37c53c850b8faea6",
+      "freeze_block": 87738297,
+      "frozen_at": "2026-11-05T14:22:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xbf88f06807621896285a8361f6d554f6091f362a",
+      "tron_base58": "TTRx7PkzEDyZAxYaWo9yeCCFPkCwyiffje",
+      "freeze_tx": "1bf2aa2b8480cf58839260833509449040d10286cee83741f54bd01e0e2ca0a6",
+      "freeze_block": 85408997,
+      "frozen_at": "2026-08-16T16:35:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xdf74cb61da72b418b59afe0cb37045e3cdf17522",
+      "tron_base58": "TWLjbrknVTzgE8hkGSVcr4BCKxf7qMSDtp",
+      "freeze_tx": "52af07c66a69f9e1c7526ea1d018e6467d3ee0eeee1b43a5d8c6e084d39fe622",
+      "freeze_block": 77466120,
+      "frozen_at": "2025-11-13T18:49:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe66b6c66daab4e5d056d9cfd6bd74791ca3075b0",
+      "tron_base58": "TWyZ76GxKpomey1FPzvpxr5SqpfUrrrdvQ",
+      "freeze_tx": "845760dd317f9b2aa503eb0b24ae260e100ad68d646dc21d2f8707e111ee12a2",
+      "freeze_block": 84830898,
+      "frozen_at": "2026-07-27T14:41:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3d77fc79cbe02285f2f1e393a5682f96db1b74ed",
+      "tron_base58": "TFaDxYsVjCV1vsmXuK75hjtsZQrHD4MYnA",
+      "freeze_tx": "885070f1b1f9dfafd0c88700f99a084d744258a611bef3ec707c6d4a7028d2f5",
+      "freeze_block": 86211107,
+      "frozen_at": "2026-09-13T13:16:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7dd7fbfaf2cdc4fc6535bf84c3942ca0bdb2ee5e",
+      "tron_base58": "TMScCtZubvcgNykzgj1PAP4iqcUd4NMFuB",
+      "freeze_tx": "6eca27f2e67bdd8e29db447dd4fb67e9c2dc9827566684810f124f51580350d5",
+      "freeze_block": 86011847,
+      "frozen_at": "2026-09-06T15:08:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x72796707f362ec8922452404a97f9960bc23d928",
+      "tron_base58": "TLQVU7qxgLxjG6wLK3csBs8QLiWVo16Kv4",
+      "freeze_tx": "7b9c5930555e5c5fe654799f289e17e78c3f7199e5175219bdaf4632fdb8ee60",
+      "freeze_block": 85184362,
+      "frozen_at": "2026-08-08T21:20:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1f2e09f9107ffc3dc2c9cdbce20ec522a2bd6707",
+      "tron_base58": "TCp56rAiL6FQj7o5hoY9yY7rHviB1CLjsa",
+      "freeze_tx": "0acd6e37fcc9c4d78a3170329c57d0a7f356a8424e699e88e2c898087001c548",
+      "freeze_block": 74673656,
+      "frozen_at": "2025-08-08T19:04:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xacd9c48985a115478a7d82838ebe16fea362ef88",
+      "tron_base58": "TRjA6pYTxihRWmCZ8XgywFYRtW8mf1TFDr",
+      "freeze_tx": "2f1cf6a6434841fc17fba210416adc5d28eeb51051ab9cf2c16d63e2d8f7d7f4",
+      "freeze_block": 77499433,
+      "frozen_at": "2025-11-14T22:35:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x0a9a3bbd600abbcfe17b1713b7068c3fe313eb44",
+      "tron_base58": "TAwGXJHoN1YmY7iG31ogqaqVRnPChx6Pr9",
+      "freeze_tx": "74d8de5ed75e887c5d4177438a5fae9ca7ede49a571232ac35488c29fb3903e7",
+      "freeze_block": 44833793,
+      "frozen_at": "2022-10-06T18:39:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x75042f8ff202f7abf162aec8f30a4a91a21751eb",
+      "tron_base58": "TLdw5LVnQLAYuXU4TR9rgBWCsvP7bZxeZ7",
+      "freeze_tx": "e68c15695be4eb7752c282dc972ff3012dcec6c6a047e123d4b450834c9f164b",
+      "freeze_block": 84319639,
+      "frozen_at": "2026-07-09T20:28:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x701f00ebbcd4c09d6a7a9f89023cbf400c318504",
+      "tron_base58": "TLC3piEQ5n4tcULKHqLTGhmYFUyHUVSxck",
+      "freeze_tx": "91c5949b090a82738245e349454fcdcd83d75542a07397204db4aa691be129f4",
+      "freeze_block": 84075172,
+      "frozen_at": "2026-07-01T08:41:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x03ac9f9cb9917182d0cd388202d079fe1fcc97d7",
+      "tron_base58": "TAJdpiyWa39dg8JLEBVHKGhQ3zgoqwanZn",
+      "freeze_tx": "b860bba3f4572cb3cbcaaa13eb5c6c38f68b72d7925e18e714c0959b583ce9fe",
+      "freeze_block": 78650883,
+      "frozen_at": "2025-12-24T22:29:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x22cc47102174fa9976869b3e1aba782a72131aa4",
+      "tron_base58": "TD9Ch36k9Dy6g9D5Q4HetwQkGkuYwST4ch",
+      "freeze_tx": "a014fcd7d1b481cea437be2d1c00a14bf9b8ca604b1cf21883fcbc6e478dd472",
+      "freeze_block": 73882388,
+      "frozen_at": "2025-07-12T07:30:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1c9934eecf2171ad1a1f2c666e7e134a47bf22bf",
+      "tron_base58": "TCaRTRVpR6eT39reL7LbWgGqTweQfzNAuv",
+      "freeze_tx": "fa54b3dc74de5495f2f2edd40c454d3a4493be01158c0ccc1bfad82a2cb34c42",
+      "freeze_block": 76181939,
+      "frozen_at": "2025-09-30T04:21:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7459bf3009494423705b530264464cf4d186c78a",
+      "tron_base58": "TLaQu2hjtQx8BZrqBaSoRfwk2m9uV5uKda",
+      "freeze_tx": "d4587d1e00810ded972f297d696e34127d3fe73383133a030ea35141785d5c5d",
+      "freeze_block": 69151190,
+      "frozen_at": "2025-01-28T23:00:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x20f2467a4bd226bd3e427c0e789646ec8155403e",
+      "tron_base58": "TCyQrnEnzd3f9h73iAZQ7Pekepb4obebtn",
+      "freeze_tx": "920bb5176996da3a672e1a24d0fada916d23866e572687334a8adf0b869afabc",
+      "freeze_block": 84319373,
+      "frozen_at": "2026-07-09T20:14:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x0f7d60ead80f4436e1b1d457d3f22e7c761d7a1d",
+      "tron_base58": "TBP7LPkptRCZkD1wZuEzpnhLVk8Pf74cea",
+      "freeze_tx": "51aceca56ccc624fed3dcba575474631d4db653963d48ed3e0ea507e55fbef61",
+      "freeze_block": 86714168,
+      "frozen_at": "2026-10-01T00:38:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa9208b9aaf40b33b4b6ae0d3cc17441b14729a6f",
+      "tron_base58": "TRPUBmTwXoPXiNwB8LdmdBrqE2FJuz4vpw",
+      "freeze_tx": "832b0deba0a33a13d169da475a1e5ce50dc6b0c7e91686b98c8ef4777b7a6781",
+      "freeze_block": 75959640,
+      "frozen_at": "2025-09-22T11:03:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x22a006306396c01fea340fa4c180f10758cb37d9",
+      "tron_base58": "TD8HgFo5zGFSBZVkeD2EMCNrGBNTTMVnwy",
+      "freeze_tx": "00056918df618a88f64e0a943a96eaa7f9fde06cdfc529549ffde7d1411c1368",
+      "freeze_block": 86103799,
+      "frozen_at": "2026-09-09T19:49:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x787733766d0979a71c2da838ed0ca2de78948e51",
+      "tron_base58": "TLxAtJzreTPWBHeiqxUSyu4fi5GjKRaoFB",
+      "freeze_tx": "f4e3d4292f2b234517232a92b53a8ecfa6b16c4caa78882fdd07d48229c5d290",
+      "freeze_block": 71737711,
+      "frozen_at": "2025-04-28T19:23:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8e7dd17105d73b1bfe9468051f0cddb7e83e82bf",
+      "tron_base58": "TNxdgJ7gjXUU1Yxx4X1GooHaerNqNbYUBr",
+      "freeze_tx": "5956bfa9c63d0a0e57b15b4f79c87c592891904bc7e3659356a53d419cdeb3e0",
+      "freeze_block": 44833911,
+      "frozen_at": "2022-10-06T18:45:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf6e176b9e0b4dd303b4d3ef7ab7da31174671f36",
+      "tron_base58": "TYUbKkGtUQEcCFkhHLBytP6gS7Jvtzaf4u",
+      "freeze_tx": "3dcf4376b829c9094283f4b7ff8ae60016920254d9919c91c4b6fde506a2c345",
+      "freeze_block": 67100083,
+      "frozen_at": "2024-11-18T17:13:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6d55199481a6237b54e46202790f84ece42e8fc1",
+      "tron_base58": "TKwJbpD9tJ7Hay4BxirQymmhJuTRQnHyAA",
+      "freeze_tx": "e9ce7f75b487a7bd6b2b2301bed9e17cc4ef7ddc2d1b43be191da0b478f32f9a",
+      "freeze_block": 73754913,
+      "frozen_at": "2025-07-07T21:14:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x42863f25b532eb8d4f3bf6f221eb5194cd36f249",
+      "tron_base58": "TG2xRLnQsPvbegrQWnhRxTqDv4PjybZGX8",
+      "freeze_tx": "bd626f9cd497e566852f3711f8aa0fddd8553d3cc284769396f3aba2d69f54df",
+      "freeze_block": 79277625,
+      "frozen_at": "2026-01-15T17:03:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf03510d722e841c14666264991e9e7df1c633fd6",
+      "tron_base58": "TXsJkB1ywY5kfbQDXtcQ7rLx1ZaciXfwEn",
+      "freeze_tx": "93abaac40d2ea8ac748cda16bf08583722e8bf989113f3e3592dd6bccc11a8c0",
+      "freeze_block": 87974074,
+      "frozen_at": "2026-11-13T18:54:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7afbea0e193cefae5e350115b0c8323df9ce593f",
+      "tron_base58": "TMBVDmoD9RNvStrVqbQpB4HGQoKqC4Biyv",
+      "freeze_tx": "88cedb6723f496b24db6bca646c82453f557cf8453ed9437e83a05f98929785a",
+      "freeze_block": 44833719,
+      "frozen_at": "2022-10-06T18:35:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf064109090e30203afffe233c9acefdbeee78099",
+      "tron_base58": "TXtH3iUipk6DZnYNu3kgjDsnSSLHLz8ZZU",
+      "freeze_tx": "5c0da39262303c4b06176c23502d35112824b88fee84632cc24f7360e22d1bd1",
+      "freeze_block": 86060966,
+      "frozen_at": "2026-09-08T08:04:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd005d7260c6b6efbbc0d428ca1c6371594e66c85",
+      "tron_base58": "TUw8Ym1HguUpzsY4fTfxANNR6x575TM86D",
+      "freeze_tx": "312d60283e0abf9ed6ea44a08270138f489492f397f5f13783aeeb41788917bd",
+      "freeze_block": 73882383,
+      "frozen_at": "2025-07-12T07:30:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5f38ab155482f7d1200507d1889b185e2f418789",
+      "tron_base58": "TJeh5fXJttbypanF2FMzgu42yqXnc5BuWw",
+      "freeze_tx": "2749700ee7846fb14da6ac9048ab49ff4542b1de8bc036eeaf71de5742d64dde",
+      "freeze_block": 85184360,
+      "frozen_at": "2026-08-08T21:20:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x2ec60514b15a127af5f616ada7635a10dbf4cb9c",
+      "tron_base58": "TEEXJYUAMupkXW2dx9V9WDkjKcckjkP5hi",
+      "freeze_tx": "5c9b046e9ae5f5f93cfe2517a6df6594f1bab4aeca2cf514e67e9538f823fb44",
+      "freeze_block": 82411924,
+      "frozen_at": "2026-05-04T14:12:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3053bf5f59123a2c03513e2a490583d4bb969818",
+      "tron_base58": "TENjm9Zyn4McrqQmLzhMvNNX6oFj85tAoW",
+      "freeze_tx": "945ba0dc44a3e2bb81145a006fa5e078eac5343ab558fd85f45edd5fda745762",
+      "freeze_block": 63706278,
+      "frozen_at": "2024-07-23T19:51:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xdbbf742737803972e6b08c57d0e0a8a45af6ff7f",
+      "tron_base58": "TW18LWQPoAddph7xW7hmbJMhE1S23rLLhv",
+      "freeze_tx": "a5a05149fbe9c52b58ad096866edf434cbc2b87f372f5e9bfed8254fb554b54a",
+      "freeze_block": 65281464,
+      "frozen_at": "2024-09-16T13:14:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xb6316bfd7b9b9895362370b13160a9d7f62bc90c",
+      "tron_base58": "TSaZBrvUtmM2jXsUZKCdo7QpgMBv4p424r",
+      "freeze_tx": "e06606f9244e9887f318333374b0576049e1acbc0cf020e40b2d29a167b39f60",
+      "freeze_block": 67985748,
+      "frozen_at": "2024-12-19T11:32:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd7f46b8c2c6776addc44616400caf41b0099bcc7",
+      "tron_base58": "TVf55uhHKkheP2JLVKTNP9PydLMjx16AzY",
+      "freeze_tx": "2c04e8ae55f0de8ca16345cb79a9345bcf06a604336fe1ad43179725522f15ac",
+      "freeze_block": 71611867,
+      "frozen_at": "2025-04-24T10:29:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd22f0af909be9fddd0d332fe4e2b7fc95e3ea82e",
+      "tron_base58": "TV8ZFwQJTEkFs8AxxLkkKUhEdoRaEw1qy2",
+      "freeze_tx": "bcaf6dd9bab0ac0dfdba2186829503d878652ef4b6b18bfba12f051f706f10d9",
+      "freeze_block": 67589243,
+      "frozen_at": "2024-12-05T17:00:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xedc67686b0494e09ab7585ad457d73a91ba3267a",
+      "tron_base58": "TXeStyQPRa22wfALBofB9Lk74bp5fyRgem",
+      "freeze_tx": "77f22cac758eab11af4365773fd13c509617ef4482e2e0f4198ac2dc7a243d1e",
+      "freeze_block": 84138862,
+      "frozen_at": "2026-07-03T13:46:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1a623b85e5e1e934c3f07b5b4d1f2251aaee05da",
+      "tron_base58": "TCNiFMuESR8jjua2oJP6Di3pgVCa4TGsDN",
+      "freeze_tx": "a9725f7028393afb33a5bdd065feb7619c708a6bee36a67fbdeb894462f00636",
+      "freeze_block": 67185192,
+      "frozen_at": "2024-11-21T16:10:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3107901a017c4417a9393e6939727b2f91e3b035",
+      "tron_base58": "TESTAwMbTsyTeAzkA8qNkHn6yLJ4tDvPqe",
+      "freeze_tx": "f31a13d3ffa32c4dd8454d483ef2ed0fc031567d7aefcc39cd64dc68e9a797b9",
+      "freeze_block": 61082757,
+      "frozen_at": "2024-04-23T16:46:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1d5024eb535a6172029878cc41086809b2c30f1d",
+      "tron_base58": "TCeCc94bcYiooTuGsHojDCUNbdneK2qgn3",
+      "freeze_tx": "c8917324f22329ca6ad9627c66b0a10bc47e7a596cda5db1ee7a3dec7234b919",
+      "freeze_block": 71416505,
+      "frozen_at": "2025-04-17T15:38:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xce2ebbccbbfaa78ae9163db9718178d463d86fde",
+      "tron_base58": "TUmQBgZvBuqGGyRi5Cjqh8aMj1Xt8jrz9v",
+      "freeze_tx": "15a29b8baefcce82083a2b491f5f6aec909d1e258ca37a433e29d9ded004a1ee",
+      "freeze_block": 82238857,
+      "frozen_at": "2026-04-28T13:56:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xad99b44ef6ce5914b3c0e4a47963cacdd51fb7b7",
+      "tron_base58": "TRo82ovBQurbbqEFcPL77ZQ2QWuj9BXct6",
+      "freeze_tx": "2d397ead55b6ec4467d47e25df367dbfbb5b146b6b1df7ae28870bd16244403a",
+      "freeze_block": 87569758,
+      "frozen_at": "2026-10-30T17:51:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x36f0813af44ea7bf39b18a7deeb3de0f68712ead",
+      "tron_base58": "TEyhbz4ohzVLQWGmsWjTKqLL1vHMjUG2Fc",
+      "freeze_tx": "80e4e015d599d30fe41659bd20c329faffcb0deaba93854e069e1c4d8a504806",
+      "freeze_block": 85269474,
+      "frozen_at": "2026-08-11T20:17:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7e1a8fcfb10b511fafcd61c6aea7ca8e28806430",
+      "tron_base58": "TMTyxmoY9Psov5gDVN3BXpzGj5i1yZs6z1",
+      "freeze_tx": "8db5d50b0ec8e74e87cd569aca20e2d025dcf83d8191017f6cc8531f56cd4f2a",
+      "freeze_block": 85156270,
+      "frozen_at": "2026-08-07T21:55:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5fed14c93e5aecae5629e593c6fde09d120e4960",
+      "tron_base58": "TJiRCyPwmwGtgp3MhzDHuALhR9evjwUt42",
+      "freeze_tx": "bc08e3e1d8410180d662a592043b8349b09dc1a985d2bf11091286830bb46b35",
+      "freeze_block": 73882353,
+      "frozen_at": "2025-07-12T07:28:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5f104f7eb5edd2ec15bcb3aa1da5ec78dd559e57",
+      "tron_base58": "TJdrjZKzcbXkmGy3Sm9RQNK5QGRMK93jf5",
+      "freeze_tx": "993a19b78bd1ab86813b6b38df417856a712d2296f835dc65b8497bde7af0740",
+      "freeze_block": 87345335,
+      "frozen_at": "2026-10-22T22:45:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe4fdedaef0684413efc228e9d7ab1808f38dee5e",
+      "tron_base58": "TWr1G47DtfvPZ1QAH3RgV9c6SkSSe8a9hS",
+      "freeze_tx": "d684a3224b3a1373f4537a3d1692ffeb97ce3af0a2902b0c397ffc78078ab7eb",
+      "freeze_block": 60684350,
+      "frozen_at": "2024-04-09T20:29:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x464da77310220c0c1596f8339129907b16cd896f",
+      "tron_base58": "TGNwKzHjYvYP2SwsrmCYrRRvCRdxQgLq1w",
+      "freeze_tx": "62070b7665bb8203aa7b014f4c9c943cdde555dc33496c117c964e8e60504232",
+      "freeze_block": 84074389,
+      "frozen_at": "2026-07-01T08:02:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd722ef0f54283ef9d6902d028348985e9685c99f",
+      "tron_base58": "TVak8YhqCcur9w3bJgyW6Suohqp6b4aawx",
+      "freeze_tx": "676ec1839571d4fd5ed1628d30705afd5b030770965c2ef16eaea3da54f9944e",
+      "freeze_block": 59104811,
+      "frozen_at": "2024-02-14T22:24:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5be6c1cde8360c0afdbd28d0122624a414e8bea8",
+      "tron_base58": "TJM8vo9C3VmW91kiXcHsrQevnrZShpyrcx",
+      "freeze_tx": "1f8c326e028109c7d1c854edf4da813d47b6f9eaf580da156c7c3edd62259541",
+      "freeze_block": 66794944,
+      "frozen_at": "2024-11-08T02:52:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8e82f2373e05afd72e28cf65c222e036ea9d853d",
+      "tron_base58": "TNxjpbbaUoo9SKBegRFLcaZCYwwtNTt9Hh",
+      "freeze_tx": "e35af540f04d882153dac0e2a2801aca36648382fe6b1013bec90cb8bf7ecacf",
+      "freeze_block": 83657244,
+      "frozen_at": "2026-06-16T20:18:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xebd14285670a89bf3db87f58be88ebe0352abae3",
+      "tron_base58": "TXU6UmWmtNEogBS9QGpgAR9AhuCZYnYhTb",
+      "freeze_tx": "c526f4a48ce48a7e4dca54ddcbb97a04e3c90c6aa7499cb8d759a1cd4cc23ab0",
+      "freeze_block": 87770245,
+      "frozen_at": "2026-11-06T17:00:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7eeaf4b40864f6107d37f5287ffec8f0229e6c78",
+      "tron_base58": "TMYHcFSeoyNWNKL7eYmNf67wJccuP8UFxn",
+      "freeze_tx": "29cc3ab5e7be1250d531ff031adc86a50492eec53d9f5e735395bc17cc72ea89",
+      "freeze_block": 76181940,
+      "frozen_at": "2025-09-30T04:21:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x251914e3c362182f868b05994af1275d57fe4f63",
+      "tron_base58": "TDMN3remc5BzjzXUyxkdNmJ7VrjZJs6whB",
+      "freeze_tx": "a96aebe3308ce61ff424bff670ec4a453d49676e21fcb13f2f032a396928856d",
+      "freeze_block": 80024046,
+      "frozen_at": "2026-02-10T15:22:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe26ac4fb1d786b9dd27f5652207d28dca78e84b3",
+      "tron_base58": "TWcPctFz4dpXoZVAR67xs7gHLkLhoqapKw",
+      "freeze_tx": "1cc2885f2e2a40adf68d15e37b188f25dcaee085a43d9ce0167161d1d5b66e0c",
+      "freeze_block": 73754906,
+      "frozen_at": "2025-07-07T21:14:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x30cb5e25dc29d4b2185796e833d7bb1c6c3aad43",
+      "tron_base58": "TERD4WMUxRoZK5Kf1mEbh2fhcE9dZbXZYj",
+      "freeze_tx": "d72585448e6f5c9c68be8237e922c1c4ab85aacab05792c0ae5361675371d229",
+      "freeze_block": 77029643,
+      "frozen_at": "2025-10-29T14:58:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x18529b3e9345f6358b95f5e1f7e6e22e89f8fc22",
+      "tron_base58": "TCBpBFuhUMf5U3EJcq6GWUodtYHRCgZMZK",
+      "freeze_tx": "79fe887e05b06227f6a840f83b574f07a3b38829155f47043d46356eeb0e6bde",
+      "freeze_block": 66173853,
+      "frozen_at": "2024-10-17T13:08:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x0759b6ef11902cb239d1bcc04799747c12cda554",
+      "tron_base58": "TAe5Ct2D3F9ZyRHQ3waRXrN53tNBXQzuqY",
+      "freeze_tx": "d04783f09743b4ca767039da1a5956790e59f52acc882fedc697a05ebb0a9241",
+      "freeze_block": 72243548,
+      "frozen_at": "2025-05-16T09:05:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x2e1b4779a5c8cbb5e8a9cf7e5537b80ce90865eb",
+      "tron_base58": "TEAzmGvAA6dWAh9nM8mnbMX4YgVi41SEob",
+      "freeze_tx": "8feb07218b9228a8a4f4f83bc8d36b04b26aeffe8c89f234c46c2fe29f1ce70c",
+      "freeze_block": 75959680,
+      "frozen_at": "2025-09-22T11:05:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x77d157023bb818f2c6b3ed30a5d33475eff22165",
+      "tron_base58": "TLtkC5Pgctg2KMcfg2LBok3Mi2dprVc8WT",
+      "freeze_tx": "a5946fcab46b574c2f94ee3b1f005a838cec50cf953faf43688b4071b6f3824b",
+      "freeze_block": 65919260,
+      "frozen_at": "2024-10-08T16:54:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x533f7bbb961a7679ab9fb8826e82b3e915f21e1f",
+      "tron_base58": "THZP8szu5TQZ8Lthd7EcZdZWxcxxKhGsmP",
+      "freeze_tx": "eafa4a3aa0a8732054f596935aa61456a091087c8e61dfe9abf3889b1ddbf879",
+      "freeze_block": 44834187,
+      "frozen_at": "2022-10-06T18:59:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xcfce6c78f595132a83e2ece589192644fbee70a3",
+      "tron_base58": "TUuzALeArAkJPyLfZYD26v7mV3HS9hyWKh",
+      "freeze_tx": "d519f36705820b875143d1912f1f6dcb3e1c31132340779cd57a7da4d64715ca",
+      "freeze_block": 66754246,
+      "frozen_at": "2024-11-06T16:57:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf7129aa68cd1b4032eaeac84a167182355505f62",
+      "tron_base58": "TYVcC5Qykcx4f8YdNfxF4zeARyg34QzbiC",
+      "freeze_tx": "a74d4e28773e1855c3fd8d17dd9d4754de1621216a635a5cc2a523d1bad848b6",
+      "freeze_block": 80635643,
+      "frozen_at": "2026-03-03T21:32:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf4cce9211c327879c36a1c3442d175eed3ad0e44",
+      "tron_base58": "TYHbMJpJEeXuHuJAujYDzYht1EJf6gaf5R",
+      "freeze_tx": "ec5b3e80de0e80e56b2b5895979bda901cf5f30758fc1384a4018bd36a75b6d1",
+      "freeze_block": 73882879,
+      "frozen_at": "2025-07-12T07:55:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6d2cf8f5de3017149e14a043bf44a1e9a159325c",
+      "tron_base58": "TKvUXiHow912c8HPCpwrrdoz4z47NWwL9D",
+      "freeze_tx": "dd2bd3e261c194c0d34559ae49dd0097c68427dc62a09ac7b068613ac2ff5850",
+      "freeze_block": 60673957,
+      "frozen_at": "2024-04-09T11:49:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xcd51c8bec6e25114a5a88b53f32c3b9774273a05",
+      "tron_base58": "TUgqVr6nUoB7HaEd2BMbQFx8gkAbCFRXbF",
+      "freeze_tx": "ec655d8570a79f27c2d42f65072925c6976dd91e1d88b461ef74c1ba4c4d3bee",
+      "freeze_block": 61053273,
+      "frozen_at": "2024-04-22T16:12:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1c7d74a81e74051ab10aa55f5a334643cb250a79",
+      "tron_base58": "TCZrDF8Wcw6nmZPcdtDtiNgGYtNqcEHJAo",
+      "freeze_tx": "4ec8c9c8ad55c9910043f8f55df925581e70b3d0f78a389fa1960d13b80786b4",
+      "freeze_block": 81461327,
+      "frozen_at": "2026-04-01T13:49:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5256863ae6720aeb2cee650320fa954172ee9bea",
+      "tron_base58": "THUa4c4igVfjvHm7mxx6g9qhFNAMqC7dWr",
+      "freeze_tx": "5a55227bb1963ba96043c0d2034d7cb8c109f47d44dbed395311ec5d04c182fb",
+      "freeze_block": 77004639,
+      "frozen_at": "2025-10-28T18:08:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xc29c4df7111a39030a037a3abc8dc68c8d1d8ceb",
+      "tron_base58": "TTiDLWE6fZK8okMJv6ijg42yrH6W2pjSr9",
+      "freeze_tx": "295cd606150289dc18d9e0e4d9503adb9d1b10bde9c314158f9cfa7c9928b09a",
+      "freeze_block": 82092618,
+      "frozen_at": "2026-04-23T12:02:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x014712099a4155bca8dd1a500071a0deb0b220b0",
+      "tron_base58": "TA5xpK6poVZz22yTcCjWxKzheTxgxeji7D",
+      "freeze_tx": "95b527fb5a41793d7166cda82034bfae65faac7a7296a5519c7cb307f3127e95",
+      "freeze_block": 73882481,
+      "frozen_at": "2025-07-12T07:35:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xc81406d9ec1d377d3e2d429b86f5261090676fec",
+      "tron_base58": "TUD88ufy9Hfrgkbn7jyhSK2zg8ZfoKWHhN",
+      "freeze_tx": "a9053b95ec53a1232c5340f8b761afee4d0fe788aee974fd1ed1df0bed3d4d2b",
+      "freeze_block": 86957935,
+      "frozen_at": "2026-10-09T11:49:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x86fdbb38ac3824cde9ed905e8db26de2d7f960bf",
+      "tron_base58": "TNGyWKtFBaSfhszdKLYxDs1egyQZweS7KN",
+      "freeze_tx": "c9abd52df37cce87dd44ad7a5cf5cf453bc0c8e9fb1ce2085f03244f3823fae2",
+      "freeze_block": 42902152,
+      "frozen_at": "2022-07-31T15:40:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe84128804fb9780833b8e2df19824290d81270e6",
+      "tron_base58": "TX9FpqQEMypD2ErVFSiMUhbjs9BVKtWTmY",
+      "freeze_tx": "aefd4cc79d2e1d614f0a26dc7cd3750fda936b3b16892589482f41cb9d228549",
+      "freeze_block": 81641869,
+      "frozen_at": "2026-04-07T20:18:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9207c99a2d5e1be7655ed97635b082c887ec5511",
+      "tron_base58": "TPHLz9m3Aub6Hv5M8QcYwczqLJDCzNJcMA",
+      "freeze_tx": "34f05b7f0501fd6b86ce58da8f9ce9ddb2098833d55b5faa5311168fe29fe952",
+      "freeze_block": 76384161,
+      "frozen_at": "2025-10-07T04:55:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd7a3d34e8709312fd2847517a0801a4260011bdf",
+      "tron_base58": "TVdQY6Hxix3VW2U5q3c2U75vyJqDPHbKfQ",
+      "freeze_tx": "813956f29fb0c16ecf1aa7cc5b107f6ef46baddae60986d467302d5248d49351",
+      "freeze_block": 86916371,
+      "frozen_at": "2026-10-08T01:11:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf77e675d9c47c50c43f1c09634ebc3bb8ecc6151",
+      "tron_base58": "TYXqL8SnbzfTVuFZLtZcbjurwkbbXj6ZCH",
+      "freeze_tx": "73879583489ced6aa55b16f6819ad7e7b8db956873f83a81ba5f496ffe3d9732",
+      "freeze_block": 70581334,
+      "frozen_at": "2025-03-19T15:10:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4dc31d56ca1ebbb7ed4018cb3e05ccb8a1e12f01",
+      "tron_base58": "TH4NmdWvhUf8hnFGEiXkFwz7sALdDEriKS",
+      "freeze_tx": "addbafa0cdac1ed543f150eef60fde3e296fcd912dd9d4209ec3ef82dce6a349",
+      "freeze_block": 79665664,
+      "frozen_at": "2026-01-29T04:35:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5efff0641b80f8f9ea15d55cb9cb1a02039706a1",
+      "tron_base58": "TJdX83eW28zoiFgD3AH5WHN4k8XKBzY6JP",
+      "freeze_tx": "e4eb3dcf77413b28862775a66e09fb0d3efdc4cca7101614d43a4087cb074b78",
+      "freeze_block": 59795843,
+      "frozen_at": "2024-03-09T22:26:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x978ea9317a0e923afda942f45fbfc3793d8132db",
+      "tron_base58": "TPnZwH9jvNdLzry6dFTap3xyKojXnTQgZE",
+      "freeze_tx": "7bd46132cc2150a36b3cde6aff025664527fd71e820bedccd03df6de2486524e",
+      "freeze_block": 67589240,
+      "frozen_at": "2024-12-05T17:00:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6eee9a00e6b951db9a83ac166d0802d15cd6c8dc",
+      "tron_base58": "TL5mAVHa6u7ywZUv4XWFiskNJkq7Y4XsWL",
+      "freeze_tx": "5ed0f3c2546821419d3edf8fe7028284361b6092b0728eb0df0c3a52489401e9",
+      "freeze_block": 66816228,
+      "frozen_at": "2024-11-08T20:37:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1c6d1e07c9042f40e334692606896afa07d5e06f",
+      "tron_base58": "TCZWe2uJkkYNtwan8eEmziXUp7e3Pg4zA2",
+      "freeze_tx": "f8bccb88d7d3752c94f80d9902b7f713462bff9d26eb2fc271ceea984e323074",
+      "freeze_block": 70360895,
+      "frozen_at": "2025-03-11T23:25:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1d7bf12d46f5a4ac4b233fd59aa87ccc1bf6ed4a",
+      "tron_base58": "TCf75GcQWnbTJbatt1JeSdp6yCeohtAb5N",
+      "freeze_tx": "5863bf02704129529718974f6c145b46370daa9c8f4e8978f92dc39b8e289fa3",
+      "freeze_block": 87659028,
+      "frozen_at": "2026-11-02T20:16:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa0a8b5e88c7650506ec11b7fa019e3ebf58ac106",
+      "tron_base58": "TQchDy872mixuySePJJYW8SAein7QcY199",
+      "freeze_tx": "d620b23cf2b7f82762dca9144a226bf933daba4bd6d1e0955318ba64367b2b26",
+      "freeze_block": 73882557,
+      "frozen_at": "2025-07-12T07:38:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1be97661513b97a4b2482a0584aea64d1dd2a270",
+      "tron_base58": "TCWnvVV3B2C6xx66Q8L5CwhCY8yFmUtAE6",
+      "freeze_tx": "6e18b8ef727568170d1ec3701b1f81e36f14c3c89f1584f08ce6a8114b2b82f1",
+      "freeze_block": 80849853,
+      "frozen_at": "2026-03-11T08:06:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1812f4188131ea795b0674f801cb7562c29aab30",
+      "tron_base58": "TCAVvaJxeFhBSJZHcc3mEBLMuxvrqt4Uja",
+      "freeze_tx": "e423bb79a7d1274cb1bd637c7b9a7e9df7498404b3903866ca5d59a4d6f88e68",
+      "freeze_block": 66896011,
+      "frozen_at": "2024-11-11T15:07:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf244e024e98f2238fca0c54b8f49f64b8f91b454",
+      "tron_base58": "TY4D33GnRACD8gnXyDhLnDpbeYaT8SY55D",
+      "freeze_tx": "728b198dd5e182a6d02f4ad524a0c7819b7b59612c4255303fe9c04649f10122",
+      "freeze_block": 83218654,
+      "frozen_at": "2026-06-01T14:40:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4ef06e0e6892856a19dfe66096f3e4c7e8563ec3",
+      "tron_base58": "THAbjPG3idM7U4JcnX7Bj9MsZhzPhN8eY9",
+      "freeze_tx": "6d546690d89e98c63b3a25e707ee2b1557f2d581fe33c7d94eee939c8239f127",
+      "freeze_block": 74353323,
+      "frozen_at": "2025-07-28T16:03:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1bbc97d9b9f0fb9230177d764db3fb7633c04efd",
+      "tron_base58": "TCVsAvPZcFBDEkFHboqFQu1fEt4z6hF85Q",
+      "freeze_tx": "bc027cc170d75cf326558e3f2240a5b2639bfa2a523f9e18c94aa5179c160ec7",
+      "freeze_block": 85601210,
+      "frozen_at": "2026-08-23T08:49:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x27ac91d50ae6bce2a3ddff9dcd9c0ad767949033",
+      "tron_base58": "TDaz5tbRhQSGteG6teeLdkhm3eCCAGQLrE",
+      "freeze_tx": "735e612d2af349e8655b3949b0b2c469d96f57094e7e6adb492f39f0f587234b",
+      "freeze_block": 73882118,
+      "frozen_at": "2025-07-12T07:17:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5d2431c700a5d1a2024c444db5a7123bf90efb75",
+      "tron_base58": "TJThCjUk2xxMjz1iVzmyF1zF4o5jMGgeEN",
+      "freeze_tx": "aba55cae63288f15f65b4d631df9fcc1c6b7443149ae784a5a377811c333fdad",
+      "freeze_block": 76661949,
+      "frozen_at": "2025-10-16T20:28:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x2176daed544ec7f24aaf28a7a1ad723ab7bf8abe",
+      "tron_base58": "TD29gbJvyvJ1VZxkrQKewPWBpWexjZzLcB",
+      "freeze_tx": "2443f5b1d3c59c66c1d46493d7d3cb08a8b9d48e973cfb46b39488901d9c9045",
+      "freeze_block": 83513774,
+      "frozen_at": "2026-06-11T20:42:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x211d918cc32cb95eea5763f6464c7f920714a6c3",
+      "tron_base58": "TCzJirAovwFR8vNBJApaZnmPbncNJ1q8HP",
+      "freeze_tx": "4ac3dc5489fede1f878b70419191bb2b7266b45adf24cc6eb61245f30a06e3d8",
+      "freeze_block": 73882343,
+      "frozen_at": "2025-07-12T07:28:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x773ab5602f4b5677d010627f798e61647756bc41",
+      "tron_base58": "TLqdk2PoSSjvJbWgkqtK9RVz2Vda2qRVAy",
+      "freeze_tx": "c3aaffc889ffe5b57e461b6c4ea6c645156233b86c177e305fcb6807f8ea5c01",
+      "freeze_block": 87144095,
+      "frozen_at": "2026-10-15T23:00:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xced65f62c4dfed3bf786edfbdc0f8fa4ae2479fb",
+      "tron_base58": "TUps1SnuWpWrybHqVvTSBG1cWiKVo97CnW",
+      "freeze_tx": "870baddf7b5fcba3a94b9f3c1c630ff4653458c3d7eaded51042f20f06eaac9f",
+      "freeze_block": 73882860,
+      "frozen_at": "2025-07-12T07:54:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3d0b6db77cfa109768d42591223a7361a8b45d3d",
+      "tron_base58": "TFXyuqEQXWHsPoKzVUFuawfK4xufeAUpBb",
+      "freeze_tx": "a31f61b2b3ba20559cd5577c7ce24d9867cf0913796562da34fa1a2a6d097416",
+      "freeze_block": 80941743,
+      "frozen_at": "2026-03-14T12:42:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7cff7aa60fb81198620b96b17b296b12cf7e2398",
+      "tron_base58": "TMN8qqx7Lbxy4RypwWrpS1cJKcgW29ZTGF",
+      "freeze_tx": "6d4c17f19c23373a97379bb08ed97627d5b555f85e89b59b865daaef8962bda5",
+      "freeze_block": 77030040,
+      "frozen_at": "2025-10-29T15:18:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x135fb07b1d47b7d06b3c14e8021a1ad844cceb23",
+      "tron_base58": "TBjeUKRDJSC7ZG6VPgK4pHAmzZsGgdNscc",
+      "freeze_tx": "c0aaaf58b46e1c26f120fbf57aa8da3c24b3f4226d547f594ccb00646726a4f2",
+      "freeze_block": 83858385,
+      "frozen_at": "2026-06-23T19:58:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x283f011a8d49e6d515d45585f47144bfe1d39cc0",
+      "tron_base58": "TDe1WMAfWmdpVECRGF6tWNcSv7WoBQwzDg",
+      "freeze_tx": "8cd9862e4c160f6b3ed30876be3fadf88282834af03116925ffa980e308fecc6",
+      "freeze_block": 73881921,
+      "frozen_at": "2025-07-12T07:07:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd60b5454b7f3bc2de102ef4a1969d817f7c71eb4",
+      "tron_base58": "TVUyBHv4SS4fZUDvQy89rLjM55iRALrYuU",
+      "freeze_tx": "0532ac794e06379c3648e9c72fea64f7cfe8e290183c0122ea42525cd22f243a",
+      "freeze_block": 71414367,
+      "frozen_at": "2025-04-17T13:51:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa210be6ba849ab4e9a702912c82d153ad12e64b9",
+      "tron_base58": "TQk8XWxGgKZG97CBJRRXh2d2ZdiuBd5Fmp",
+      "freeze_tx": "c9a5e99958727f4b2596bbbe72e600c19e7fea18f1faf60233041329091c2060",
+      "freeze_block": 73380354,
+      "frozen_at": "2025-06-24T20:43:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x84664671bc9d07b3242447883b266710f5051f27",
+      "tron_base58": "TN3GiaqYouqqSDnmnWYREMwKpfTihL7S7B",
+      "freeze_tx": "f617a5ec5f2a99d5e1734bc13bdefb90491bb10a880db2969fcc83038f5ba92e",
+      "freeze_block": 75959881,
+      "frozen_at": "2025-09-22T11:15:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6741ba855fc9c40b1f2b47b7df72412ba8f3a7ba",
+      "tron_base58": "TKPBLikDNdKDVgo7HQPKvGUBAbDXAYhrVX",
+      "freeze_tx": "0ef1b6e27ea42caaef019919f42db7a60ba6c53f5e79c1a56c8fe11aa1bedf09",
+      "freeze_block": 69151197,
+      "frozen_at": "2025-01-28T23:01:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa0fadcbd3a77e309d5d23de33855f45b26f704b3",
+      "tron_base58": "TQePdy4gsJo9bNt89pP8SUnydptvwith3U",
+      "freeze_tx": "f0def263a03cc616873101b11496f53d7a4dadd9e27dd279f115abe0170d9ecd",
+      "freeze_block": 73880785,
+      "frozen_at": "2025-07-12T06:10:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x78d321ce9aed6483cb9887af5f2c31df00d7ae0f",
+      "tron_base58": "TLz51nr6MZEXM2RfijaoRc9LxH4dKVrRcf",
+      "freeze_tx": "d268ef5bb69b829059aa08566b67721e2edc876a6d3ab57060096a434a04219d",
+      "freeze_block": 85241250,
+      "frozen_at": "2026-08-10T20:45:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8728786c0786a671a3e027008805bc309ef19190",
+      "tron_base58": "TNHrhtVnRMRaTJFRsqLUqSytCKsavXJJaa",
+      "freeze_tx": "d68e35100b12a4aaa7596505bba466247f958b01ae2b97c2263caa00267e1a55",
+      "freeze_block": 86714168,
+      "frozen_at": "2026-10-01T00:38:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xcabf84801a3a36e91fa01187c6b5bed1ec3094ab",
+      "tron_base58": "TUTEvgbS6YzouHnDcheehyvizasG7UqBCC",
+      "freeze_tx": "84076a1eed6218c9cac30e189c27799be86ef89ed0f33f3307797779ab4a1ccd",
+      "freeze_block": 84895712,
+      "frozen_at": "2026-07-29T20:44:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x419713f02b1e2cc45d3f7994f1ef483400ce04ac",
+      "tron_base58": "TFx1ubwuCvWLBtFix7MHdLEGVibtPttcfL",
+      "freeze_tx": "73a56006a6790baad34394f2620f05cadb274c882569b17d677ac9b4ebe6a388",
+      "freeze_block": 83218920,
+      "frozen_at": "2026-06-01T14:53:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x998d2573b8c82aa90d6cd0c184d799261eb0d85e",
+      "tron_base58": "TPy7UReJj62TDvVhH1CMGYNRdP4kAhT3wy",
+      "freeze_tx": "c0591a35651d622d19ed27b1e1961dc005e7a84074ecca2012eac4505c296a5e",
+      "freeze_block": 70180719,
+      "frozen_at": "2025-03-05T17:13:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe949976263d0cc550fd81cd4cdc612a1c9d0b899",
+      "tron_base58": "TXEibyKL8KfhnDxy1Rxyc5uuCQFLCoUvmM",
+      "freeze_tx": "e78bcfd9bbc8615775f7d2847d35c9a00d9eebbf7ad76ee28b9e47143bd8260d",
+      "freeze_block": 71611869,
+      "frozen_at": "2025-04-24T10:30:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa1f4c46b6b50661f0dd38f3ecf4b6be313581086",
+      "tron_base58": "TQjZ1ftgpUYQuvUMWuDJPXfkzTrLCM2nR6",
+      "freeze_tx": "bcf08e4a61dc3d59bfb5a850d13cd0a7b955daf3b290f8c244f1cf0f88a56859",
+      "freeze_block": 80688709,
+      "frozen_at": "2026-03-05T17:46:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x23a8b2cb3a2204f0b9d7740aa6eaf40ebe138cb9",
+      "tron_base58": "TDDkk9Kku1e3wwKikP2BBUJPcQKYNF5rJf",
+      "freeze_tx": "90d96dab7833f031990e85993df5acec9951928c5151eb891234eef294f2d8c8",
+      "freeze_block": 71737457,
+      "frozen_at": "2025-04-28T19:11:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x04ca8d155225c72ce04377959f6f51312e508c6d",
+      "tron_base58": "TAQYMKjxYcrtufnezNyZHboWrpLAoLXqKb",
+      "freeze_tx": "a6aaa31c805fb721357bccd5140baf85569bb9525a854f2581428bba35347bd1",
+      "freeze_block": 84711817,
+      "frozen_at": "2026-07-23T11:26:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe9d12c5d6954487fba2ce36a0b0ab5c8515dbb98",
+      "tron_base58": "TXHX2NUvcgft4zs6MkkUtdNVERPTavHDWN",
+      "freeze_tx": "e878b3c42851454dae4b0190dcf10313870b9ec94e5bb61889541719248ff5d8",
+      "freeze_block": 86060883,
+      "frozen_at": "2026-09-08T08:00:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x320db515f04f11b1f4968d24cd04218749fa2a90",
+      "tron_base58": "TEXsD49JGEaM8qgBX77Xuq3wxMKiAyWHNX",
+      "freeze_tx": "681dcc39832d13271b84bf4c434883a755b18cb457a268bb98f4937ec83c5ec8",
+      "freeze_block": 73603453,
+      "frozen_at": "2025-07-02T14:59:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x23e706ef86ac0e4e1fd4d79f3891c78d6ea17b5d",
+      "tron_base58": "TDF3QpL9d6PPjSWAs1R4ucT8eNWTq8yQWM",
+      "freeze_tx": "b8da0a7573acc7cf83ce40ec03d54ba443bfb66f432f932cb8b599bc1ec9fd9f",
+      "freeze_block": 80827847,
+      "frozen_at": "2026-03-10T13:46:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6cd366f773bba63b984585f21a3cfdbee9e2196c",
+      "tron_base58": "TKtdEG2oRVkoDSHvbzwuH9NdxiMSRst9V3",
+      "freeze_tx": "237caa4339f4cb77d5cd4cd6b966527ec018153bef143809293ad56e8e4af891",
+      "freeze_block": 85866408,
+      "frozen_at": "2026-09-01T13:53:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x42984c999a9bab0335ccd07d074ebb6a5e70b53b",
+      "tron_base58": "TG3L3ewpZsm3oAM3VeeUwgEjjmKVeBYCy8",
+      "freeze_tx": "d52956de6ae77f66ad165577ae68cbbdd102e6fde2893aa897aa4c64d200a9f1",
+      "freeze_block": 83916993,
+      "frozen_at": "2026-06-25T20:49:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xb313f1b6f27eb81e6a1ef945b93d7503e1295433",
+      "tron_base58": "TSJ5r9J16Mhu2waHz6TPtETcyaydSVPJtE",
+      "freeze_tx": "a33fe2ba27bcf1307b0e3e9354b75b1defdda3e409f21fbc26fdd4f32412d994",
+      "freeze_block": 67507044,
+      "frozen_at": "2024-12-02T20:28:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x21bcafe74b796c05bfc4232275762007ddb0b070",
+      "tron_base58": "TD3bLbnVvcvucnJm8uhvVYGwinUzFUFgud",
+      "freeze_tx": "40ac372f926f4208b0ef676a28845b6a8a21f2eb5da0fd5d0a001ce21873d9cf",
+      "freeze_block": 72836301,
+      "frozen_at": "2025-06-05T23:12:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7be6fe8c528273a3a072a538e12c08500bf4d328",
+      "tron_base58": "TMGLqRQ4twjW8wJhVH1mQR7nUThpGHUsN3",
+      "freeze_tx": "f2b566756308e42275b570dc8ecaeae7d63babb1b936810887e87d5c5bcecec2",
+      "freeze_block": 60102381,
+      "frozen_at": "2024-03-20T15:20:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xbd681436e6bb5dd78e22f955945e6d9d59624480",
+      "tron_base58": "TTEhPr97cvtkpsFaLGQvAPQi58ZAu8tPu3",
+      "freeze_tx": "65a6488c1e96d20bae252fb7578fc327cfa528482a3d061fb75ef813b93ebfa2",
+      "freeze_block": 75959644,
+      "frozen_at": "2025-09-22T11:03:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x91ee5d7324615b4a02128c647351fbed697109fb",
+      "tron_base58": "TPGpXmUW4E2FsXpLRBx4R3pVRJbbCgFuLd",
+      "freeze_tx": "a4b7510feff85c0f988486bf6f8de8da77b44256a46425f0e53ea7e769f89656",
+      "freeze_block": 85695255,
+      "frozen_at": "2026-08-26T15:13:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4f20fb0e0437be80da1af8ea070d8c92c7ba97f2",
+      "tron_base58": "THBbtkYekMN5MMXrvJ48PM3kdte7VikjHo",
+      "freeze_tx": "9111f12967a64f8cefbb13135ea584ddd055ae0e00b7e79018317ca413ebae8e",
+      "freeze_block": 72537897,
+      "frozen_at": "2025-05-26T14:27:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xdf7ac22d2c22825aefbcc45397256de0e93f79a7",
+      "tron_base58": "TWLrkFJZgeT4tGH8kSBoKjEgZzS5VMCSCF",
+      "freeze_tx": "75bdcd9ce31c805fb8756478791ad4ad852adc3894ed8dab3b6f00b4faea3bef",
+      "freeze_block": 79648588,
+      "frozen_at": "2026-01-28T14:21:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9a952d1873e4433adf85792e6cd32850bbd4bc50",
+      "tron_base58": "TQ4ZmYNsBTbp1igLjiv6QXBJ6LSX5jn8uS",
+      "freeze_tx": "010fa5a10d11c1379196620800ccf2c36514507dc99a8836f6e95ad21f67ea32",
+      "freeze_block": 87133311,
+      "frozen_at": "2026-10-15T14:01:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x03f1418ff68855d440a924424762eaa69c96a71b",
+      "tron_base58": "TAL43QHui9vb8p9gvqNtEUM3yZ8JrxW1Pr",
+      "freeze_tx": "8aa792dbaadc91cc98b5cca92ca0466146703bef8b10d409b21ce8538058acaf",
+      "freeze_block": 73754873,
+      "frozen_at": "2025-07-07T21:12:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9924c1f3a9ce7f10e6f17dc066c5a29cc21e7bdc",
+      "tron_base58": "TPvxRNcutfN5Xpco3co47nSz3afHBa1jca",
+      "freeze_tx": "948f4ea5627f0ad91696d565f0db796c3ad54416736890e3b359cf4a369999fd",
+      "freeze_block": 66173872,
+      "frozen_at": "2024-10-17T13:09:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x33ed29c0319199bbf3a23d6e2a51fb3e313bf4bf",
+      "tron_base58": "TEhmaDsFpc7Virq4Zcrg9ErVtUzAgddVbm",
+      "freeze_tx": "e421731fac5928ae68fb1e2a359601b3bfc4d41cda0d1e0aca7fbc1944610548",
+      "freeze_block": 82950110,
+      "frozen_at": "2026-05-23T06:49:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x43980de41555dce36e69bd1c0645c36d3cebf290",
+      "tron_base58": "TG8cRpv6JZbKbRUZqtFDSTacbFz67hFeHb",
+      "freeze_tx": "3f11a97662766e8438a6683f976b772ac8dddf452c6e58eeb5ca90c7be69cffb",
+      "freeze_block": 73882652,
+      "frozen_at": "2025-07-12T07:43:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x86b4e39eab9c39ac34a4077e933d74562a2b189f",
+      "tron_base58": "TNFUFAMQ2z5eVQPvRGB4nNZ4mZs9g4GHv9",
+      "freeze_tx": "e45bb1e23884b870cb03d34c2b99b89ce9165ebaedabbbe5d2e735a159f840cf",
+      "freeze_block": 73880765,
+      "frozen_at": "2025-07-12T06:09:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3ae42f943481052eb27a90977de21ecac8abe24e",
+      "tron_base58": "TFLbYpJPqHABzRL8KJeFWuDiW23ahpsb1B",
+      "freeze_tx": "42b2cf09ecba55ca1052271d3d94e9d3667985c10c148ace1916f9fa2c2a75b4",
+      "freeze_block": 71737710,
+      "frozen_at": "2025-04-28T19:23:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3594b717d7b3571ca7485de5dc4d8408c9bad6ff",
+      "tron_base58": "TErWy94Uc9viA6LygZCsnBtRK1GDL2qHXD",
+      "freeze_tx": "e2ae52bb59d943cc39be5b9b5de8444ea2b5007f25d451f503092f82f07874ad",
+      "freeze_block": 73289749,
+      "frozen_at": "2025-06-21T17:11:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4e1219b45e986015d7aff0bd66607cf74a00d0ba",
+      "tron_base58": "TH61PfFAhxGqsrrMP63vpHkGJvnDWW5TUu",
+      "freeze_tx": "fb0e1f2e6523266c82c81441b56bb4ca2375ec7d0a87761959cb427dbaf1d6c0",
+      "freeze_block": 71132759,
+      "frozen_at": "2025-04-07T18:49:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8af27eda95ea0b137a35a5f36eb15dd4e274335d",
+      "tron_base58": "TNdtkR5MsqCeEdB5JBpve4UW6mDftyYNYB",
+      "freeze_tx": "e53feb4d07bbc1f7d240cf66b18864f30ec882b47831e2b6ddb28ac3ea3eafb8",
+      "freeze_block": 73603480,
+      "frozen_at": "2025-07-02T15:01:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x90231d46c4ff26fe9c2c6da36d9d213215f0444d",
+      "tron_base58": "TP7LNUHF1EJn15gLUv6KkQZoKACVjYar62",
+      "freeze_tx": "0d5e3e06ff11adee74bd6fe65b636b2564b509eb550dddb1d8d66f6a4ced0771",
+      "freeze_block": 86701463,
+      "frozen_at": "2026-09-30T14:02:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6b0768b1d51c20d56cc2dd391415dc67114ec872",
+      "tron_base58": "TKj8BNLSMSrgkNH1uFuDu81fNWqQSpCenT",
+      "freeze_tx": "443992d8622da17027450f87b4f332502027437b501dc45a5697cbdfec46511d",
+      "freeze_block": 81654926,
+      "frozen_at": "2026-04-08T07:11:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xafaf3dd72a6ecb2b7c1cd412e7b8c9408b3a5310",
+      "tron_base58": "TRz9BdJQ6w6GiTediU9wULEu4nQpuCz8e9",
+      "freeze_tx": "3b3c6525c61a9f094491e246e8f9938e8bfadffbf8603f9609973fb31097e8a3",
+      "freeze_block": 83131854,
+      "frozen_at": "2026-05-29T14:19:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x66e9e51d251faf0945d4a7f709ca4216ea38cb9e",
+      "tron_base58": "TKMN7w6fvxgMqHVLrDtpBSPRhNagUni9Rd",
+      "freeze_tx": "304971aab5cd34917bd82c6372091d72f87a02930ac5855d65182332490bf69a",
+      "freeze_block": 75959871,
+      "frozen_at": "2025-09-22T11:14:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8673b8f2b3ebc21a50eec2bab74e1daa7a51adec",
+      "tron_base58": "TNE8BJRoqnY3kWkUQJeBiaZFh8v9hw9sFb",
+      "freeze_tx": "1e7d0b89bf37c9fd17f74b6eebe95991fcd44b11084665621ff61463509f6b01",
+      "freeze_block": 76225335,
+      "frozen_at": "2025-10-01T16:31:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf8980561e7d394c0d2373986a7af92024876994e",
+      "tron_base58": "TYdehEp58hRPwKxQWgAXMY4gq375uBEoqe",
+      "freeze_tx": "617899125bae1f0542b3f41508738457feb556a96583cf505f5a84b50dbe3940",
+      "freeze_block": 72243437,
+      "frozen_at": "2025-05-16T08:59:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7f8e9a0dfb4b09fb7161953540d7e0cb7d0933aa",
+      "tron_base58": "TMbfeZp8JTiiXECEHWHyC5VzEhrQgULBsu",
+      "freeze_tx": "dfa66e82cf3bb3a6771a8b5e94d6605bd21ad37d142f511e352f8814a5a69670",
+      "freeze_block": 83218651,
+      "frozen_at": "2026-06-01T14:40:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x186350927e76a1d0f1ac643a9775bd03041fb7d0",
+      "tron_base58": "TCCACAuu3kT6FobVMM1HRcaP3bMUtSkjRy",
+      "freeze_tx": "a42e9e296e47592693c78744a55de77f6cbe12e850b40c5be71537f765f6d3c0",
+      "freeze_block": 82122460,
+      "frozen_at": "2026-04-24T12:55:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x2d95d3718d0af66e18c992b5a62a72929236bd6d",
+      "tron_base58": "TE8EtnFSoWBgXGHkjSPDmo2irAMxbhscXF",
+      "freeze_tx": "ea99e820fb50a15f06ac7511c10682fe49b98f65c5a6f27911ca1c308e8a1c3b",
+      "freeze_block": 85523131,
+      "frozen_at": "2026-08-20T15:44:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8d5bc84006b2f1136b08d0d6fc0e2805e80cd76d",
+      "tron_base58": "TNreEFLagqp2K9JmoZABJALzmq7tddKpFo",
+      "freeze_tx": "d530092b0323a18e0596126f5071d782c5b37c610dc467226ca1b1922671c5de",
+      "freeze_block": 84340576,
+      "frozen_at": "2026-07-10T13:55:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x159bc17daba7223baadbb7a75174abc9846dbe3e",
+      "tron_base58": "TBwTnC5UZXKWDM538VthWj1g6neMmhKqQj",
+      "freeze_tx": "6b580952a6d032881b69dd3f41da86117872194f6f419f2c03904e3f9df0dcaf",
+      "freeze_block": 79277643,
+      "frozen_at": "2026-01-15T17:04:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x0203c9e5f91d7237b1c868e4c9219801553df765",
+      "tron_base58": "TA9rtgcNQeQjJjyMSL1CqNhA3Kr5wF41oA",
+      "freeze_tx": "69fed84a6c3119f739430dd27082a6abf64e47ba564b0d35ac6fd108c8f116f6",
+      "freeze_block": 73882878,
+      "frozen_at": "2025-07-12T07:55:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xaa6fd45777ff5ba6efccc28069ace11fae28b462",
+      "tron_base58": "TRWPqiZ54BYD9rAKmDM1bkKYsFHttVfXNY",
+      "freeze_tx": "ff6462919175e1b7c893da014830557b4f9bf1b38bd10ba6dc2a1cce00371514",
+      "freeze_block": 82729227,
+      "frozen_at": "2026-05-15T14:41:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x418949a4a7da9e07192909722072dded8f670d58",
+      "tron_base58": "TFwjPScaJRCbSWVAywE1S1WgaUgSnyYUbD",
+      "freeze_tx": "26a115e30cf35272f719aa5f1bfb0a6c6a69d1a845aa42305092032b2b52fd84",
+      "freeze_block": 74849015,
+      "frozen_at": "2025-08-14T21:15:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x855b212b34d056e270cc8aacd5fccf0d8f21cfd9",
+      "tron_base58": "TN8L3NALetJGcTdX8uPL4nLHuV5aqNtLNn",
+      "freeze_tx": "e64b80724daa4bb73aa96a73d64894c395ddfb75274e380423b5f095fc1bf9e8",
+      "freeze_block": 85873860,
+      "frozen_at": "2026-09-01T20:06:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x51028ac457f1de264e2bf3c893f114c5db01937d",
+      "tron_base58": "THMYnDs256pvxGHM7qoyJCcMDH9pLBJJQx",
+      "freeze_tx": "9d70f9216352f6e70be7939ee5f3ee8dd90a71ececaa65319ecf9ec4086d7582",
+      "freeze_block": 77238144,
+      "frozen_at": "2025-11-05T20:46:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe1bfa0136bc3e96b4f41e950b2cd59cce0d6d66e",
+      "tron_base58": "TWYrbaasLizta3nSBV3t3MU5LFZ6dhQBBr",
+      "freeze_tx": "447bc16a095d12e85e3fbc079b459e888076cde58c7998e48251e687bb7df185",
+      "freeze_block": 59952320,
+      "frozen_at": "2024-03-15T10:13:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xda2eb1baf2142fc0426ce6e5734d173c02f0ca2d",
+      "tron_base58": "TVrrFFa22GLrfR5q1mKFF3X1XkWi85M8ZS",
+      "freeze_tx": "40fa65b88ff645eb01cd0803e960a26dc218f45c14b796f4fd91e0064bd4a4ec",
+      "freeze_block": 75648674,
+      "frozen_at": "2025-09-11T15:49:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x05031bb5e5980627a03684199d89cb09f94fe6a2",
+      "tron_base58": "TARi6yxDxQeaCRPDUXabNwj76evgFBwYqp",
+      "freeze_tx": "6abe2d0975aff04a61c8a21b5a9ebe9e4ee41a70b9501e9782a694d5ca0f3b97",
+      "freeze_block": 69025479,
+      "frozen_at": "2025-01-24T14:13:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x24dd45ac932ae8cc4d980932ba7ca5639030ae0b",
+      "tron_base58": "TDL8QDyBkgwYeaz1yf263qULPopiX6K9yq",
+      "freeze_tx": "ebb41e55c388f54f51dadfc2d7eaae8c372efddb0cebe66da6657b52be61aee7",
+      "freeze_block": 63706280,
+      "frozen_at": "2024-07-23T19:51:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4aa3276a8a5a6fb4af2a3022b49bcd038de6d871",
+      "tron_base58": "TGmrTPdWy7ZGCe4u8rmDE2MwsXbj8Mnbke",
+      "freeze_tx": "e7c9f39a46697483f6318374a4b16cd0aa2c32b454e39f929f0070b2f605b2d8",
+      "freeze_block": 80635635,
+      "frozen_at": "2026-03-03T21:32:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x11e046b4ea99c805bf732b2465c4519e3f118678",
+      "tron_base58": "TBbjAJZPAC9yGLnvEE1tUn2Mq6sHtvEgZ7",
+      "freeze_tx": "a447239aa07b57bce3ec48bb6e750e06a279d1b43fb43befd5e3a16276a2a260",
+      "freeze_block": 86305619,
+      "frozen_at": "2026-09-16T20:03:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xbd404e12fd004513f53dd1d552f81f342b77e0d2",
+      "tron_base58": "TTDskJXsPXKaPN7tG9J5xozNk4YTQZhDuq",
+      "freeze_tx": "31ebc1365606d9104fb5c4721595005d779067816411b7905627dd5afab95145",
+      "freeze_block": 85873854,
+      "frozen_at": "2026-09-01T20:05:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4a2d118007692c5b36eb83639ac826fb993ee0b9",
+      "tron_base58": "TGjQzfB65EtdeM1mub947qpiGnMDoUVZxu",
+      "freeze_tx": "724ef3ec4d1fb7c8031e4f7c849240df7f7c0f493a7d2d093c31e649c331cf49",
+      "freeze_block": 84086418,
+      "frozen_at": "2026-07-01T18:03:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xdb13712f9fd7e76549b1bf7ac3b2d590d8bc794c",
+      "tron_base58": "TVwaGw4fVbJQqj1usH8o2Znx8jcD9mqo7Q",
+      "freeze_tx": "ec017062d997c2305b64fe1001e2b41797e9f0304720ae59fc0580a75094f745",
+      "freeze_block": 77238140,
+      "frozen_at": "2025-11-05T20:46:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4049e71b23c0bad106e4e8dfd3f52a418f2a128a",
+      "tron_base58": "TFq8nBxgbb9pjMw9fjT2uNRNuuhTgDdBed",
+      "freeze_tx": "8fdd5aac1f1aedfd71a72dbf5bb60815db1a2c03a511a39b344aeb30f29b44ac",
+      "freeze_block": 70635013,
+      "frozen_at": "2025-03-21T11:54:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1451c610badaf9c167a07cfc80b53d9b81a97b9a",
+      "tron_base58": "TBpeUdaFLNXkhMmnkPdhwjeeGxhugp33bH",
+      "freeze_tx": "4b7574256c920e248327738c9dbc67c597cf440776e750afb3bd63176972097b",
+      "freeze_block": 67985739,
+      "frozen_at": "2024-12-19T11:31:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9d6dc7932c8b5945dffcca492a9eff3e7203b228",
+      "tron_base58": "TQKcbo7uCMEofme9GXkSpDgN6NYrpekQSu",
+      "freeze_tx": "38b6bda21a622d88bee6c7270deb92981d0a77e7e2832ed1ef58ec19d681e1f5",
+      "freeze_block": 73882880,
+      "frozen_at": "2025-07-12T07:55:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xbae59e26abaf8b58763d87ba68abed1a9a3eccfd",
+      "tron_base58": "TT1RkryA2qvbySytXthYKJYLzxfeiYHSj1",
+      "freeze_tx": "5354ec8526bac244362a5b944b8bee8e7b5688d17fa214e3a4153157e6f551c4",
+      "freeze_block": 82633184,
+      "frozen_at": "2026-05-12T06:38:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x138335dbea8e172298ebec82904d2eba89674666",
+      "tron_base58": "TBkP2Muckuw6ocUeaiSq6B48bPTHbjc4MK",
+      "freeze_tx": "68c81efe3273cfc2efa03972f39f1cc9e64e9fd8e321cbaada5b72b1a0b20ff0",
+      "freeze_block": 73882647,
+      "frozen_at": "2025-07-12T07:43:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xb7f3efc058fe97b67031fb763a39c3ee20f5c158",
+      "tron_base58": "TSjrtAsu5U2VgBGwGSrQFCmjXDi4xPbXq3",
+      "freeze_tx": "f1bb6e3802104ffa7d42940b5eaba7a3a0e450576e40d6d88bc401dc70ced9bc",
+      "freeze_block": 87290483,
+      "frozen_at": "2026-10-21T01:02:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6aa3ca095f44fa972a3a6995cfc010f1319db147",
+      "tron_base58": "TKh4qfcU5co3JvdAQWXC8MoXbL1kMXbErM",
+      "freeze_tx": "24fa156a97c18496c7488f9f4f92efdbd606ce22c0452efcb056a1fa05e6132b",
+      "freeze_block": 86151467,
+      "frozen_at": "2026-09-11T11:33:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7e9142608b530a2503bb9c0ec21a9883d0432958",
+      "tron_base58": "TMWSA2DNw94AeZez4pCkDFHCiA3ZjERNva",
+      "freeze_tx": "ac5b07c20189e2ab8e9d17c0b9a1f9d0d58e2c0bc346a414e246e04c50df288c",
+      "freeze_block": 80361665,
+      "frozen_at": "2026-02-22T08:48:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x33bac6d55c84b487ef95863319e31d8cdd6fef11",
+      "tron_base58": "TEgjDKCESf7kp11ezVyh36DN9MGBX6eXBw",
+      "freeze_tx": "1f6bce237d4a3f435f0c290df647bcb31b241c9b12a678cdded72839e51063e3",
+      "freeze_block": 82445675,
+      "frozen_at": "2026-05-05T18:20:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xb5cbde32a214364f9a9c7bd2c4f31635cd90853d",
+      "tron_base58": "TSYTXmsgKcauQ1V4Xtr36KrJmAW9BQcZjm",
+      "freeze_tx": "48fe28c0f50bc1c7acefef8e8cb7b3846b9e026a2c9f53492d03ce55094f2f28",
+      "freeze_block": 42902169,
+      "frozen_at": "2022-07-31T15:40:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4d72d10a09614342b3238a300fe4b4e9a9c4f908",
+      "tron_base58": "TH2iaRZkWSwf7pDtwumbxyuHv5XpgQj6xv",
+      "freeze_tx": "98a51520b736587a7f2998c27a78113d8202887068b3a1ed5cf1d018e5f3248c",
+      "freeze_block": 83584609,
+      "frozen_at": "2026-06-14T07:45:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x77fac3917fe4c57d811dec41d417b914a0ab1cf1",
+      "tron_base58": "TLubpGf3XUwBTrnnqfE3DzJ5ynZQue1vsv",
+      "freeze_tx": "2e5d7c950412d849655db540a3a49e95353fb251f42cd0d0109dd5a89c190edc",
+      "freeze_block": 83331408,
+      "frozen_at": "2026-06-05T12:42:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5177850139e8d4a56ead5ef2990373b7c85234b8",
+      "tron_base58": "THPxuxhfQ12Shydz5sCpqh5CqoWzrnBNvi",
+      "freeze_tx": "581bf968ca9753309f086e88bb8aaa32f0e3b2cc128c20062a5d7ca076988255",
+      "freeze_block": 79024731,
+      "frozen_at": "2026-01-06T22:07:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x58c64dd1892699836af30636c3337a7064c85b29",
+      "tron_base58": "TJ4c2LnvgZxreyp8jePUKt1Fz1u6BE1nL2",
+      "freeze_tx": "a46a71167431e5cda1c19680e155b1c374437c7329bc8411526f91e92bfdce6b",
+      "freeze_block": 80857091,
+      "frozen_at": "2026-03-11T14:08:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd2bba6b361a2d918119fe16cd0bcb7422eef6c30",
+      "tron_base58": "TVBThaLVh8ai8g4Vxd9SHGDJhwXPimJ186",
+      "freeze_tx": "ac6d8c6a054f67d4a2e52bcc0d48625bec0ce4aa3a38f94604588bdabf926fa0",
+      "freeze_block": 85550223,
+      "frozen_at": "2026-08-21T14:19:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x0c43ffb91ed5e135f76150e74ee92dc485b44cb7",
+      "tron_base58": "TB64a1TLyhcZvfU4MZEdM8HiapCkYVcj1X",
+      "freeze_tx": "e4c64417dfbe0485a5143ac76246e39b35ec2807e0a6cfc6a367fe9f0f7163ed",
+      "freeze_block": 42902135,
+      "frozen_at": "2022-07-31T15:39:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x59f5a85b91acd8e53562748a6f9f3ef96702c115",
+      "tron_base58": "TJAsRiyNFrV5ZpG2No6MYmTe8UNsJ22dwc",
+      "freeze_tx": "0e50124c5de07548b7897444f250c979d8c6bebc04cd2f04249e169db8540809",
+      "freeze_block": 73882345,
+      "frozen_at": "2025-07-12T07:28:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa9dda804c70453c6c76293b9aef973dfc92ac24e",
+      "tron_base58": "TRTNjRsbvwxCEwKt6tQ6dsVfZiL4Ftaj8J",
+      "freeze_tx": "f55ad4d3319be02854f6765d1e311182c113a261d468dde9c17a1165566c8dc7",
+      "freeze_block": 66002801,
+      "frozen_at": "2024-10-11T14:33:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd260a1c50199020e49adf014141fa38be84c2f6d",
+      "tron_base58": "TV9afSqpGKLFvALt9id39UcwoLQskfhazR",
+      "freeze_tx": "c0e0fa7c675970a033b735521aa512810166a231ef6b03d5e99446d54091598f",
+      "freeze_block": 82706756,
+      "frozen_at": "2026-05-14T19:58:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7de809deacee268f5b7f728c94db46496126dbdc",
+      "tron_base58": "TMSwSMnXXjHPoRM2Q2aJCowZYTi6pSseSJ",
+      "freeze_tx": "796de568f8020fcb32a912f1ed721d43b0dbba5ea2af5411758f11fea2b5586b",
+      "freeze_block": 70127805,
+      "frozen_at": "2025-03-03T21:07:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x87cfeaaa8e23e479e77ce085a7b542903fe32d5b",
+      "tron_base58": "TNMKJFzNBDtKHvGobR8pEtpXZyq9K3wYw6",
+      "freeze_tx": "f5bb3d13c8379a56a6ed7b39b534e0a9b30848aa581ffe10d19bf7bd4d9cd541",
+      "freeze_block": 80688686,
+      "frozen_at": "2026-03-05T17:45:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4fe21aa059bb8ff455226fb4941bd04bfd4f1c71",
+      "tron_base58": "THFbFCJBgAJAtjvc96CvDqN7vMJ5Tg7NMm",
+      "freeze_tx": "998dda56ddb5338698e13642df3733e1e9212f7fe1af2e5d42783eb516341e26",
+      "freeze_block": 69630197,
+      "frozen_at": "2025-02-14T14:17:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3626da0e131c352387adbeca770ce77b107258c7",
+      "tron_base58": "TEuY2tNwvrwRnM3DrVmtQqsmNq1BE7Sask",
+      "freeze_tx": "3b1cd2ae73ba5323df1cbcc365a835ae39ca03934a9cdf82648e5299ebcb310b",
+      "freeze_block": 73882581,
+      "frozen_at": "2025-07-12T07:40:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xc4232d1bb5276a312b19414e11e2fc1e02a56463",
+      "tron_base58": "TTrHak4biV5ZtNwN1K8oi7916CjmeVVeH8",
+      "freeze_tx": "432b74c6d4a64277d0e07eb8e22e90de28cbf8ca073d743ba4f66844fc8a5e35",
+      "freeze_block": 86060966,
+      "frozen_at": "2026-09-08T08:04:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x12f3acd05ddc70d333ca7e8d9a36513997cfb08f",
+      "tron_base58": "TBhR5MLrTsNZ8FUyKgzdrCjWkYD2orYLdx",
+      "freeze_tx": "3d3f2a3bfaad6f662ee7c37ff5d46c81f9a879d781303f55e3f86d9fa089f47e",
+      "freeze_block": 84074692,
+      "frozen_at": "2026-07-01T08:17:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xef6cf2dc5c96cb4551331c8d835251087c4cc1b5",
+      "tron_base58": "TXoB1nxHoHKeNrr5CVykAPxc3cS2HhamZz",
+      "freeze_tx": "29911e6df19b1eca180a6e7166f432adddf432b581798d17883eaa305b2e8904",
+      "freeze_block": 73882285,
+      "frozen_at": "2025-07-12T07:25:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7125937d849d1d89acd321c06698549438334719",
+      "tron_base58": "TLHUNa6SLdmW4W84NEyRevynTSrKCszSsp",
+      "freeze_tx": "b64543f32f48f1059286c5f2eea553883ca0a81235bbc7ad241bb422ad3dabb1",
+      "freeze_block": 46619473,
+      "frozen_at": "2022-12-07T20:54:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x645d849533622f7a6975377195ee65fc9e044a25",
+      "tron_base58": "TK7tbynAQt8bjgdbFB6gW5woFLvESSsCLU",
+      "freeze_tx": "8b89ad47c6448d6aa6bc8de0b504a2a219005383a944079c173005c803fb2c6e",
+      "freeze_block": 77067971,
+      "frozen_at": "2025-10-30T22:55:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xeaac716a919f3a032a7e5f4d803c799569c32bd4",
+      "tron_base58": "TXN3hVukebhyYR31YPCYd7aJAvmUeXu1ab",
+      "freeze_tx": "f0b8d67ea2511f421bb62c45f2ae668af7a1690e7a0e0f2b667625ad3425fa3b",
+      "freeze_block": 85156114,
+      "frozen_at": "2026-08-07T21:47:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xb359d2c104beec692e02c0c2c20fe149a9c0d89c",
+      "tron_base58": "TSKXZRfLBJLJX7Qerdue1xrtDybzgfNr3G",
+      "freeze_tx": "9b63c1bde234ae1e2fabf1d549ac34ae28fa4d6539dc1252c2b1faebd4f5a707",
+      "freeze_block": 86535538,
+      "frozen_at": "2026-09-24T19:42:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9be57f250772132a7522a322ca1f310d3af2c133",
+      "tron_base58": "TQBWfVxdf6SVTeCAMh1gLAD3922aUq2XDL",
+      "freeze_tx": "95ca85d083c8b610fd9189edf0d8a0ee4b93b71932ca7897a9ce6ba92d82f9f4",
+      "freeze_block": 67209808,
+      "frozen_at": "2024-11-22T12:41:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x73bed1bd3023e7a9ebffad0858aad44609a0092d",
+      "tron_base58": "TLXDJUauN4vgN75tJtCbXiAm4mQaDTmTNY",
+      "freeze_tx": "64a83f6a57e358001abb99027c0e40991afdf7ee6ca43871ca9c79b9ac0d86ca",
+      "freeze_block": 85726139,
+      "frozen_at": "2026-08-27T16:57:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x719845ff2e1b09b1838b6a30b9b83028c9c0a460",
+      "tron_base58": "TLKqmsvq9VpG7FCLY7PcCeK3FDaLo1cVEc",
+      "freeze_tx": "4181b0728fc72caa154d780cbcfcc79578c255b8edc04441dc735b4906798855",
+      "freeze_block": 62669370,
+      "frozen_at": "2024-06-17T19:25:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x0ba2b8069a0a9fef45d6591fcc245d53a358b5dc",
+      "tron_base58": "TB2jN5C8AuFccWo3BnkBmzUTCdin1TqMyQ",
+      "freeze_tx": "0e7204fa9820d6e1e50529fa4ef9ee2078d8819e6e8cb6af5b2f68e798bbb322",
+      "freeze_block": 84830895,
+      "frozen_at": "2026-07-27T14:41:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x610b4fdf1939bc2879273d59b7a056c880da65f4",
+      "tron_base58": "TJpL6dxJtspp1YKJBSY2Nrxx1ztpP8TnB9",
+      "freeze_tx": "27429824814be52fa9f592710bada8dd85c4648eac4e9d77d762b0e80ee054ad",
+      "freeze_block": 66926160,
+      "frozen_at": "2024-11-12T16:15:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xcc6772e39681d9a50c11736f7e753800bf8e8744",
+      "tron_base58": "TUbzmwUTBbVtJAjKfQnLxV97KyU6KqJhaK",
+      "freeze_tx": "11c7dd41505c289174ef9889270aba979597f62bd8d773a970f7cc5b44d2a705",
+      "freeze_block": 70754073,
+      "frozen_at": "2025-03-25T15:09:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa7e53ce6a99ec5b09db932cb99fe197a2c0c2461",
+      "tron_base58": "TRGxTpgFjEz27UaHpwtc5A1uyodg9xZZ1R",
+      "freeze_tx": "7683400381265066f3190c5351a5f37c60a60252eb6efa0db48aac70d6999f10",
+      "freeze_block": 43768144,
+      "frozen_at": "2022-08-30T18:10:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8e892b829259d5806bffede734b9f70b61985f9b",
+      "tron_base58": "TNxsH2yfXRAq7PbjBfSoMp9sWbg9fRRf5k",
+      "freeze_tx": "c62ad442f7d4344b045bae19c84e6e4631c060ac1eb28f071351cd230b22e77e",
+      "freeze_block": 73882881,
+      "frozen_at": "2025-07-12T07:55:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x21f5080af3bead2554e46621a50478faac3842c0",
+      "tron_base58": "TD4kqUFoZ2kSFCfrf61CdhFRPngkeDkZrR",
+      "freeze_tx": "253dc7d5a1dfa7e017e323bf24b0efa41e428753cf5d62dc2ecc2ba8e6eccecd",
+      "freeze_block": 85526558,
+      "frozen_at": "2026-08-20T18:35:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8eb23314f702c8837789fe8404fe74937d8d626e",
+      "tron_base58": "TNyiRpWVFJAv1CFGGoQoBuXJP8AVVnzwNC",
+      "freeze_tx": "1f60e7fe92e096247aadde0511213bf93cfc19b5b1266ac9bc098971c9aff50d",
+      "freeze_block": 73980796,
+      "frozen_at": "2025-07-15T17:32:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xb48a8f07828f6fcb9d2dd19a0f21a1e6f75d5489",
+      "tron_base58": "TSRpcpJK1N4zdZufiXRYVw8GpoBxcExuSy",
+      "freeze_tx": "fdfa9acdb714389b197097c1a8547ca3ea0e2d86ebb599c55231128020891719",
+      "freeze_block": 70808745,
+      "frozen_at": "2025-03-27T12:44:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xccfc61f110f3daa0e0baf419420a2bd0f90a9e3a",
+      "tron_base58": "TUf5C3Nu7gdRRoEArG1DH1aPGdbP1VyWjR",
+      "freeze_tx": "3f02de33160381e3677304889908f9791d20d500f5927f2717950ad32bb75bba",
+      "freeze_block": 63706275,
+      "frozen_at": "2024-07-23T19:51:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa969c315627254d7755e0d14aacf633122f8e2e5",
+      "tron_base58": "TRQytxHhpk36kyifLS4ekshWxm1dRpu7zW",
+      "freeze_tx": "010758f9915c13c116c9033fd5afdef4ae49601c75ca5d5f4d5a3b72c8940dca",
+      "freeze_block": 86211107,
+      "frozen_at": "2026-09-13T13:16:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x0db396f2d9968eaae1dcfa56eb41b77d93e1297c",
+      "tron_base58": "TBDevfELRo5qDvXohrCLuN1ypZADBJ4p1x",
+      "freeze_tx": "a323100c545fcbb324b9559d13d50ce88ae791943f253ac86c86d97a46857baf",
+      "freeze_block": 75648672,
+      "frozen_at": "2025-09-11T15:49:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3ac407cc90c06c6432cdc60222b378f0265bf39e",
+      "tron_base58": "TFKw2cxB4Vvm6e5kGXPZDAMaWqgTbNJvSm",
+      "freeze_tx": "151353290dbf788659ff1a50038d86ad045bc646f1e67cc83a83672fe79e2400",
+      "freeze_block": 84772722,
+      "frozen_at": "2026-07-25T14:12:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x84d7305cd595476121ea29577390df8c1cc8ee36",
+      "tron_base58": "TN5byy8orJ9Tn5Ha4BaygQt6SYXypVndWT",
+      "freeze_tx": "d68e45573d9e3834461a057aa856ea954c755954cec82cd947cc319c8a81225e",
+      "freeze_block": 87717422,
+      "frozen_at": "2026-11-04T20:58:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5984c554e686e379d8f24d75c69f65b64842e6d4",
+      "tron_base58": "TJ8YCDAxkm6uvqGLreYUHqMoECeQagaMSw",
+      "freeze_tx": "96073071072ac579589981dfdcef9dc80c975f2987df7542220c3faabfaaca1d",
+      "freeze_block": 85148363,
+      "frozen_at": "2026-08-07T15:20:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x8711522cdb2f89df2d99dea0c1cb68ce2ee3016a",
+      "tron_base58": "TNHNySUf8LMzhzSiQnHCXCbgatscQbM4ZQ",
+      "freeze_tx": "73935b30146d3b8261038906b27243c351d8da4d329185ca32197a220917f255",
+      "freeze_block": 84075287,
+      "frozen_at": "2026-07-01T08:46:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x12b84f4a4e0c7f8a563bb8eb01c8a7a43b16edf2",
+      "tron_base58": "TBgBxaP18eRC4a4BpG4SGE1Qc9N8pu9ugi",
+      "freeze_tx": "b354c3068ad0ca3a7604e4c2db0b38f621baacb646f956fa08138ca1d92dcd6e",
+      "freeze_block": 77466139,
+      "frozen_at": "2025-11-13T18:50:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x363ac7b03c2f1e4a5303d98d4b4e2f47ff78185a",
+      "tron_base58": "TEuwuXU9Au9VQCwXe6YPtcw3qBdcT8kb8u",
+      "freeze_tx": "edd8a855c7b4e0a09f84dbf9643b824f718c4db3cbea3028d3cde2f19c3f73fc",
+      "freeze_block": 73882599,
+      "frozen_at": "2025-07-12T07:41:03Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xdda2e0f0ba931c9478bb75ef9f76d18592f2de4e",
+      "tron_base58": "TWB7TTktTVKMWBjnjVhqhJG3TGzFJ9MwGj",
+      "freeze_tx": "efe838dad16299a4705e52135b267766dd4175a93f519dc6b57c448811d5299e",
+      "freeze_block": 87507926,
+      "frozen_at": "2026-10-28T14:17:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xb12b0ff90730bc08e15061fca465a4651470f52d",
+      "tron_base58": "TS7zC3JefPmipGZ8nZqFbSnR2JThao4W6o",
+      "freeze_tx": "18eaead7a998f858ed4e49e743c4d728ebb8196599b81a59b4f8178547e9c775",
+      "freeze_block": 84772644,
+      "frozen_at": "2026-07-25T14:08:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa0aed32dc3f6e88d5467a725a312e292443c8bd2",
+      "tron_base58": "TQcpYoMePVHYw4VAtkGyvRhntuhW3P8v9L",
+      "freeze_tx": "39132b93abf062738434ecfb1508b0021947adea98ff22dac89bfd89a64d1bb9",
+      "freeze_block": 74673664,
+      "frozen_at": "2025-08-08T19:05:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xde666ec127918a541e3e5c9b8b5f0dea9b0f2992",
+      "tron_base58": "TWF9inkSHQPQf5KXXCTot7H8zh5kLA24Vn",
+      "freeze_tx": "f4c7050fbe800b097a62121df9a965013685bca80232897e8d9ef96c574fd026",
+      "freeze_block": 69151221,
+      "frozen_at": "2025-01-28T23:02:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3af69458cc6ec2fb5d787e428142cbc6a51546e4",
+      "tron_base58": "TFLyapxvmhYVPQ6DG5sX2voRXSnk1c4afc",
+      "freeze_tx": "27dc3cea36c63c23e04d81313b8bdd489581708daed555b35068fea7453ad560",
+      "freeze_block": 73405855,
+      "frozen_at": "2025-06-25T17:58:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xc553dcedf20f484561ec05ad1207c4dde111d0e6",
+      "tron_base58": "TTxaakee5ZMsWrCsSp36UJtt1pfFbAo7WE",
+      "freeze_tx": "d5221c0d5e82f4d520c3c51e9bbcbd23dad4795d9f4bc453f0bec5cf8ca99ba4",
+      "freeze_block": 80632493,
+      "frozen_at": "2026-03-03T18:55:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5f0cad1af86f2bf3aa73de8fe7a0110c3fc9d2c1",
+      "tron_base58": "TJdnP3HW6RBfmAgihBFdjXDJhvoCgNvNk9",
+      "freeze_tx": "ebcadde81f8145496295703fc6ce55f03fb52b9f5b41008751eef248076d5508",
+      "freeze_block": 86254327,
+      "frozen_at": "2026-09-15T01:18:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x817536bf2dcb33d8732f6b70484e86571d7a6665",
+      "tron_base58": "TMmiay1dgmupWP79NNV7cuukjyDcBqQXEz",
+      "freeze_tx": "4f506026cc9790c9d02c970abb32b9282f21c160c794199eef7e8e34d9493c99",
+      "freeze_block": 82130186,
+      "frozen_at": "2026-04-24T19:21:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x15af709d7a7796b95864942a28fc96e87fc2b3d0",
+      "tron_base58": "TBwsMsA7chZNUQZjrTQH4oinGaHNBW9GFg",
+      "freeze_tx": "a38e19d1f99ad7284a1f6c9c327a38bc75987643a2cd4d6944a47b2ecc229c3c",
+      "freeze_block": 80492370,
+      "frozen_at": "2026-02-26T21:45:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xde526761790b83f25414bd527fb794e33f7ea7a9",
+      "tron_base58": "TWEjjATeWRCAoagHDEkBf2jD8q8NZjgzqD",
+      "freeze_tx": "a44c1f534d80869cfbdc4f85c506ba2d75d7669048d7438ea13dd80f1ee05577",
+      "freeze_block": 77499428,
+      "frozen_at": "2025-11-14T22:34:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x00eb1fce14a63f2ec6820d5dbc88876511ae6852",
+      "tron_base58": "TA44fn3gudHcm5Gc1USCPBFtasZVJYxUta",
+      "freeze_tx": "2529e3e1498ec71a5bc6d2972f4ecd8ec28af9c2a9c507506991f8525b7c98df",
+      "freeze_block": 80941726,
+      "frozen_at": "2026-03-14T12:41:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6316ec868fbe28700c6686ca34e800544155bcb3",
+      "tron_base58": "TK19MqFMLJW9hxr9mm5aX6hMBYTLHtk1Y6",
+      "freeze_tx": "6e40f9070688ffdba8464aa5171e36905e2f09f8801ad6a189aa8f4cbfce0c77",
+      "freeze_block": 83254114,
+      "frozen_at": "2026-06-02T20:15:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xbaa9f113e60eb1f4dd6a106eb0c3928d27a6e430",
+      "tron_base58": "TSzCGVkMhTLM53jzycAHgX8hx9NRhGiinu",
+      "freeze_tx": "ee4701b01d26e6961cc62cd0b659ecbea5fa9f13f246b44c737b75c614b44411",
+      "freeze_block": 82445677,
+      "frozen_at": "2026-05-05T18:20:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xdbe8eb306e8cbe7778f47319089d2a715dffbca1",
+      "tron_base58": "TW1z1YaxAqqJvGpZcs8EJKWcdv8dF7qbsb",
+      "freeze_tx": "8bba8e3de61e2d226674ae25d24c91d6f7439ebf211d0cc6558d4c98eee4041e",
+      "freeze_block": 75272926,
+      "frozen_at": "2025-08-29T14:36:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x2244932834a7db390348d3dc979a4a38a6a8961c",
+      "tron_base58": "TD6Q8F7S2sfvfXH71VmNGzW4sKKiZDE5io",
+      "freeze_tx": "f7f3384649dd7abe830e2008f54dc485eec6c56b8023de95c421087472cf8dbb",
+      "freeze_block": 86305616,
+      "frozen_at": "2026-09-16T20:03:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa8fe2d47e97c2e0c34657eb2d98e08651ac5eb8f",
+      "tron_base58": "TRNm1ogRp2Uso8qJuJDDoz1NF3X1q3v1mR",
+      "freeze_tx": "c099edbeec35a4cdbe346cfcaa379957cb5073585aa6fb4fa6ca39a5b4ee662c",
+      "freeze_block": 80941736,
+      "frozen_at": "2026-03-14T12:42:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa0d02e0f228a8cedff75d05111c52dc6935c4a88",
+      "tron_base58": "TQdWWM2om5vSvSgruWgid6jArtkohq11qo",
+      "freeze_tx": "3087f4dac6b67cd20965fd8b019c6d7969cf5e7fb5d612e0a4954aa143b28f15",
+      "freeze_block": 85902590,
+      "frozen_at": "2026-09-02T20:03:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3edf7a417af5e27917fc098e2630834030058e89",
+      "tron_base58": "TFhecSoXyqaW8WHAv4LKsozk8QNaFYQanJ",
+      "freeze_tx": "e8f9e541e07bfc539a820e6af803f724027a9446efa9a9073e8111ebf7465b03",
+      "freeze_block": 73882632,
+      "frozen_at": "2025-07-12T07:42:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x99929eed7638ac0f031a5d925409741f86f98be6",
+      "tron_base58": "TPyE2oSoaysrXfLzwf9wetBVr9JudLwjtD",
+      "freeze_tx": "bacf91feed89e91ddb5b951bde62a1175d8f7908e66d47a41244226b81f13871",
+      "freeze_block": 84724161,
+      "frozen_at": "2026-07-23T21:43:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9dbc8fda607d0b975f29d481156065a967e2d398",
+      "tron_base58": "TQMEygtx1uiAuRjtKFL33navqiZRsZkp75",
+      "freeze_tx": "6ede1b2d9a7430fb6893f52cfdba0c8d2346f9ed0d63966c1de4afab5622be56",
+      "freeze_block": 84520658,
+      "frozen_at": "2026-07-16T20:04:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd0e38810b328f520f7debf61522d9628470f75f5",
+      "tron_base58": "TV1i88FZYfCK3q8mVQoYeNogYS3JCmWdQo",
+      "freeze_tx": "d3c5ce5b1a23d29a0521fac82f813e57c7293fbacff8552e5a5e23b3df61204f",
+      "freeze_block": 83238198,
+      "frozen_at": "2026-06-02T06:57:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa6cf8a54c9cf5896b3dce3d9aeeec421ee98a4dc",
+      "tron_base58": "TRBDo4QmH31jtFntNAb7aHvSsmm67QD422",
+      "freeze_tx": "f5aa6c9847ba47eac8941230ba6b90cb92ba82592a13658c9fbaf1a9c0912483",
+      "freeze_block": 77203668,
+      "frozen_at": "2025-11-04T16:02:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xce156319c86a09657eab047efdde5a4ec70a70a1",
+      "tron_base58": "TUkspaWuDJCCrMTyPzU4GpaFagR94kARna",
+      "freeze_tx": "a054687fde7cfc4d9063ab8ced911d22a6b5f45cd22733ca84d56ac062da4095",
+      "freeze_block": 86701916,
+      "frozen_at": "2026-09-30T14:25:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x97365a15f85d2f55a181aa881188353604372d06",
+      "tron_base58": "TPkk9Tiag9HxP2X7iLL84m3Hi2ZotfWZek",
+      "freeze_tx": "d6ae5ab9cba31f173b5d23c326b0cd79ddeeeed1a5b501f0abf050b0c77bdcab",
+      "freeze_block": 71050899,
+      "frozen_at": "2025-04-04T22:35:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x40471df988d897dbe22ef1fbd03de4e778fd45e1",
+      "tron_base58": "TFq5SdxqovKzjNLv99DspEVUj637zyXsh8",
+      "freeze_tx": "c15595871de2c9633da17eb518f09c1294127f6cf5e6bfcb2f2e276c358b72f1",
+      "freeze_block": 82761473,
+      "frozen_at": "2026-05-16T17:34:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x601d77306917263f0ea2a8fa8a7516b3aa0a0a1f",
+      "tron_base58": "TJjRAn9kLiyh8h6gjBjaYjkfDkskgZfyW9",
+      "freeze_tx": "dd94aac37c121524a927e1ebb74f5b5eed17766196619beba62060ccbeb8e53c",
+      "freeze_block": 86704095,
+      "frozen_at": "2026-09-30T16:14:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd67bb799b7d2dded7dd85802c5a6affec1108b94",
+      "tron_base58": "TVXHp8bMrpRd5HGy3w1yu9f87qwRrMHFp8",
+      "freeze_tx": "48292b96cac7f36e53f1a90c94d8a52aafa9170ee30896f36057032f3985fd63",
+      "freeze_block": 84075287,
+      "frozen_at": "2026-07-01T08:46:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xc29e85a7a59213a00ababffe01eaa69e3ec99dc1",
+      "tron_base58": "TTiFzahyNWVSPwCotsYdDhJbDkCpz2ox8W",
+      "freeze_tx": "a0706be06a9cdf9373a5672cb48334aca91ae8b4252e818f61423cbe3517a9d8",
+      "freeze_block": 71611866,
+      "frozen_at": "2025-04-24T10:29:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x56fb55a8b9dfe59515f9a81e7d301bf58ac1802a",
+      "tron_base58": "THu8CbEHruUGxQzbVUkvqM5YSx7xXH8Wdr",
+      "freeze_tx": "163ca7e9d911d3e61d4f3afa81e276fd80d8fbc7c855b66c09aa13369b207d00",
+      "freeze_block": 73063988,
+      "frozen_at": "2025-06-13T20:59:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x99b9fcb85400793ece5586a96b6d953d7ab8dc57",
+      "tron_base58": "TPz3C2RhCEyrcMAjwFHJ1jFgomG5zUimMp",
+      "freeze_tx": "2fb92affc18817661d2f1a195a3022b0365ab7ae7a7e9184a03af76a7305758f",
+      "freeze_block": 83642334,
+      "frozen_at": "2026-06-16T07:52:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xcfadd44c326d3b425485db95dad4c9139d69ece2",
+      "tron_base58": "TUuK7dzK5xzxMH8CtbpUxGtZ5YAc85uJ3Z",
+      "freeze_tx": "8003dab5e2b7d3028774a27045a0509193332e58d336633b3ad4a3f4724b4b67",
+      "freeze_block": 73754854,
+      "frozen_at": "2025-07-07T21:12:00Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x002db3fd88745d2d78c06bfc8137f39dd5b3e248",
+      "tron_base58": "T9z9kZjWvpHcoPXtfcGKrpBHAZdTFho2AZ",
+      "freeze_tx": "89c2eab27bbf635b2a33a6791765b8b6a91a71c60c2d711fa087f0b4f899f127",
+      "freeze_block": 72537880,
+      "frozen_at": "2025-05-26T14:26:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9b5c79545436d5dd3bda9c51cdd0871a30cba375",
+      "tron_base58": "TQ8gWzf9i4oeabLT6XY7nrn8QsRwyG8gSi",
+      "freeze_tx": "94f2ebe7c3e374ff531bdd7e4857531f45a9e5ce92e3d2748fa9d9aaf0dddf3f",
+      "freeze_block": 81856538,
+      "frozen_at": "2026-04-15T07:15:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x92c6733f73df8a0ee38c39fa21e2b852a21f5047",
+      "tron_base58": "TPMHPdKM9qAozNrAVmCq9ejBs3S7qLLipe",
+      "freeze_tx": "311163ce57fcc700ef09be3f7e42200627549ff824452bcd515d09cff614fa89",
+      "freeze_block": 72053352,
+      "frozen_at": "2025-05-09T18:32:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6ada1317f7f25172991f6961178e7fc59f3ff8bc",
+      "tron_base58": "TKiBsUqd5ixPTqVWVp5BdDCHvoR7nwfMn3",
+      "freeze_tx": "3e386d8cac05cfe7130d3a85a28b1fd4696a1a4375d2faf7dbd35a556ba4ea74",
+      "freeze_block": 59795846,
+      "frozen_at": "2024-03-09T22:26:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xdb2652ddb4711f67ad1754d9319927f0740bbfd3",
+      "tron_base58": "TVwxtr5EXJ3MuyTHJZpMy4Bg8QErL2SQfM",
+      "freeze_tx": "4f0d7c44c741ac4cbf20d44592586e9962a93841e9157ea2a5f1344a1f737c7d",
+      "freeze_block": 66023162,
+      "frozen_at": "2024-10-12T07:31:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa4fb977aa5e5b52c6c4896497c7c98417daba576",
+      "tron_base58": "TR1ZDRCUjAMktBeMSyFCGmmYjkWvRErQmJ",
+      "freeze_tx": "fc1e31e296ced74aa37cac379f144ebfc8e5fa26d46f3f67ab8c6af4cb7c1b9e",
+      "freeze_block": 86151463,
+      "frozen_at": "2026-09-11T11:33:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xece9ced58243f9b513a1b7ee785b80e0fa867147",
+      "tron_base58": "TXZtZbH9KYhcPB42vMTdPDnzv8TBA7Psqc",
+      "freeze_tx": "588e46d3b91d3286245e375e57736c0ba0c961499d65722c155935714cf08e8f",
+      "freeze_block": 44833835,
+      "frozen_at": "2022-10-06T18:41:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe1b6b94e8d2502270252340a17cae91312a3b804",
+      "tron_base58": "TWYfw6a4iQuyGbA9P7cu79ESmkas4Ms7xx",
+      "freeze_tx": "58a4c95e2f29366266948185abe11cec6deb57d9b30b992ea93d8e81f26b96fb",
+      "freeze_block": 80599521,
+      "frozen_at": "2026-03-02T15:07:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe1eef8b820cac8e5b2e1dc5bea4b36e1a3309b5a",
+      "tron_base58": "TWZqKFo56SZiwu9Pcq7DEA4NcHnbLCnKkC",
+      "freeze_tx": "8e0fff7a1327878598d84c2d49fc85b464ecf834e2662071b30d4917738c7a4a",
+      "freeze_block": 87979620,
+      "frozen_at": "2026-11-13T23:32:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6d27ba22efea6c8466ae7284c050370267af1a7d",
+      "tron_base58": "TKvNFFmnRS6PDVC1nmehN8vZqiPL9uzQNV",
+      "freeze_tx": "66902b3cf357261ebda1c26c3ac61c72037ffb85adb39de0a4ac1787a27b2c74",
+      "freeze_block": 81867015,
+      "frozen_at": "2026-04-15T15:59:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf06dd727e182f324b813cb6a92fb2fb8ce858be8",
+      "tron_base58": "TXtUkws27fZfwkbiy7XyT9hwiQNTHszLPt",
+      "freeze_tx": "cca456c1ceca0f9d5a0b8f3378843cd549160c26cf31a500b09d6f4d05e8e6c6",
+      "freeze_block": 71132766,
+      "frozen_at": "2025-04-07T18:49:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x54c33d1f8e0959e96f16aab79c96b53cd81d3310",
+      "tron_base58": "THhPebk1Kv8EhakqCjGS2DtYjimwMnBmS7",
+      "freeze_tx": "03987b3d5265ba3be1de8918d42582ee947bb37f42dc8124078598528faa3660",
+      "freeze_block": 80377656,
+      "frozen_at": "2026-02-22T22:07:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x29bff22109cf7dfa7ecc37bb34b6349a1d5d4b4f",
+      "tron_base58": "TDmxeZ3CA5hYKT79nkeFbjhHjVJS2A75C8",
+      "freeze_tx": "26cd761af816594f358a7997c127fa63e8a629f0a18b86c2538e6f90763643ef",
+      "freeze_block": 77047239,
+      "frozen_at": "2025-10-30T05:38:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9175b4d97a2a0b3572f7a1bd7d5830cddb0ab410",
+      "tron_base58": "TPEKzG7rz9it49o46guHgtDypmMjucJ5wz",
+      "freeze_tx": "69a7bacf8cc45bb4edebc6d6503fc33042d5123c14102b9dd016f2f3b101027c",
+      "freeze_block": 59071223,
+      "frozen_at": "2024-02-13T18:24:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xab65ff13a5cd897a21544f57461f84a03ab28cb2",
+      "tron_base58": "TRbUjhJUMP3aPBoSebJuRnb4AF9mUrXJQJ",
+      "freeze_tx": "f0502010392002f9f73179672705269a9b9b0ee58d092c4cbf26b4fb37ce3eac",
+      "freeze_block": 80849853,
+      "frozen_at": "2026-03-11T08:06:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x2e366a50f51a85f934a9e7b19ab7ff8a69b0a8a9",
+      "tron_base58": "TEBZGiy3av1aadityXxvBG9LDjQyt8nvuM",
+      "freeze_tx": "af24f453fb894f44060651bad2ef3f2d535cf5051af836a97430b15c1e4071ce",
+      "freeze_block": 80599509,
+      "frozen_at": "2026-03-02T15:06:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x77233c1a147a7603eb132398d18f3de53d12af16",
+      "tron_base58": "TLq9d3Nk6j5ZPBHv4zRBQQ12CGrx6KZ4HV",
+      "freeze_tx": "55eb674250ee7ce1536e661586989e4ae381a215d63070e735008ad4793abdcc",
+      "freeze_block": 74235559,
+      "frozen_at": "2025-07-24T13:53:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x9eeb1e9ece536c77efe441260e24a0fd7144e366",
+      "tron_base58": "TQTVRmLE6KakX2rNe6mt294pL1tCjLVui2",
+      "freeze_tx": "4b51693eab7e2a1b999ff1115402e799412857b37bfe5d73f6cdf031167ab96e",
+      "freeze_block": 81922243,
+      "frozen_at": "2026-04-17T14:01:24Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x726043b074ab892bcc5d2795459889427c0ac5f5",
+      "tron_base58": "TLPyMVjY2YDkPtxipNECEDhUgwd2mcFy6b",
+      "freeze_tx": "16cd16ba15b8ac71d7df7bbab51660049684b3cd9c128d1b9d7d3ace8a255130",
+      "freeze_block": 85426415,
+      "frozen_at": "2026-08-17T07:06:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x642136209cc0d7a26396ebcf5fd3602c4ec4ddbb",
+      "tron_base58": "TK6eMp7DKr1YdA282HmdyvDKMbn6qvRVvP",
+      "freeze_tx": "84149b363baa2e3fc947f6cc2e8b9d5e5b98770a19ab8412d66a31bd58b9db92",
+      "freeze_block": 75959906,
+      "frozen_at": "2025-09-22T11:16:39Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x49df822d8c494aa9a8d662b211125a61f27b2b5b",
+      "tron_base58": "TGhp5hu9mfg3QXD9XjRvx4N3DWBJ4pwAFr",
+      "freeze_tx": "ad3ee502245a73b883b0ba8b367b55cf4030e49ca56ce479eda5c055d2c7927d",
+      "freeze_block": 81265435,
+      "frozen_at": "2026-03-25T18:31:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x0c1ee706f91a56fc96e2f260c670bd4bf3002696",
+      "tron_base58": "TB5J8W166YTUmtpUsy4XnNTKLVtesuE9eV",
+      "freeze_tx": "8d385bdb446114fa834e5e3818e3bcbbc3f0237386afa12a70a187495ae51d0d",
+      "freeze_block": 84074362,
+      "frozen_at": "2026-07-01T08:00:42Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x1642a4647317d18c20bcdca3a9fe6f5c3285dd59",
+      "tron_base58": "TBzuhf6JMGDRo55SatSbe5dBNMPFekQoXg",
+      "freeze_tx": "8dcd7f7c32c47ea192e18f3c0c25b97e832e7d8cc011c15c587aad72c65c8453",
+      "freeze_block": 85148363,
+      "frozen_at": "2026-08-07T15:20:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7c3d7294383debe96fb1341e6cd8b9dc9302e650",
+      "tron_base58": "TMJ8QJFe8TgpzxwqMS6be95uFKQeretZKp",
+      "freeze_tx": "228dbcf50d6f972b3b1355df457f6ff31f9675948d069aada8e1c0ca02f7e0e5",
+      "freeze_block": 67704280,
+      "frozen_at": "2024-12-09T16:54:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf1614ff4118066b49803da9db5798e23233362bb",
+      "tron_base58": "TXyWRfj97HVAzL1boJGbniWQbuGjwFYMh6",
+      "freeze_tx": "ed360e26bd5c5d8b3c11ce0d5f3eba0b04cf4b2707ca413903730f7cf34553ac",
+      "freeze_block": 68175054,
+      "frozen_at": "2024-12-26T01:20:27Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x23cc2e760e9c2a909f97304d6eaceca71df7756f",
+      "tron_base58": "TDEVFYwvBxEtzC3UmRTKxj7vk7GL8J8zeu",
+      "freeze_tx": "85dd39747426d4c5f8d2d6c7b822aebe8197817e80fdcd48784ae720f8563643",
+      "freeze_block": 87400506,
+      "frozen_at": "2026-10-24T20:45:18Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe8659e0d3e6e7339de593adf247b0f9ba3882da1",
+      "tron_base58": "TXA1W4eRH2hdtELwygpkfDon8eohSTjjUr",
+      "freeze_tx": "38c7daca1fbd29f48ff653e297f4aee58c8d05db2a66fa08ac3ab4512209052a",
+      "freeze_block": 87005200,
+      "frozen_at": "2026-10-11T03:13:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd3c51e43f5d624be086ff92020f674f64ddb2660",
+      "tron_base58": "TVGwiYpyybLk8jMiANCq77Z3WTtwkKYr4D",
+      "freeze_tx": "d1e749213ce1aebcd0caec80f3a81c63611c69bb435df10e5f506e85369407ec",
+      "freeze_block": 71050898,
+      "frozen_at": "2025-04-04T22:35:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x61c947eb8e22fe8b3d8b109a61232ab4b6821353",
+      "tron_base58": "TJtFfuosmF7Ys1ML3NpV2V5MbpASvZy2Qe",
+      "freeze_tx": "7ad229535be3bfdfc6dbc58812a25dcc7737ad3fa244302f7ac60818a4098e6e",
+      "freeze_block": 82010002,
+      "frozen_at": "2026-04-20T15:10:36Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xc4b13cf26d06bd15db5b8efe9553710b9aae8acd",
+      "tron_base58": "TTuDmNhu8A6koPJRUd8Q5RnsT1FMfrZnoj",
+      "freeze_tx": "add2a250a9288cdfd9b99549aa4d547ff07b477c329ac426db4bcb10bf65e1d2",
+      "freeze_block": 84075207,
+      "frozen_at": "2026-07-01T08:42:57Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xfb465258af3cc69fb51080147fdd4143e4a1fb1d",
+      "tron_base58": "TYsprF599Z3HQ3iVd2URP2n1cRCmMnuEWc",
+      "freeze_tx": "117d9226b0c6e463e1463a757c274b8059874c9f58a6bae3cb59a941fdbe2fd1",
+      "freeze_block": 44833860,
+      "frozen_at": "2022-10-06T18:42:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xccf1befc451ef851462f072df6d12430b32023ac",
+      "tron_base58": "TUerT13LhGQdYT8588CWsoRXVZXaLppsbM",
+      "freeze_tx": "e6b7c7b2ffef910e27ddbae4183061dd2eab57b85d65503b7fdd32273b5dbc93",
+      "freeze_block": 62111859,
+      "frozen_at": "2024-05-29T10:37:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7b8938e39d469c3147f454960137383f16dcdfe8",
+      "tron_base58": "TMEQW2C5hZ8bhdrumi7SPG1K2BcsiuKkxJ",
+      "freeze_tx": "263a7e5e32239cf1d38dfe325dd63f843f6b614f2c1cd54aaa3214a2c8ad22db",
+      "freeze_block": 85269475,
+      "frozen_at": "2026-08-11T20:17:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4a0587abad37dbeccfb0e494d2ce69404c87a6a9",
+      "tron_base58": "TGibdUyCFiQdsreyFgs5tno7AeboyVQ56A",
+      "freeze_tx": "7d6ccb9bbacd6eeb58eaf97f153307c63c49199df4a2da8dd1b6a601c01dbbac",
+      "freeze_block": 86508704,
+      "frozen_at": "2026-09-23T21:20:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x02e75fbde42c215802f5a820f3204794f9fc3bf5",
+      "tron_base58": "TAEZXb921aw2EuQPCPLG7vvLiA6zLxD2jy",
+      "freeze_tx": "3e46c4762a1a366a574899fc60e5fc1ca75362be0b6fe88afa1f9bf3df6c4e54",
+      "freeze_block": 74378647,
+      "frozen_at": "2025-07-29T13:10:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3572f6fe960d7e8925755d13236f9d5b379f55ab",
+      "tron_base58": "TEqpY82JaUCJdCLxXtrPkonNUKpQRkAKmX",
+      "freeze_tx": "4b436681d0c8400b4ff2a3e786bf9f889b6d5228cf7a90767dbe04f3934ebef3",
+      "freeze_block": 83426744,
+      "frozen_at": "2026-06-08T20:10:12Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd8b856b9977e5fed7776a0934314ee3922bd5fff",
+      "tron_base58": "TVj7naPy1zM6TtMrz5R3DPzqH3FHyLPbSV",
+      "freeze_tx": "9129fa90d4222a756bf9ee0587f9201a342bed35e3e8336f902d56c65bb8fcda",
+      "freeze_block": 87112330,
+      "frozen_at": "2026-10-14T20:31:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x6f56c5f367c229b536682c1c8b1686d8ee4dfa29",
+      "tron_base58": "TL7uxToeNLUAeM5YCkJ46nxo6fnrzmC7nc",
+      "freeze_tx": "3775a4f452acc0ceb0ff9ee1fb8274a973674f0d8cb5c81597ace2f45e114649",
+      "freeze_block": 75299358,
+      "frozen_at": "2025-08-30T12:38:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x5840b86a4d74112c33151213f0ec8c581a71e4ee",
+      "tron_base58": "TJ1qzno2dxthVqLJGcmF2pxL6yVzPRnkQ7",
+      "freeze_tx": "c6b76be59cf7ab24ed88481b59ee198087d51d517194886fc726b7c9501ed66d",
+      "freeze_block": 78650889,
+      "frozen_at": "2025-12-24T22:30:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xecbc1378a89bd10a4aee63900dcae9fdae85a567",
+      "tron_base58": "TXYwn5sDeLuqnpvWWqn6HQHFffX1RsGAWn",
+      "freeze_tx": "739cfadec8bdb3c27e6aa4d48e7b036aa1ba841a4c0f4837109478ee0d26e8d9",
+      "freeze_block": 86439444,
+      "frozen_at": "2026-09-21T11:36:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x183398ad0dd41a7a8fa64cd66ad976b5ebaef860",
+      "tron_base58": "TCBB2eFJ5HvYSjv5Y3cNPq2XPQ7Hm2T8ev",
+      "freeze_tx": "133d633ec76da8715cad076cd48ba8109d7bad0757222fd48050a833ba123d95",
+      "freeze_block": 73882409,
+      "frozen_at": "2025-07-12T07:31:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x7e6d797aef706dbc2a0444914cf2bf80db34712e",
+      "tron_base58": "TMVhHerXqTw5SGNSwVrwQSqxWWCTYsrWXt",
+      "freeze_tx": "a12b782024bc8d6139b47270260e5b0d0cedd304c70b455c84ac489d2f912bfd",
+      "freeze_block": 83648333,
+      "frozen_at": "2026-06-16T12:52:45Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x3da852d7aed60eda1b228fc8c844b8d850389f78",
+      "tron_base58": "TFbDs69t3TmMxbjiVPKeQqeH65VdqnCkRg",
+      "freeze_tx": "c1554e5a3e2ceaff9fb8b456155052b66fb59d2c20ec77362f0ee6f3ac150944",
+      "freeze_block": 70360889,
+      "frozen_at": "2025-03-11T23:24:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe90726ecad9e2e092a80c19b30ff6b22627f86e3",
+      "tron_base58": "TXDM1gtZcisAHYuatZmfQb6f2zsx3CJ1qT",
+      "freeze_tx": "389a15a08b278018a6ba1d7a0519100a9cbebc45a7bfaf38e2b1bcb3c69505ec",
+      "freeze_block": 67906225,
+      "frozen_at": "2024-12-16T17:15:06Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x43021af16829831fbf8af2860d19f75a1dff9529",
+      "tron_base58": "TG5WoBnJw8YCRhBDpboABUzK9ENUkxCy3x",
+      "freeze_tx": "bdc51a96348a10014a8ea110430125f0e33ad03ac7684fd5943b576a43677753",
+      "freeze_block": 79140747,
+      "frozen_at": "2026-01-10T22:49:48Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xecbf979203295bdfac2311186fe54e71f03583c6",
+      "tron_base58": "TXZ1zP5cR3sJzv4Bfh1G87wCAC8H7FMD6n",
+      "freeze_tx": "29b7ecae58db5ee61592901d0a428fd63bcce37f0a3ccc3101b9d23e32dccc0a",
+      "freeze_block": 83021569,
+      "frozen_at": "2026-05-25T18:23:15Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xa272a4afb1aff0d30c6d2237383cdc55c958a72d",
+      "tron_base58": "TQn9oh6Mw6jLfgzh23AVHsCcfC9ZE41fne",
+      "freeze_tx": "56ba7c4b52e50dead2f4754b00ce6a0e11791a6abd743c34f7538e34d2a37fea",
+      "freeze_block": 50809202,
+      "frozen_at": "2023-05-02T15:27:51Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe2270ac23407f6287d21a31e1166b93e864e199d",
+      "tron_base58": "TWazV6mGjdTjHe5UxTRx5HPq9UbBiixMEi",
+      "freeze_tx": "6728b783fc753edc0a25f6b827e1e45967dc5c52a84ee1d855c27990b6c6b42a",
+      "freeze_block": 67943533,
+      "frozen_at": "2024-12-18T00:21:09Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xd9aa3cdffae2c9d8f2fc23a96e57b34f20b0fd5e",
+      "tron_base58": "TVp7a1r4FGNgWE2ViskhcfVYxbyZRvpvmv",
+      "freeze_tx": "acb951d633cbbf27de61491f532b3c998bc950038f0a63434199f5f1117e4532",
+      "freeze_block": 70360879,
+      "frozen_at": "2025-03-11T23:24:21Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe381f3c85f34a5936508d23e23bd702bf6788791",
+      "tron_base58": "TWiA4r5PCQ4waCv6bmnrN5LM1QXScagwHX",
+      "freeze_tx": "39d0f561a33f618f1708e35c0cc425d62d0f42e670d588c8242456c7e41b8a01",
+      "freeze_block": 86210841,
+      "frozen_at": "2026-09-13T13:03:33Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0x4fe18447bd2394b9001364a334e680f79e71e9be",
+      "tron_base58": "THFaYPa9ypgr2QPDNPGAzThq8ueGNdSuBT",
+      "freeze_tx": "87f74aeed6a8a0719ac4599f79908a17dd7db57fb1768fa1d22507e716bf0cb5",
+      "freeze_block": 86733470,
+      "frozen_at": "2026-10-01T16:43:30Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xf1258666d11df1b4fda791f3def177e25a45c741",
+      "tron_base58": "TXxGoaCmhxdKPkJzrfBhuD9MtgnmFHzXYX",
+      "freeze_tx": "fd9b15ff61c4e89f2db0f9bff9ccd924eaea819d478cd922b3dfbaa8708ac2f4",
+      "freeze_block": 87479976,
+      "frozen_at": "2026-10-27T14:59:54Z"
+    },
+    {
+      "source_contract": "TRON_USDT",
+      "chain": "tron",
+      "address": "0xe5b76e8f7cd8f7cf48761937c14c5868e7239b56",
+      "tron_base58": "TWuqV4LkXvtgepPoSnZ1CrjzPDC1qJNtPL",
+      "freeze_tx": "48278e3bb6e1c3e06fd46cd00701f194bb737dff7504816d8eafecfe83e483c9",
+      "freeze_block": 86305618,
+      "frozen_at": "2026-09-16T20:03:45Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x76c7c4ff99ab9791d4e358e33a3f51c2c5d3ac8e",
+      "tron_base58": "TLoG3vbjDgqmTD5bM7w9rMgA6ysaNReuRy",
+      "freeze_tx": "a7ba565483242915851f4f184485357cff61bcc826052245807b3a21bb34dba9",
+      "freeze_block": 84722356,
+      "frozen_at": "2026-07-23T20:13:09Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x6fac4d18c912343bf86fa7049364dd4e424ab9c0",
+      "tron_base58": "TL9gR3f4FgNa9VZAsPt6xuKXPrfWAUJ5MW",
+      "freeze_tx": "f4f5d3f781d5cded27a7959eb014b970955ca7e654c98e8e438040f985e788ca",
+      "freeze_block": 85644934,
+      "frozen_at": "2026-08-24T21:16:12Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x803a9bd5e917e32bd7bcde526e656254417c5a86",
+      "tron_base58": "TMfDhpUqW5W6HcMPXFaJfaiY271CYa51Hs",
+      "freeze_tx": "338dbf4bab5316407325e2a574b1047afe55ab0cf48f91809765c346bee3d928",
+      "freeze_block": 84087190,
+      "frozen_at": "2026-07-01T18:42:18Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0xf1c4c44d2dcbcfa704349e3b57628dbd8404e597",
+      "tron_base58": "TY1ZZtQzQEZ7QaRRaAfi5xEmUuV2cmxAp2",
+      "freeze_tx": "9a617ded4864880fc2080e5595a36e4e9f47ee1c42b2662ec380eaf82121d6bc",
+      "freeze_block": 85644933,
+      "frozen_at": "2026-08-24T21:16:09Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0xe4c9a7f68b1eba4508f54f07f7378847318dd1a3",
+      "tron_base58": "TWpve7EDebGqqsXMYXT9CAn8NXhTXnjXyC",
+      "freeze_tx": "8afcbaa8f1953309e8f53212716aa1cbb5b08d7aa4dc9fade6eb0fdabd030910",
+      "freeze_block": 87511720,
+      "frozen_at": "2026-10-28T17:27:30Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x68c15054d74c86ffca1e23a3802a27bab1735395",
+      "tron_base58": "TKX6rgpGpGrJWzf1qXUUSNL5cYHQt7Z9rY",
+      "freeze_tx": "9202294ce9ea3dbffdee45cbe7110c91a58df4a5622f9c4d3be9f536a0cad146",
+      "freeze_block": 84087201,
+      "frozen_at": "2026-07-01T18:42:51Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x7fea703f97cdf8d607513231f8f3310e56096863",
+      "tron_base58": "TMdZfVVAsxKsbXGmV3kBnEgM69z3QHH3kz",
+      "freeze_tx": "acd3821168921a48e60ccdd01138a0be7d3edbbeffb9316f2a80064076d10831",
+      "freeze_block": 86101809,
+      "frozen_at": "2026-09-09T18:10:09Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0xd086c684646d4eba389c5d97e57d5b2bee3826b7",
+      "tron_base58": "TUyo1Kfnnjr2iMQdZxLWPX1U8Xiy1Wz5z5",
+      "freeze_tx": "f81aa9a6ea1b5aa29c4dfc1a6d153549c02bc72374fe163c62f8d24bc877436e",
+      "freeze_block": 84087200,
+      "frozen_at": "2026-07-01T18:42:48Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x1c625310c217453840702d81180859a33477d81a",
+      "tron_base58": "TCZHi8kj5pjRQweCB11Bp38qCnpz32vDXX",
+      "freeze_tx": "36d8df632325fe69df1c811b10aba23befb504beaaa8794cec7d1bad34e83c17",
+      "freeze_block": 87658271,
+      "frozen_at": "2026-11-02T19:38:42Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x8576acc5c05d6ce88f4e49bf65bdf0c62f91353c",
+      "tron_base58": "TN8u3FNJd7q63WJBnquGgQdYYQEDouN3BK",
+      "freeze_tx": "13851654b65bf1f80321a14bb97b2edacefb772d64fcfe06c287469e21292660",
+      "freeze_block": 39354658,
+      "frozen_at": "2022-03-30T04:30:33Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x66fb0cd942a92eb9e54918efd9617ecb666a7d30",
+      "tron_base58": "TKMifu5XTzWBpZkd3PbALNdDvRzjadtBk5",
+      "freeze_tx": "c1a250a65ca8991cc46458acf90f5f3442bb6ede2d6e65f15403dd4b9ade6ddc",
+      "freeze_block": 87658269,
+      "frozen_at": "2026-11-02T19:38:36Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x7f03679b56d8772530efa516b58bb83d4829e881",
+      "tron_base58": "TMYntz6GZKNtg9MPAFjkh96sggBh3qviM6",
+      "freeze_tx": "18e9d4d7fbd9e38ee0f5e6ed52d1b5af4051d2da31b3a74055a733d1d07fd778",
+      "freeze_block": 85644932,
+      "frozen_at": "2026-08-24T21:16:06Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x998587afdf35fd181e6c6df51ae8449d981eb3d3",
+      "tron_base58": "TPxxMEkuDg3Vdc25AkqP94GoaPqT5zcFjD",
+      "freeze_tx": "b15f8ec28fb84a99884913653f62b85e8fe98a7f90e9e8364dbcd2b96c3e62a8",
+      "freeze_block": 87658282,
+      "frozen_at": "2026-11-02T19:39:15Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x95055422c43e622cf8c93708cf3032a9256b019e",
+      "tron_base58": "TPZA4tBMrcXWgGzi495gQRYuLdZjqaFMQw",
+      "freeze_tx": "067f110a585931a44055659cf15c0f654fcf855408d85a68c0eddd3a2ce7652a",
+      "freeze_block": 87658268,
+      "frozen_at": "2026-11-02T19:38:33Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0xfbd36c041070f28fd0498166be6494065bec5f0e",
+      "tron_base58": "TYvjt4ZKfsipHjA52nzgjUjDBF622SLCih",
+      "freeze_tx": "886fa9c6476380c197ce5c7f421bde10d05373c782767e45b42f06f356a16512",
+      "freeze_block": 86101862,
+      "frozen_at": "2026-09-09T18:12:48Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x1da5821544e25c636c1417ba96ade4cf6d2f9b5a",
+      "tron_base58": "TCfxsL3Ab7zSZpPuu71hQnGdTDAxcqwEUu",
+      "freeze_tx": "6e624961e096d076ca0f6ebfe47366f4078f309e843c1b14ab53d510f55f6b6e",
+      "freeze_block": 39354694,
+      "frozen_at": "2022-03-30T04:32:21Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x37cefc817a4582773b26835910127ba24f284bb4",
+      "tron_base58": "TF4J8Gp7zbS8NA3HLuxsLdx7Ebzr6weCGn",
+      "freeze_tx": "136cd0c7bc1ac326a26200b9e729b01a3e06ad183430bbac39aaf325305dc4bd",
+      "freeze_block": 77209036,
+      "frozen_at": "2025-11-04T20:31:06Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x3e37627deaa754090fbfbb8bd226c1ce66d255e9",
+      "tron_base58": "TFeBF9j5UAw6SsnGQjvj3nZkSJYV1GxvKy",
+      "freeze_tx": "c0c4963f6a98fc4cabce9704e231b74ab400657d49ebc247df4e45e5d8b283d6",
+      "freeze_block": 40448006,
+      "frozen_at": "2022-05-07T04:08:57Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x6315bdc714ebb7a08e5ec10f351b6ca61d052bee",
+      "tron_base58": "TK17wfSPp32RWrnzZPrGpv7TxdNFvvvE2s",
+      "freeze_tx": "dbfbf4e9917407e984e354f1ee6792f213e6e14711861fda83942b4385b4c159",
+      "freeze_block": 80894100,
+      "frozen_at": "2026-03-12T20:59:36Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0xb338962b92cd818d6aef0a32a9ecd01212a71f33",
+      "tron_base58": "TSJqk6ukg1HYtyzq9ZPMSDmdQhzHy4FmpA",
+      "freeze_tx": "bfdf88e822e8d1fae6031bb53ad2d21ea9b2c29a7de711d0b1aeba5f7913a0ba",
+      "freeze_block": 74850908,
+      "frozen_at": "2025-08-14T22:49:54Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x3ec58d2b0bce77282f2e415ac6596dc3f626f436",
+      "tron_base58": "TFh7Z4qmdiT7opAYYLmNVXQJtVCkAtg7Zh",
+      "freeze_tx": "f990f4d24cafabf5d0515a8979a727984b7e898967a94d3a161673f1d865fcc1",
+      "freeze_block": 84087186,
+      "frozen_at": "2026-07-01T18:42:06Z"
+    },
+    {
+      "source_contract": "TRON_USDC",
+      "chain": "tron",
+      "address": "0x591c430024fce05a9d657d1fa3eba15109e48600",
+      "tron_base58": "TJ6NznpBV5uUpp5uZGDub9zD1999999999",
+      "freeze_tx": "5758697a91b9a2895cf45b6e0c4c83d61467d47bce9147f73a7103208c0ec4ec",
+      "freeze_block": 86101811,
+      "frozen_at": "2026-09-09T18:10:15Z"
+    }
+  ]
+}

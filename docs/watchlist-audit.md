@@ -135,6 +135,18 @@ Seedable live-frozen fleet total    = 12,732  (vs 12,757 on-chain total)
 
 Both numbers resolve from the same evidence file; neither is massaged.
 
+### Enriched dormant sample
+
+For the paid Case-1 proof, every sample wallet needs its **real** freeze time so the twin can be registered with a truthful `frozen_at`. `docs/evidence/dormant-sample-500-enriched.json` extends `docs/evidence/dormant-sample-500.json` (original kept untouched) with, per row:
+
+- `freeze_tx` — hash of the earliest `AddedBlackList` / `Blacklisted` / `AddressFrozen` / `FreezeAddress` event on the source contract naming this wallet.
+- `freeze_block` — block number of that event.
+- `frozen_at` — ISO 8601 UTC timestamp of the freeze block.
+
+Method: full-history paginated event scan per source contract (Etherscan V2 `logs/getLogs` for ETH, TronGrid `v1/contracts/{addr}/events` for Tron); wallet-indexed; earliest timestamp kept. Deterministic — re-running on a different day only changes the result if a wallet's EARLIEST freeze is itself replaced, which cannot happen (freeze events are append-only).
+
+Result: **500 / 500 rows resolved** with freeze_tx + frozen_at. `unresolved_count = 0`. Freeze dates span **2020-02-14 → 2026-11-16**, confirming the dormant-sample covers real long-tail history and is not clustered on the last 30 days.
+
 ### Decoder golden fixtures
 
 To prevent silent decoder regressions in Issue D's watcher (per that issue's Definition of Done), `docs/evidence/decode-fixtures.json` pins a known historical `(tx_hash, log_index)` to an expected wallet for every qualifying event-type on both chains that has at least one firing:
