@@ -1,6 +1,6 @@
 # Watchlist audit — chain-watch Issue C (P0)
 
-Status: draft, 2026-11-17 (revised after PR #23 review). Scope: Ethereum mainnet + Tron. Read-only enumeration; no paid jobs.
+Status: draft, 2026-11-17 (revised twice: once after PR #23 v1 review, once after the authoritative-census pass). Scope: Ethereum mainnet + Tron. Read-only enumeration; no paid jobs.
 
 ## 1. Selection rule (the deliverable)
 
@@ -49,59 +49,73 @@ Rationale: the watcher is an event-subscription system. Admin *functions* withou
 
 Filter parameters for row 9: 68 Aave V3 reserve asset addresses (from `Pool.getReservesList()` at `0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2`). Routed by indexed `asset` topic.
 
-**30-day firing table** (reproducible — see `docs/evidence/watchlist-30d-counts.json` and §3):
+For 30-day and all-time freeze counts on account-level contracts (rows 1, 2, 3, 4, 5, 10, 11) see §3's census table. For protocol-level pauser 30-day firings (rows 6, 7, 8, 9) see §4.
 
-| # | Contract | Firings (30d, counted events) |
-|---|---|---|
-| 1 | ETH USDT | `AddedBlackList`=51, `RemovedBlackList`=0, `DestroyedBlackFunds`=21 |
-| 2 | ETH USDC | `Blacklisted`=59, `UnBlacklisted`=1 |
-| 3 | BUSD | not re-derived this session — see RETRY-3 |
-| 4 | USDP | not re-derived this session — see RETRY-3 |
-| 5 | TUSD | not re-derived this session — see RETRY-3 |
-| 6 | Aave V2 LendingPool | not re-derived this session — see RETRY-3 |
-| 7 | Lido stETH | not re-derived this session — see RETRY-3 |
-| 8 | Compound V2 Comptroller | not re-derived this session — see RETRY-3 |
-| 9 | Aave V3 PoolConfigurator | `ReservePaused`=0, `ReserveFrozen`=65, `ReserveActive`=0 |
-| 10 | Tron USDT | `AddedBlackList`=308, `RemovedBlackList`=25, `DestroyedBlackFunds`=50 |
-| 11 | Tron USDC | `Blacklisted`=85, `UnBlacklisted`=0 |
+## 3. Authoritative freeze census (account-level contracts)
 
-## 3. 30-day event-frequency probe — N derivation
+The second revision of this doc ran a full-history census of the seven account-level freeze contracts (the four stablecoins plus BUSD, USDP, TUSD). Protocol-level pausers (Aave V2, Aave V3, Lido, Compound V2) are **excluded** from N and the census — they are address-set admin actions, not per-address freezes, and belong in a separate "DeFi admin actions" cadence metric (see §4). Event-row dedup is by `(tx_hash, log_index)` for Ethereum and `(transaction_id, event_index)` for Tron; distinct-address sets are then built from deduped rows.
 
-The headline figure is **N = 503 blacklist/freeze additions over 30 days**, summing the four canonical stablecoin add-events (rows 1, 2, 10, 11) — all re-derived this session, raw log counts in `docs/evidence/watchlist-30d-counts.json`:
+Full evidence (per-contract address lists for all-time added, all-time removed, currently frozen, 30-day new, 30-day removed) is in `docs/evidence/watchlist-30d-counts.json` (~1.4 MB). Only aggregates appear here.
 
-```
-N_headline = 51  (ETH USDT  AddedBlackList)
-           + 59  (ETH USDC  Blacklisted)
-           + 308 (Tron USDT AddedBlackList)
-           + 85  (Tron USDC Blacklisted)
-           ----
-           = 503
-```
+| # | Contract | Scan range | All-time add events | All-time remove events | Distinct all-time added | Distinct currently frozen | 30d add events | 30d distinct new | 30d remove events |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|
+| 1 | ETH USDT | blk 4,634,748 → head | 3,224 | 347 | 3,214 | **2,868** | 51 | 51 | 0 |
+| 2 | ETH USDC | blk 6,082,465 → head | 962 | 227 | 908 | **711** | 59 | 59 | 1 |
+| 3 | BUSD | blk 8,493,709 → head | 274 | 1 | 274 | **273** | 8 | 8 | 0 |
+| 4 | USDP | blk 14,653,265 → head | 106 | 0 | 106 | **106** | 8 | 8 | 0 |
+| 5 | TUSD | blk 11,506,213 → head | 0 | 0 | 0 | **0** (sentinel) | 0 | 0 | 0 |
+| 10 | Tron USDT | deployment → head | 9,282 | 1,006 | 9,243 | **8,238** | 308 | 307 | 25 |
+| 11 | Tron USDC | deployment → head | 1,205 | 640 | 1,201 | **561** | 85 | 85 | 0 |
+| | **Totals** | | **15,053** | **2,221** | **14,946** | **12,757** | **519** | **518** | **26** |
 
-**Fallback N = 418** drops Tron USDC (issuer-unconfirmed):
+Row numbers correspond to the watchlist table in §2. Rows 6–9 (Aave V2 / Aave V3 / Lido / Compound V2) do not appear here — see §4.
+
+### N — the definitive figure
+
+**N = 519 account-level freeze additions over 30 days** (events, summing column "30d add events"). Dedup'd by distinct address: **518** (one Tron USDT address was blacklisted twice inside the window — likely a remove-then-re-add).
+
+**Fallback N = 434** (events) / **433** (distinct) drops Tron USDC (issuer-unconfirmed):
 
 ```
-N_fallback = 503 − 85 = 418
+N_headline_events  = 51 + 59 + 8 + 8 + 0 + 308 + 85 = 519
+N_headline_distinct                                  = 518
+N_fallback_events  = 519 − 85                        = 434
+N_fallback_distinct                                  = 433
 ```
 
-Mark picks which to lead with on Friday; both derive from the same table, both reproducible from the same evidence file.
+Mark picks which to lead with on Friday; both derive from the same evidence file.
 
-**Removals** (count-only, not in N): `RemovedBlackList`/`UnBlacklisted` across all four = **26**.
-**`DestroyedBlackFunds`** (USDT only, both chains, asset-burn — separate action, not in N): **71**.
+**Removals** (count-only, not in N): 26 across all seven contracts.
+**`DestroyedBlackFunds`** (USDT only, both chains, asset-burn — distinct action, not in N): 71 (21 ETH + 50 Tron) — see the earlier 30d probe in the evidence file.
 
-### Discrepancy from prior lane figure (N = 400)
+### Reconciliation of the earlier 237 → 308 figure
 
-The 02:10 UTC lane post on #648 claimed N = 400 (51 + 59 + 237 + 53; removals 24). Re-derivation this session finds ETH figures match to the event (51, 59) but Tron figures are higher: Tron USDT 237 → 308 (+71), Tron USDC 53 → 85 (+32). Likely causes:
+The 02:10 UTC lane post on #648 cited N = 400 with Tron USDT at 237. The first in-repo re-derivation (PR #23 revision 1, `counts.json`) got 308. This census — a full all-time paginated TronGrid scan dedup'd by `(transaction_id, event_index)`, 53 paginated calls, 9,282 raw events returned with 9,282 unique keys (zero duplicates) — returns 308 for the 30-day subset.
 
-- The two probes used 30-day windows ending at different times (prior ≈ 02:10 UTC Nov 17, re-derivation ≈ 13:45 UTC Nov 17 = ~11.5 h shift).
-- Continued Tron blacklisting cadence over that window (Tron USDT averages ~10 adds/day; a half-day shift alone does not explain +71 on USDT, so the earlier count may also have used a slightly different filter or bounded page size).
+**Root cause of the 237 figure: incomplete pagination in the earlier probe.** The honest explanation is not a "window shift" (my previous hand-wave was wrong — a ~12-hour slide on a ~10/day contract is ±5, not +71). The lane's 237 almost certainly ended pagination at its first empty response or default page cap and never reached the full 30-day set. The census's full fingerprint-walked traversal is the complete count.
 
-Honest call: **N = 503 is the figure this repo stands behind.** The earlier 400 is not retracted as an error for its moment, but should not be re-cited. `docs/evidence/watchlist-30d-counts.json` holds the raw counts, block range, computed topic0s, and three sample transaction hashes per bucket for audit.
+Repo therefore stands behind **N = 519 (distinct 518)**, with the 237 (and the derived 400) retracted as undercounts, not as "estimates at a different timestamp".
+
+### Fleet-size read
+
+The live frozen address population across the seven contracts is **~12,757 addresses — thousands, not hundreds.** Breakdown:
+
+```
+Tron USDT     8,238  (64.6%)
+ETH USDT      2,868  (22.5%)
+ETH USDC        711  (5.6%)
+Tron USDC       561  (4.4%)
+BUSD            273  (2.1%)
+USDP            106  (0.8%)
+TUSD              0  (sentinel)
+```
+
+Tron USDT dominates both the live-frozen fleet (65 %) and the 30-day growth cadence (307 / 518 = 59 %), confirming the reviewer's prior framing. The address-twin pivot is working against a thousands-scale fleet, not a hundreds-scale one.
 
 ### Reproduction query
 
-- Ethereum (USDT / USDC / ETH anchors): Etherscan V2 `logs/getLogs` filtered by `address` + `topic0 = keccak256(event_sig)`, blockrange = `head − 216000` → `head` (≈30 d at 12 s/block). Paginated at `offset=1000` per page.
-- Tron (USDT / USDC): TronGrid `v1/contracts/{addr}/events?event_name=<Name>&min_block_timestamp=<ms>&limit=200`, paginated via `fingerprint`. Keyed via header `TRON-PRO-API-KEY`.
+- Ethereum (USDT / USDC / BUSD / USDP / TUSD): Etherscan V2 `logs/getLogs` filtered by `address` + `topic0 = keccak256(event_sig)` over `fromBlock = deployment → toBlock = head`. Paginated at `offset=1000`; auto-bisect on 10-page cap. Dedup by `(transactionHash, logIndex)`; address extracted from indexed `topics[1]` when present, else the first 32-byte word of `data`.
+- Tron (USDT / USDC): TronGrid `v1/contracts/{addr}/events?event_name=<Name>&limit=200&order_by=block_timestamp,asc`, paginated via `fingerprint` until empty. Dedup by `(transaction_id, event_index)`. Keyed via header `TRON-PRO-API-KEY`.
 
 ## 4. Aave `ReserveFrozen` — separate metric, NOT in N
 
@@ -189,9 +203,9 @@ All computed topic0s used in the re-derivation are stored in `docs/evidence/watc
 
 **RETRY-1 — Tron USDC deployer cross-reference.** Deployer `TYsvgn3yjTQSWMwfsCN4mygYvozJGo8xBC` could not be cross-referenced to Circle's attested identity this session because Tronscan's anonymous API was rate-limited. A later session with Tronscan API-key access (see [docs.tronscan.org](https://docs.tronscan.org/#get-an-api-key)) should re-run the `apilist.tronscanapi.com/api/token_trc20?contract=TEkxi…rdz8` call, inspect `blueCheck` / `public_tag` / `vip` / `issuer_name`, and if any attestation is present, promote the label from `issuer-unconfirmed` to `issuer-confirmed`. Session-specific access failure, not a disproof.
 
-**RETRY-2 — Re-derive the four 30-day stablecoin counts in-repo.** DONE this session. See `docs/evidence/watchlist-30d-counts.json`. Finding: N = 503 (not the previously cited 400).
+**RETRY-2 — Re-derive 30-day stablecoin counts in-repo.** DONE (revision 1) and superseded by the §3 census (revision 2). Evidence: `docs/evidence/watchlist-30d-counts.json`. Finding: **N = 519 events / 518 distinct** (the earlier 400 and intermediate 503 are retracted as undercounts).
 
-**RETRY-3 — 30-day firing counts for the six new ETH anchors.** Rows 3–8 (BUSD, USDP, TUSD, Aave V2 LendingPool, Lido stETH, Compound V2 Comptroller) carry a qualifying ABI but their 30-day firing counts were not re-derived this session (reviewer scoped RETRY-2 to the four N-feeding stables only). A follow-up pass should run the §3 recipe against each contract's full qualifying event-set and extend `docs/evidence/watchlist-30d-counts.json`. These counts feed the operational watchdog thresholds, not N.
+**RETRY-3 — 30-day firing counts for the three protocol-level pausers.** Rows 6, 7, 8 (Aave V2 LendingPool, Lido stETH, Compound V2 Comptroller) carry a qualifying ABI; their 30-day firing counts were not derived this session (reviewer scoped the census to account-level contracts only, with protocol pausers kept in a separate "DeFi admin actions" metric alongside Aave V3 `ReserveFrozen`). A follow-up pass should run the reproduction query against each pauser's full qualifying event-set and extend the evidence file.
 
 ## 10. Reproduction
 
