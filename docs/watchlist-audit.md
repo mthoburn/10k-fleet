@@ -96,6 +96,23 @@ The 02:10 UTC lane post on #648 cited N = 400 with Tron USDT at 237. The first i
 
 Repo therefore stands behind **N = 519 (distinct 518)**, with the 237 (and the derived 400) retracted as undercounts, not as "estimates at a different timestamp".
 
+### Sentinel-address note (post-merge addendum)
+
+The currently-frozen sets include a small number of near-zero addresses: 17 on ETH USDT (`0x0000…0000`, `0x0000…0018`, `0x0000…0019`, `0x0000…001a`, …) and 8 on Tron USDT (`0x0000…1896`, `0x0000…2053`, `0x0000…234a`, …). On-chain diagnosis (ETH_USDT tx `0x26e2265c66d7de39bdf0570a74118bbeec782ea11b10b9b075f3ef3866d70722` at block 6,969,269, raw `data = 0x0000…0000`, `topics.length = 1`): these are **real on-chain blacklistings, not decode artefacts** — the contracts genuinely emitted `AddedBlackList(0x0)` etc. They appear to be issuer sentinel / test additions from very early in the blacklist feature's life.
+
+They count toward on-chain totals but should NOT be fed into the fleet seed as substantive wallets. Exclusion rule for fleet seeding: addresses with the leading 10 bytes zero (first 20 hex chars of the body are `0`).
+
+Resulting counts after exclusion (fleet-seedable only):
+
+```
+ETH USDT currently_frozen seedable = 2,868 − 17 = 2,851
+Tron USDT currently_frozen seedable = 8,238 − 8 = 8,230
+Others unchanged.
+Seedable live-frozen fleet total = 12,732  (vs 12,757 on-chain total)
+```
+
+Grant text should use **12,732** (seedable) when describing the fleet, and note the on-chain 12,757 (with the 25 sentinels explained) when describing the raw census.
+
 ### Fleet-size read
 
 The live frozen address population across the seven contracts is **~12,757 addresses — thousands, not hundreds.** Breakdown:
