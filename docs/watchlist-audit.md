@@ -109,7 +109,15 @@ The currently-frozen sets include a small number of near-zero addresses: **17** 
    - **Fixture-pinned**: `docs/evidence/decode-fixtures.json` includes an explicit near-zero fixture (ETH USDT tx above → expected `0x0`) so a future decoder regression would fail CI loudly.
 3. **How they got there**: all 17 ETH_USDT near-zero logs were emitted from Tether's **Gnosis multisig admin** (senders `0xf4b51b14…`, `0x61d5a4d5…`, `0xac3b242e…` using `confirmTransaction(uint256)` → the multisig's internal `execTransaction` → `USDT.addBlackList(X)`). Several are sequential small integers (0x0, 0x18, 0x19, 0x1a) — the pattern is consistent with issuer sentinel / test additions in the early life of the blacklist feature, with a few where the stored address in the multisig pendingTx apparently got set to a small uint value (possibly txId leakage). Either way, the on-chain state is what it is.
 
-They count toward on-chain totals but should NOT be fed into the fleet seed as substantive wallets. Exclusion rule for fleet seeding: **addresses with the leading 10 bytes zero** (first 20 hex chars of the body are `0`). Applying the wider 8-byte filter adds 1 more ETH entry; the fleet-seedable total differs by 1 depending on choice (12,732 vs 12,731).
+They count toward on-chain totals but should NOT be fed into the fleet seed as substantive wallets.
+
+#### Sentinel-exclusion rule (committed)
+
+> **An address is a sentinel — excluded from fleet seeding — if and only if its first 10 bytes (the first 20 hex characters of the 40-char body, i.e. `address[2:22] == "0" * 20`) are all zero.**
+
+That rule, applied to the seven account-level `currently_frozen` sets from `docs/evidence/watchlist-30d-counts.json`, yields **25 sentinels** (17 ETH USDT + 8 Tron USDT; the other five contracts contribute zero). It is the exact rule used by `docs/evidence/dormant-sample-500.json` and the one the grant copy relies on. It is deterministic and re-derivable from the evidence file in one pass.
+
+The count is a function of the threshold. A stricter threshold (e.g. first 12 bytes zero) would classify fewer addresses as sentinels. A looser one (e.g. first 8 bytes zero, which is `address[2:18]`) catches one additional ETH USDT entry (26 total), shifting the seedable number from 12,732 to 12,731. The 10-byte threshold is what this doc and the committed evidence stand behind; any revision should be stated with the same precision.
 
 Resulting counts after exclusion (fleet-seedable only), lead-10-byte filter:
 
@@ -120,7 +128,12 @@ Others unchanged.
 Seedable live-frozen fleet total    = 12,732  (vs 12,757 on-chain total)
 ```
 
-Grant text should use **12,732** (seedable) when describing the fleet, and note the on-chain 12,757 with the 25 sentinels explained when describing the raw census.
+#### Guidance for grant copy
+
+- **Headline**: use **12,732** seedable live-frozen wallets (the fleet the project can actually address-twin). Derivation: `on-chain live-frozen total 12,757 − 25 sentinels (per rule above) = 12,732`.
+- **Footnote**: "On-chain, the raw blacklist state across these seven contracts records 12,757 addresses; 25 of those are near-zero issuer sentinel / test additions (verified real on-chain, decoder-independent, documented in `docs/watchlist-audit.md` §3 and `docs/evidence/decode-fixtures.json`) and are excluded from the fleet seed."
+
+Both numbers resolve from the same evidence file; neither is massaged.
 
 ### Decoder golden fixtures
 

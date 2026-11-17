@@ -1,0 +1,72 @@
+{
+  "purpose": "Case-1 (dormant-twin-wakes) input data for the atomic proof. Two paired-event wallets handed to sup for narrative selection. Both drawn from verified-clean addresses (near-zero sentinels excluded per the audit doc §3 rule).",
+  "generated_at_utc": "2026-11-17T15:30:00Z",
+  "candidates": [
+    {
+      "id": "A_short_gap_eth_usdc",
+      "narrative_strength": "mechanical correctness; short gap undersells dormancy",
+      "chain": "ethereum",
+      "contract": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "wallet": "0x8419e7824e785c4ac8d9d94a0093c437ab1ff320",
+      "freeze_event": {
+        "name": "Blacklisted(address indexed)",
+        "tx_hash": "0x943d7e193946eec4900ddc992b35c10538ffd0ad5006af9c304b567d71ccb94d",
+        "block": 26329026,
+        "log_index": 30,
+        "block_ts_unix": 1793645795
+      },
+      "wake_event": {
+        "name": "UnBlacklisted(address indexed)",
+        "tx_hash": "0x0a2a96ef4650baff0a4fb28614171bd5cb42eecb4834e9f4362d1162ffc43741",
+        "block": 26329073,
+        "log_index": 9,
+        "block_ts_unix": 1793646359
+      },
+      "gap": {
+        "blocks": 47,
+        "seconds": 564,
+        "days": 0.007
+      }
+    },
+    {
+      "id": "B_long_gap_tron_usdt",
+      "narrative_strength": "strong; ~2.4 years dormant then woke on asset-burn — proves a long-sleeping twin can still wake on a chain signal",
+      "chain": "tron",
+      "contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+      "wallet": {
+        "base58": "TN8SZ8kuMaAGHNk686X3AHo1ip2X5uzV2c",
+        "hex": "0x85609109fa821a49ba40c83d69999e178fc33f91"
+      },
+      "freeze_event": {
+        "name": "AddedBlackList(address)",
+        "tx_hash": "ffced4d751f48f6091246af38bcf712714792be655224cddc3738ab3ba402578",
+        "block": 61743559,
+        "block_ts_unix_ms": 1715873772000,
+        "iso_date": "2024-05-16"
+      },
+      "wake_event": {
+        "name": "DestroyedBlackFunds(address,uint256)",
+        "tx_hash": "edb61baae4c0b96dbb121f47998bc0c7066acc12c82e65b0ee1a85569eba2b80",
+        "block": 87255823,
+        "event_index": 1,
+        "block_ts_unix_ms": 1792440507000,
+        "iso_date": "2026-10-19"
+      },
+      "gap": {
+        "milliseconds": 76566735000,
+        "days": 886.2,
+        "months_approx": 29.1
+      }
+    }
+  ],
+  "selection_pool_summary": {
+    "tron_usdt_destroys_30d": 50,
+    "tron_usdt_adds_all_time": 9282,
+    "paired_freeze_then_destroy_within_30d_destroy_window": 50,
+    "top5_longest_gaps_days": [886.2, 667.8, 659.1, 659.1, 659.1],
+    "longest_freeze_date": "2024-05-16",
+    "longest_destroy_date": "2026-10-19"
+  },
+  "method": "TronGrid v1/contracts/TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t/events for AddedBlackList (all-time) + DestroyedBlackFunds (30d). Paired by wallet; gap = destroy_ts - earliest_freeze_ts. Full top-5 in docs/evidence/dormant-sample-500.json's sibling scratch /tmp/wlaudit/longgap.json during generation; the picked pair is faithfully recorded here.",
+  "note_to_sup": "Candidate B is recommended for the grant headline if the narrative wants 'dormant twin woke'. Candidate A is retained for completeness; it proves the mechanism works but the 10-minute freeze-then-unfreeze gap reads as a correction, not a wake."
+}
