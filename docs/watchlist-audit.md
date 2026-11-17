@@ -135,6 +135,17 @@ Seedable live-frozen fleet total    = 12,732  (vs 12,757 on-chain total)
 
 Both numbers resolve from the same evidence file; neither is massaged.
 
+### Full USDT dormant fleet (enriched)
+
+For the Phase 2 / mode B run on edenbotanical #648, every currently-frozen USDT wallet (ETH USDT + Tron USDT) is enriched with the same fields as the 500-sample. `docs/evidence/dormant-fleet-usdt-enriched.json`:
+
+- **11,081 rows** (ETH USDT 2,851 + Tron USDT 8,230; sentinels excluded per §3 rule).
+- `freeze_tx`, `freeze_block`, `frozen_at` per row; Tron rows carry `tron_base58` alongside the hex address.
+- **11,081 / 11,081 resolved**, `unresolved_count = 0`.
+- `frozen_at` range: **2018-06-09 → 2026-11-16** — eight years of dormancy history.
+
+Same method as the 500-sample. Deterministic (append-only event-log semantics). ~3.6 MB.
+
 ### Enriched dormant sample
 
 For the paid Case-1 proof, every sample wallet needs its **real** freeze time so the twin can be registered with a truthful `frozen_at`. `docs/evidence/dormant-sample-500-enriched.json` extends `docs/evidence/dormant-sample-500.json` (original kept untouched) with, per row:
