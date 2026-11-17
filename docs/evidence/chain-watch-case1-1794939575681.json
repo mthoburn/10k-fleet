@@ -1,0 +1,43 @@
+{
+  "line": "case1: woke 1 of 501 | registered=501 wake_decisions=1 jobs=1 spend_usd=0.000157",
+  "evidence": {
+    "registeredTwins": 501,
+    "wakeDecisions": 1,
+    "jobs": 1
+  },
+  "spendUsd": 0.000157,
+  "receipts": [
+    {
+      "model_alias": "chain-watch-note-v0",
+      "provider_model": "llama3.1",
+      "nosana": {
+        "job_address": "GYxWJKo86rXAuTHiJ6sV4bA7huYXzPHUfHnAtiisEorh",
+        "market_address": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+        "service_url_host": "55fe7fvawrkwwzbshrxfq5ybaxym2nyiypbftuxada9q.node.k8s.prd.nos.ci",
+        "post_tx": "5GHBgaQCTDDPoDA5Du7SCAE1Crv3oxVFyRtqJpTbW3SK3NfXbQbhHkSQK68RDtbWXfXZa6VFpoPY8L8W7b26ePjt",
+        "explorer_job_url": "https://explorer.nosana.io/jobs/GYxWJKo86rXAuTHiJ6sV4bA7huYXzPHUfHnAtiisEorh"
+      },
+      "subject": {
+        "chain": "tron",
+        "address": "TN8SZ8kuMaAGHNk686X3AHo1ip2X5uzV2c",
+        "hex": "0x85609109fa821a49ba40c83d69999e178fc33f91"
+      },
+      "source": {
+        "chain": "tron",
+        "tx_hash": "edb61baae4c0b96dbb121f47998bc0c7066acc12c82e65b0ee1a85569eba2b80",
+        "log_index": 1,
+        "block": 87255823,
+        "contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
+      },
+      "event_source": "replayed historical event",
+      "event_type": "DestroyedBlackFunds",
+      "summary": "The log shows DestroyedBlackFunds naming TN8SZ8kuMaAGHNk686X3AHo1ip2X5uzV2c (hex 0x85609109fa821a49ba40c83d69999e178fc33f91) on tron at block 87255823 (tx edb61baae4c0b96dbb121f47998bc0c7066acc12c82e65b0ee1a85569eba2b80, log index 1).",
+      "model_output": "This log entry shows a transaction on the Tron network with the specified transaction hash, block number, and affected address.",
+      "provider_job_ref": "chat-a0de4dc005b14e458d3af52b456ff2fd",
+      "cost_usd": 0.000157,
+      "job_id": "5761db62-7241-4c2d-aa73-3cc7feaa1468",
+      "twin_id": "5e23ea2a-780a-4b84-a62a-90f8411fcb71",
+      "lineage_id": "96d12c24-102b-4894-bd55-6928e213f843"
+    }
+  ]
+}
