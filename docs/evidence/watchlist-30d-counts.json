@@ -1,0 +1,119 @@
+{
+  "generated_at_utc": "2026-11-17T14:23:44.646942Z",
+  "method": "Etherscan V2 logs/getLogs + TronGrid v1/contracts/{addr}/events",
+  "eth_blockrange": {
+    "from": 26219337,
+    "to": 26435337,
+    "approx_days": 30,
+    "blocks": 216000
+  },
+  "tron_time_window_ms": {
+    "from": 1792333416022,
+    "to": 1794925416022
+  },
+  "topic0_computed": {
+    "AddedBlackList(address)": "0x42e160154868087d6bfdc0ca23d96a1c1cfa32f1b72ba9ba27b69b98a0d819dc",
+    "RemovedBlackList(address)": "0xd7e9ec6e6ecd65492dce6bf513cd6867560d49544421d0783ddf06e76c24470c",
+    "DestroyedBlackFunds(address,uint256)": "0x61e6e66b0d6339b2980aecc6ccc0039736791f0ccde9ed512e789a7fbdd698c6",
+    "Blacklisted(address)": "0xffa4e6181777692565cf28528fc88fd1516ea86b56da075235fa575af6a4b855",
+    "UnBlacklisted(address)": "0x117e3210bb9aa7d9baff172026820255c6f6c30ba8999d1c2fd88e2848137c4e",
+    "Pause()": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
+    "Unpause()": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
+    "Paused(address)": "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
+    "Unpaused(address)": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa"
+  },
+  "counts": {
+    "eth_usdt": {
+      "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "AddedBlackList": 51,
+      "RemovedBlackList": 0,
+      "DestroyedBlackFunds": 21
+    },
+    "eth_usdc": {
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "Blacklisted": 59,
+      "UnBlacklisted": 1
+    },
+    "tron_usdt": {
+      "address": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+      "AddedBlackList": 308,
+      "RemovedBlackList": 25,
+      "DestroyedBlackFunds": 50
+    },
+    "tron_usdc": {
+      "address": "TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8",
+      "Blacklisted": 85,
+      "UnBlacklisted": 0
+    }
+  },
+  "aggregates": {
+    "N_adds_headline": 503,
+    "N_adds_fallback_no_tron_usdc": 418,
+    "removals_total": 26,
+    "destroyed_total_usdt_only": 71
+  },
+  "samples": {
+    "eth_usdt_AddedBlackList_first3": [
+      {
+        "tx": "0x32a3e0d81524ccb1e08817387e89db4969c0590de15325b35affb663effe3fb5",
+        "block": 26230483
+      },
+      {
+        "tx": "0x9c0bc5c8574d438ac584e9cc5d6f2f551660de53e66057845c2111684b63f051",
+        "block": 26230490
+      },
+      {
+        "tx": "0x2b99ce75404ffb9b8f9b48eb4856f871473f0ee5ec9a875a47c163fc1b5c2c9e",
+        "block": 26241587
+      }
+    ],
+    "eth_usdc_Blacklisted_first3": [
+      {
+        "tx": "0x90fa90d87330e7fbf4e03b6ccccc95e1a35d56aeeb50207c834e38566bf83609",
+        "block": 26230060
+      },
+      {
+        "tx": "0x9fa4294fc5317465c9f9bd65658ac0488728a7f8aa5f981f3a9303649788d0b7",
+        "block": 26230065
+      },
+      {
+        "tx": "0xcf84c624ab852d8b27cfe692acf96af899d2c893ec42a1d93ec91e8b4736c54c",
+        "block": 26251090
+      }
+    ],
+    "tron_usdt_AddedBlackList_first3": [
+      {
+        "tx": "162b774a0ca1c32de9bca5ddb69801926e0707a1fbd0356bad6ee08f03e1a7d3",
+        "block": 87248353,
+        "ts": 1792418091000
+      },
+      {
+        "tx": "5e209c56e41536d32a7c649169809a15c8a951977ab31f9c91eddf07438423f6",
+        "block": 87248413,
+        "ts": 1792418271000
+      },
+      {
+        "tx": "d7daa5ef7eb73163d7f14fd4d945503c3de47729a7762c282a97074a3a7ac7d0",
+        "block": 87248413,
+        "ts": 1792418271000
+      }
+    ],
+    "tron_usdc_Blacklisted_first3": [
+      {
+        "tx": "14f4f57bc600902a9992919950f24119d69d9b80e28707b3fac8114bbd6e6b95",
+        "block": 87511712,
+        "ts": 1793208426000
+      },
+      {
+        "tx": "adbbebb76b263bb11853b3b286cc0d118665f3f3e03d435f95c90e40144ed387",
+        "block": 87511715,
+        "ts": 1793208435000
+      },
+      {
+        "tx": "311a441144183e68e095fbdce3f23c9793f915a2a6b14072a434846e8a447de1",
+        "block": 87511716,
+        "ts": 1793208438000
+      }
+    ]
+  }
+}
