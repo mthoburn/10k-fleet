@@ -18,7 +18,8 @@ A second 10k fleet, outside Eden, run against live third-party on-chain data: st
 | Freezes in the last 30 days (headline) | 434 | Freeze events emitted by the issuers' own contracts. |
 | Freezes in the last 30 days, all contracts | 519 | Includes a legacy Tron USDC contract whose issuer attestation is pending. Use only with that footnote. |
 | New freezes per day | about 15 | 434 / 30. (About 17 a day matches the 519 figure, so use it only alongside 519.) |
-| Oldest live freeze | 2020 | |
+| Oldest live freeze | 9 June 2018 | Ethereum, block 5,758,962, an ordinary user address (not a contract or test address). Span 2018-06-09 to 2026-11-16. Say "frozen as far back as June 2018". |
+| Registered fleet, Phase 2 (live catch) | 11,081 | 2,851 Ethereum USDT + 8,230 Tron USDT; reconciled exactly (11,081 resolved, 0 unresolved), every row with its freeze transaction, block and timestamp. A subset of the 12,732 census (USDT on Ethereum and Tron only). |
 
 Sources: `docs/watchlist-audit.md`, `docs/evidence/watchlist-30d-counts.json`, `docs/evidence/dormant-sample-500*.json`.
 
@@ -61,7 +62,7 @@ Receipt JSON and on-chain reconciliation: PR #28 (`case1-chain-watch-record`).
 - Say "ran on a verifiable Nosana job, posting transaction on Solana mainnet". Never say "proof of computation": the record proves which job served the inference, not that the computation was correct.
 - Dormancy: "a wallet frozen 886 days earlier". Never "a twin asleep 886 days", and never "a six-year fleet" (the sample is weighted to 2025–26).
 - Wallets: neutral wording only, such as "the log shows DestroyedBlackFunds naming <wallet>". Never an accusation.
-- Fleet size: "1 of 501 registered twins woke; the full fleet would be 12,732". Never "holds 12,732 agents" until it does.
+- Fleet size: Phase 1 = "1 of 501 registered twins"; Phase 2 = "1 of 11,081 registered". The census (12,732) is wallets that could each have a twin. Never "holds 12,732 agents".
 - Rate: "434 in 30 days, about 15 a day".
 - USD: always with its NOS price date.
 - Credit: "Census data powered by Etherscan".
