@@ -127,15 +127,29 @@ Resulting counts after exclusion (fleet-seedable only), lead-10-byte filter:
 ETH USDT currently_frozen seedable = 2,868 − 17 = 2,851
 Tron USDT currently_frozen seedable = 8,238 −  8 = 8,230
 Others unchanged.
-Seedable live-frozen fleet total    = 12,732  (vs 12,757 on-chain total)
+Seedable live-frozen fleet total    = 12,732 frozen positions  (vs 12,757 on-chain total)
+                                    = 11,484 distinct underlying addresses
+                                      (1,248 wallets appear on more than one contract)
 ```
+
+#### Freeze-positions vs distinct addresses — the canonical definition
+
+The **12,732 total is frozen positions**: `(contract, address)` tuples with an active blacklist state, sentinel-excluded. A twin is per frozen position because each freeze is an independent on-chain gate that can be reversed on its own contract — a wallet frozen on ETH USDT AND ETH USDC is **two twins**, not one.
+
+The **distinct underlying address count is 11,484**: the same 12,732 frozen positions projected by address and de-duplicated. 1,248 wallets appear on more than one of the seven contracts; those collapse in the distinct-address view but remain separately-actionable in the twin view.
+
+Phase-2 (11,081 = 2,851 ETH USDT frozen positions + 8,230 Tron USDT frozen positions) uses the same frozen position convention.
 
 #### Guidance for grant copy
 
-- **Headline**: use **12,732** seedable live-frozen wallets (the fleet the project can actually address-twin). Derivation: `on-chain live-frozen total 12,757 − 25 sentinels (per rule above) = 12,732`.
-- **Footnote**: "On-chain, the raw blacklist state across these seven contracts records 12,757 addresses; 25 of those are near-zero issuer sentinel / test additions (verified real on-chain, decoder-independent, documented in `docs/watchlist-audit.md` §3 and `docs/evidence/decode-fixtures.json`) and are excluded from the fleet seed."
+- **Canonical grant-copy phrase**: "**12,732 frozen positions across 11,484 distinct wallets**" — use this whenever the fleet-size figure appears. Derivation: `on-chain live-frozen positions 12,757 − 25 sentinels = 12,732 positions; projecting those by address yields 11,484 distinct wallets (1,248 are frozen on more than one contract).`
+- **Distinct-wallet-only usage** (only when the sentence specifically needs distinct wallets rather than positions / twins): "**11,484 distinct wallets** across seven contracts; 1,248 are frozen on more than one contract and would seed one twin per contract." Always pair with the 12,732 position count in the same section.
+- **Never say "12,732 wallets"** — it collapses the position/wallet distinction the grant copy depends on. Likewise never "holds 12,732 agents"; see the evidence-index "How to cite" guardrail.
+- **Footnote on sentinels**: "On-chain, the raw blacklist state across these seven contracts records 12,757 frozen positions; 25 are near-zero issuer sentinel / test additions (verified real on-chain, decoder-independent, documented in `docs/watchlist-audit.md` §3 and `docs/evidence/decode-fixtures.json`) and are excluded from the fleet seed."
 
-Both numbers resolve from the same evidence file; neither is massaged.
+Pick one, state its definition, and stick to it in a given sentence. Mixing the two silently is what caused the earlier evidence-index contradiction with the Binance addendum.
+
+All numbers resolve from the same evidence file; neither is massaged.
 
 ### Enriched dormant sample
 
@@ -163,7 +177,7 @@ The watcher's unit tests (Issue D) must load this file at startup and assert `de
 
 ### Fleet-size read
 
-The live frozen address population across the seven contracts is **~12,757 addresses — thousands, not hundreds.** Breakdown:
+The live-frozen fleet across the seven contracts is **12,757 frozen positions on-chain (12,732 after sentinel exclusion; 11,484 distinct underlying addresses) — thousands, not hundreds.** Per-contract breakdown is of frozen positions (sum across contracts; cross-contract wallets count once per contract):
 
 ```
 Tron USDT     8,238  (64.6%)
