@@ -72,18 +72,20 @@ Row numbers correspond to the watchlist table in §2. Rows 6–9 (Aave V2 / Aave
 
 ### N — the definitive figure
 
-**N = 519 account-level freeze additions over 30 days** (events, summing column "30d add events"). Dedup'd by distinct address: **518** (one Tron USDT address was blacklisted twice inside the window — likely a remove-then-re-add).
+**Grant-facing headline N = 434 events / 433 distinct accounts** across **six** account-level stablecoin contracts (ETH USDT, ETH USDC, BUSD, USDP, TUSD, Tron USDT), 30-day window ending 2026-11-16 UTC. Tron USDC is excluded from the headline for now — see §7 and RETRY-1 for the `legacy, ABI-verified, issuer-unconfirmed` label; the Tronscan badge check remains outstanding (rate-limited across this session and the follow-up reconciliation session).
 
-**Fallback N = 434** (events) / **433** (distinct) drops Tron USDC (issuer-unconfirmed):
+**Cross-check (all seven account-level contracts, Tron USDC included) = 519 events / 518 distinct.** Use alongside the headline with the Tron USDC footnote; the one Tron USDT address blacklisted twice inside the window (likely a remove-then-re-add) accounts for 519 → 518.
 
 ```
-N_headline_events  = 51 + 59 + 8 + 8 + 0 + 308 + 85 = 519
-N_headline_distinct                                  = 518
-N_fallback_events  = 519 − 85                        = 434
-N_fallback_distinct                                  = 433
+Headline  events = 51 + 59 + 8 + 8 + 0 + 308          = 434    (6 contracts)
+Headline  distinct                                      = 433
+Cross-chk events = 434 + 85                             = 519    (+ Tron USDC)
+Cross-chk distinct                                      = 518
 ```
 
-Mark picks which to lead with on Friday; both derive from the same evidence file.
+Both derive from the same evidence file (`docs/evidence/watchlist-30d-counts.json`).
+
+**Per-day rate is on the headline only.** 434 / 30 ≈ 14.5/day. The 519 cross-check CANNOT be divided to a daily rate: **71 of the 85 Tron USDC adds in the window fired in a single batch on 2026-11-02** (8 on 10-28, 6 on 11-07, 0 on every other day in the window). Report the Tron USDC leg as a batch, not a cadence.
 
 **Removals** (count-only, not in N): 26 across all seven contracts.
 **`DestroyedBlackFunds`** (USDT only, both chains, asset-burn — distinct action, not in N): 71 (21 ETH + 50 Tron) — see the earlier 30d probe in the evidence file.
@@ -94,7 +96,7 @@ The 02:10 UTC lane post on #648 cited N = 400 with Tron USDT at 237. The first i
 
 **Root cause of the 237 figure: incomplete pagination in the earlier probe.** The honest explanation is not a "window shift" (my previous hand-wave was wrong — a ~12-hour slide on a ~10/day contract is ±5, not +71). The lane's 237 almost certainly ended pagination at its first empty response or default page cap and never reached the full 30-day set. The census's full fingerprint-walked traversal is the complete count.
 
-Repo therefore stands behind **N = 519 (distinct 518)**, with the 237 (and the derived 400) retracted as undercounts, not as "estimates at a different timestamp".
+The earlier 400 figure compounded this with a narrower contract set (**4 contracts** — USDT and USDC on both chains — vs the 7 covered by the census). Both effects run in the same direction. **The 400 (and the 347 fallback) are retracted as undercounts**, not as "estimates at a different timestamp". The 519/518 and 434/433 figures above are the authoritative counts; the grant-facing lead is 434/433 per the §N block above.
 
 ### Sentinel-address note (post-merge addendum)
 
@@ -215,6 +217,18 @@ Decomposition of the label on row 11:
 
 ## 8. Infrastructure — endpoints, keys, limits
 
+### Data sources, free-tier limits, attribution
+
+| Source | Endpoint | Free-tier limit | Attribution requirement |
+|---|---|---|---|
+| Etherscan API V2 | `https://api.etherscan.io/v2/api?chainid=1&…` | 3 req/s, 100 000 req/day | **Required**: "Census data powered by Etherscan" — carry this credit wherever any Etherscan-derived figure appears (census counts, 30-day N, historical `balanceOf`, block boundaries). |
+| TronGrid (keyed) | `https://api.trongrid.io/…` with header `TRON-PRO-API-KEY` | 15 QPS | Not required by TronGrid ToS; credit optional. |
+| Tronscan (anonymous) | `https://apilist.tronscanapi.com/api/…` | 3 rps, suspensions escalate (27 s → 90 s → 102 s → 117 s observed) | Not required. Keyed access recommended for the Tron USDC badge cross-check (RETRY-1). |
+
+### Per-endpoint notes
+
+
+
 ### Etherscan API V2 (required)
 - Endpoint: `https://api.etherscan.io/v2/api?chainid=1&…` — V1 is deprecated, returns `"You are using a deprecated V1 endpoint, switch to Etherscan API V2"`. All call sites must include `chainid` (1 for mainnet).
 - Free-tier limits: **3 req/s**, **100 000 req/day**, attribution clause applies to anything built on the data.
@@ -264,7 +278,7 @@ All computed topic0s used in the re-derivation are stored in `docs/evidence/watc
 
 ## 9. RETRY items (do NOT harden into permanent findings)
 
-**RETRY-1 — Tron USDC deployer cross-reference.** Deployer `TYsvgn3yjTQSWMwfsCN4mygYvozJGo8xBC` could not be cross-referenced to Circle's attested identity this session because Tronscan's anonymous API was rate-limited. A later session with Tronscan API-key access (see [docs.tronscan.org](https://docs.tronscan.org/#get-an-api-key)) should re-run the `apilist.tronscanapi.com/api/token_trc20?contract=TEkxi…rdz8` call, inspect `blueCheck` / `public_tag` / `vip` / `issuer_name`, and if any attestation is present, promote the label from `issuer-unconfirmed` to `issuer-confirmed`. Session-specific access failure, not a disproof.
+**RETRY-1 — Tron USDC deployer cross-reference.** Deployer `TYsvgn3yjTQSWMwfsCN4mygYvozJGo8xBC` could not be cross-referenced to Circle's attested identity this session because Tronscan's anonymous API was rate-limited. **Still outstanding at the 2026-11-19 reconciliation pass** (anonymous API returned 102 s → 117 s escalating suspensions on each `token_trc20` call; keyed access not yet obtained). A later session with Tronscan API-key access (see [docs.tronscan.org](https://docs.tronscan.org/#get-an-api-key)) should re-run the `apilist.tronscanapi.com/api/token_trc20?contract=TEkxi…rdz8` call, inspect `blueCheck` / `public_tag` / `vip` / `issuer_name`, and if any attestation is present, promote the label from `issuer-unconfirmed` to `issuer-confirmed`. Until that passes, the grant-facing headline uses the WITHOUT-Tron-USDC fallback (434/433) and the `legacy` label stays on row 11 regardless. Session-specific access failure, not a disproof.
 
 **RETRY-2 — Re-derive 30-day stablecoin counts in-repo.** DONE (revision 1) and superseded by the §3 census (revision 2). Evidence: `docs/evidence/watchlist-30d-counts.json`. Finding: **N = 519 events / 518 distinct** (the earlier 400 and intermediate 503 are retracted as undercounts).
 
