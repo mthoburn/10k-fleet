@@ -72,18 +72,20 @@ Row numbers correspond to the watchlist table in §2. Rows 6–9 (Aave V2 / Aave
 
 ### N — the definitive figure
 
-**N = 519 account-level freeze additions over 30 days** (events, summing column "30d add events"). Dedup'd by distinct address: **518** (one Tron USDT address was blacklisted twice inside the window — likely a remove-then-re-add).
+**Grant-facing headline N = 434 events / 433 distinct accounts** across **six** account-level stablecoin contracts (ETH USDT, ETH USDC, BUSD, USDP, TUSD, Tron USDT), 30-day window ending 2026-11-16 UTC. Tron USDC is excluded from the headline for now — see §7 and RETRY-1 for the `legacy, ABI-verified, issuer-unconfirmed` label; the 2026-11-19 Tronscan check (RETRY-1) found no verified-issuer badge, so the label stands.
 
-**Fallback N = 434** (events) / **433** (distinct) drops Tron USDC (issuer-unconfirmed):
+**Cross-check (all seven account-level contracts, Tron USDC included) = 519 events / 518 distinct.** Use alongside the headline with the Tron USDC footnote; the one Tron USDT address blacklisted twice inside the window (likely a remove-then-re-add) accounts for 519 → 518.
 
 ```
-N_headline_events  = 51 + 59 + 8 + 8 + 0 + 308 + 85 = 519
-N_headline_distinct                                  = 518
-N_fallback_events  = 519 − 85                        = 434
-N_fallback_distinct                                  = 433
+Headline  events = 51 + 59 + 8 + 8 + 0 + 308          = 434    (6 contracts)
+Headline  distinct                                      = 433
+Cross-chk events = 434 + 85                             = 519    (+ Tron USDC)
+Cross-chk distinct                                      = 518
 ```
 
-Mark picks which to lead with on Friday; both derive from the same evidence file.
+Both derive from the same evidence file (`docs/evidence/watchlist-30d-counts.json`).
+
+**Per-day rate is on the headline only.** 434 / 30 ≈ 14.5/day. The 519 cross-check CANNOT be divided to a daily rate: **71 of the 85 Tron USDC adds in the window fired in a single batch on 2026-11-02** (8 on 10-28, 6 on 11-07, 0 on every other day in the window). Report the Tron USDC leg as a batch, not a cadence.
 
 **Removals** (count-only, not in N): 26 across all seven contracts.
 **`DestroyedBlackFunds`** (USDT only, both chains, asset-burn — distinct action, not in N): 71 (21 ETH + 50 Tron) — see the earlier 30d probe in the evidence file.
@@ -94,7 +96,7 @@ The 02:10 UTC lane post on #648 cited N = 400 with Tron USDT at 237. The first i
 
 **Root cause of the 237 figure: incomplete pagination in the earlier probe.** The honest explanation is not a "window shift" (my previous hand-wave was wrong — a ~12-hour slide on a ~10/day contract is ±5, not +71). The lane's 237 almost certainly ended pagination at its first empty response or default page cap and never reached the full 30-day set. The census's full fingerprint-walked traversal is the complete count.
 
-Repo therefore stands behind **N = 519 (distinct 518)**, with the 237 (and the derived 400) retracted as undercounts, not as "estimates at a different timestamp".
+The earlier 400 figure compounded this with a narrower contract set (**4 contracts** — USDT and USDC on both chains — vs the 7 covered by the census). Both effects run in the same direction. **The 400 (and the 347 fallback) are retracted as undercounts**, not as "estimates at a different timestamp". The 519/518 and 434/433 figures above are the authoritative counts; the grant-facing lead is 434/433 per the §N block above.
 
 ### Sentinel-address note (post-merge addendum)
 
@@ -125,15 +127,29 @@ Resulting counts after exclusion (fleet-seedable only), lead-10-byte filter:
 ETH USDT currently_frozen seedable = 2,868 − 17 = 2,851
 Tron USDT currently_frozen seedable = 8,238 −  8 = 8,230
 Others unchanged.
-Seedable live-frozen fleet total    = 12,732  (vs 12,757 on-chain total)
+Seedable live-frozen fleet total    = 12,732 frozen positions  (vs 12,757 on-chain total)
+                                    = 11,484 distinct underlying addresses
+                                      (1,248 wallets appear on more than one contract)
 ```
+
+#### Freeze-positions vs distinct addresses — the canonical definition
+
+The **12,732 total is frozen positions**: `(contract, address)` tuples with an active blacklist state, sentinel-excluded. A twin is per frozen position because each freeze is an independent on-chain gate that can be reversed on its own contract — a wallet frozen on ETH USDT AND ETH USDC is **two twins**, not one.
+
+The **distinct underlying address count is 11,484**: the same 12,732 frozen positions projected by address and de-duplicated. 1,248 wallets appear on more than one of the seven contracts; those collapse in the distinct-address view but remain separately-actionable in the twin view.
+
+Phase-2 (11,081 = 2,851 ETH USDT frozen positions + 8,230 Tron USDT frozen positions) uses the same frozen position convention.
 
 #### Guidance for grant copy
 
-- **Headline**: use **12,732** seedable live-frozen wallets (the fleet the project can actually address-twin). Derivation: `on-chain live-frozen total 12,757 − 25 sentinels (per rule above) = 12,732`.
-- **Footnote**: "On-chain, the raw blacklist state across these seven contracts records 12,757 addresses; 25 of those are near-zero issuer sentinel / test additions (verified real on-chain, decoder-independent, documented in `docs/watchlist-audit.md` §3 and `docs/evidence/decode-fixtures.json`) and are excluded from the fleet seed."
+- **Canonical grant-copy phrase**: "**12,732 frozen positions across 11,484 distinct wallets**" — use this whenever the fleet-size figure appears. Derivation: `on-chain live-frozen positions 12,757 − 25 sentinels = 12,732 positions; projecting those by address yields 11,484 distinct wallets (1,248 are frozen on more than one contract).`
+- **Distinct-wallet-only usage** (only when the sentence specifically needs distinct wallets rather than positions / twins): "**11,484 distinct wallets** across seven contracts; 1,248 are frozen on more than one contract and would seed one twin per contract." Always pair with the 12,732 position count in the same section.
+- **Never say "12,732 wallets"** — it collapses the position/wallet distinction the grant copy depends on. Likewise never "holds 12,732 agents"; see the evidence-index "How to cite" guardrail.
+- **Footnote on sentinels**: "On-chain, the raw blacklist state across these seven contracts records 12,757 frozen positions; 25 are near-zero issuer sentinel / test additions (verified real on-chain, decoder-independent, documented in `docs/watchlist-audit.md` §3 and `docs/evidence/decode-fixtures.json`) and are excluded from the fleet seed."
 
-Both numbers resolve from the same evidence file; neither is massaged.
+Pick one, state its definition, and stick to it in a given sentence. Mixing the two silently is what caused the earlier evidence-index contradiction with the Binance addendum.
+
+All numbers resolve from the same evidence file; neither is massaged.
 
 ### Full USDT dormant fleet (enriched)
 
@@ -172,7 +188,7 @@ The watcher's unit tests (Issue D) must load this file at startup and assert `de
 
 ### Fleet-size read
 
-The live frozen address population across the seven contracts is **~12,757 addresses — thousands, not hundreds.** Breakdown:
+The live-frozen fleet across the seven contracts is **12,757 frozen positions on-chain (12,732 after sentinel exclusion; 11,484 distinct underlying addresses) — thousands, not hundreds.** Per-contract breakdown is of frozen positions (sum across contracts; cross-contract wallets count once per contract):
 
 ```
 Tron USDT     8,238  (64.6%)
@@ -222,9 +238,21 @@ Decomposition of the label on row 11:
 
 - `legacy` — predates current lane scope, kept per Mark's conditional go.
 - `ABI-verified` — confirmed this session via TronGrid; contract name on-chain is `FiatTokenProxy` (Circle's canonical FiatToken proxy pattern, same codebase as Ethereum USDC). Full canonical event + function surface present. 85 real `Blacklisted` firings in 30d are consistent with it being the live USDC-on-Tron contract.
-- `issuer-unconfirmed` — Tronscan's anonymous API was rate-limited (`allowed_rps(3)`, suspension escalating to 90 s → 104 s) throughout this session; the `blueCheck` / `public_tag` / `issuer_name` fields that would map the deployer `TYsvgn3yjTQSWMwfsCN4mygYvozJGo8xBC` to Circle's attested identity were unreachable. This is a **session-specific access failure**, not a disproof. See §9 RETRY-1.
+- `issuer-unconfirmed` — Rerun 2026-11-19 reached Tronscan after extended back-off and returned the `token_trc20` record; `blueTag`, `publicTag`, `vip`, and `isBlueCheck` are all empty / false — **no verified-issuer attestation**. The token's self-reported metadata (symbol `USDCOLD`, name "USD Coin Old", `home_page = centre.io`, description naming CENTRE/Circle) is suggestive but not an attestation. Label stays `issuer-unconfirmed`. Full field dump and decision rule: §9 RETRY-1.
 
 ## 8. Infrastructure — endpoints, keys, limits
+
+### Data sources, free-tier limits, attribution
+
+| Source | Endpoint | Free-tier limit | Attribution requirement |
+|---|---|---|---|
+| Etherscan API V2 | `https://api.etherscan.io/v2/api?chainid=1&…` | 3 req/s, 100 000 req/day | **Required**: "Census data powered by Etherscan" — carry this credit wherever any Etherscan-derived figure appears (census counts, 30-day N, historical `balanceOf`, block boundaries). |
+| TronGrid (keyed) | `https://api.trongrid.io/…` with header `TRON-PRO-API-KEY` | 15 QPS | Not required by TronGrid ToS; credit optional. |
+| Tronscan (anonymous) | `https://apilist.tronscanapi.com/api/…` | 3 rps, suspensions escalate (27 s → 90 s → 102 s → 117 s observed) | Not required. Keyed access recommended for the Tron USDC badge cross-check (RETRY-1). |
+
+### Per-endpoint notes
+
+
 
 ### Etherscan API V2 (required)
 - Endpoint: `https://api.etherscan.io/v2/api?chainid=1&…` — V1 is deprecated, returns `"You are using a deprecated V1 endpoint, switch to Etherscan API V2"`. All call sites must include `chainid` (1 for mainnet).
@@ -275,7 +303,16 @@ All computed topic0s used in the re-derivation are stored in `docs/evidence/watc
 
 ## 9. RETRY items (do NOT harden into permanent findings)
 
-**RETRY-1 — Tron USDC deployer cross-reference.** Deployer `TYsvgn3yjTQSWMwfsCN4mygYvozJGo8xBC` could not be cross-referenced to Circle's attested identity this session because Tronscan's anonymous API was rate-limited. A later session with Tronscan API-key access (see [docs.tronscan.org](https://docs.tronscan.org/#get-an-api-key)) should re-run the `apilist.tronscanapi.com/api/token_trc20?contract=TEkxi…rdz8` call, inspect `blueCheck` / `public_tag` / `vip` / `issuer_name`, and if any attestation is present, promote the label from `issuer-unconfirmed` to `issuer-confirmed`. Session-specific access failure, not a disproof.
+**RETRY-1 — Tron USDC deployer cross-reference.** Rerun 2026-11-19 (anonymous Tronscan API, after extended back-off clear): `apilist.tronscanapi.com/api/token_trc20?contract=TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8` returned a token record. Attestation findings:
+
+- `blueTag = ""`, `publicTag = ""`, `greyTag = ""`, `redTag = ""`, `vip = false` — **no verified-issuer badge of any kind.**
+- `isBlueCheck` / `blueCheck` / `issuer_name` fields: not present in the response.
+- `level = "2"` (Tronscan's internal tier; not a verified-issuer attestation).
+- Self-description: `symbol = "USDCOLD"`, `name = "USD Coin Old"`, `home_page = "https://www.centre.io/"`, `token_desc` = *"USDC is a fully collateralized US Dollar stablecoin developed by CENTRE..."*. These are suggestive (CENTRE is the Circle/Coinbase consortium that originated USDC), but **are self-reported fields, not Tronscan attestation**.
+
+Verdict: **label stays `legacy, ABI-verified, issuer-unconfirmed`.** The `legacy` tag is reinforced (symbol literally "USDCOLD", name "USD Coin Old"). The `issuer-unconfirmed` tag is reinforced: no blue-check / public-tag / vip / issuer-name attestation on Tronscan. The 2026-11-19 reconciliation PR therefore keeps the grant headline at the WITHOUT-Tron-USDC fallback (434/433) and the 519/518 cross-check is used only with the legacy footnote.
+
+A future session with keyed Tronscan access could still look for a `verifiedStatus` / `badgeList` field on an authenticated endpoint; this anonymous `token_trc20` call does not expose one. Promote the label only on explicit attestation, never on self-reported metadata.
 
 **RETRY-2 — Re-derive 30-day stablecoin counts in-repo.** DONE (revision 1) and superseded by the §3 census (revision 2). Evidence: `docs/evidence/watchlist-30d-counts.json`. Finding: **N = 519 events / 518 distinct** (the earlier 400 and intermediate 503 are retracted as undercounts).
 
