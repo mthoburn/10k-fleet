@@ -211,7 +211,7 @@ Decomposition of the label on row 11:
 
 - `legacy` — predates current lane scope, kept per Mark's conditional go.
 - `ABI-verified` — confirmed this session via TronGrid; contract name on-chain is `FiatTokenProxy` (Circle's canonical FiatToken proxy pattern, same codebase as Ethereum USDC). Full canonical event + function surface present. 85 real `Blacklisted` firings in 30d are consistent with it being the live USDC-on-Tron contract.
-- `issuer-unconfirmed` — Tronscan's anonymous API was rate-limited (`allowed_rps(3)`, suspension escalating to 90 s → 104 s) throughout this session; the `blueCheck` / `public_tag` / `issuer_name` fields that would map the deployer `TYsvgn3yjTQSWMwfsCN4mygYvozJGo8xBC` to Circle's attested identity were unreachable. This is a **session-specific access failure**, not a disproof. See §9 RETRY-1.
+- `issuer-unconfirmed` — Rerun 2026-11-19 reached Tronscan after extended back-off and returned the `token_trc20` record; `blueTag`, `publicTag`, `vip`, and `isBlueCheck` are all empty / false — **no verified-issuer attestation**. The token's self-reported metadata (symbol `USDCOLD`, name "USD Coin Old", `home_page = centre.io`, description naming CENTRE/Circle) is suggestive but not an attestation. Label stays `issuer-unconfirmed`. Full field dump and decision rule: §9 RETRY-1.
 
 ## 8. Infrastructure — endpoints, keys, limits
 
@@ -264,7 +264,16 @@ All computed topic0s used in the re-derivation are stored in `docs/evidence/watc
 
 ## 9. RETRY items (do NOT harden into permanent findings)
 
-**RETRY-1 — Tron USDC deployer cross-reference.** Deployer `TYsvgn3yjTQSWMwfsCN4mygYvozJGo8xBC` could not be cross-referenced to Circle's attested identity this session because Tronscan's anonymous API was rate-limited. A later session with Tronscan API-key access (see [docs.tronscan.org](https://docs.tronscan.org/#get-an-api-key)) should re-run the `apilist.tronscanapi.com/api/token_trc20?contract=TEkxi…rdz8` call, inspect `blueCheck` / `public_tag` / `vip` / `issuer_name`, and if any attestation is present, promote the label from `issuer-unconfirmed` to `issuer-confirmed`. Session-specific access failure, not a disproof.
+**RETRY-1 — Tron USDC deployer cross-reference.** Rerun 2026-11-19 (anonymous Tronscan API, after extended back-off clear): `apilist.tronscanapi.com/api/token_trc20?contract=TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8` returned a token record. Attestation findings:
+
+- `blueTag = ""`, `publicTag = ""`, `greyTag = ""`, `redTag = ""`, `vip = false` — **no verified-issuer badge of any kind.**
+- `isBlueCheck` / `blueCheck` / `issuer_name` fields: not present in the response.
+- `level = "2"` (Tronscan's internal tier; not a verified-issuer attestation).
+- Self-description: `symbol = "USDCOLD"`, `name = "USD Coin Old"`, `home_page = "https://www.centre.io/"`, `token_desc` = *"USDC is a fully collateralized US Dollar stablecoin developed by CENTRE..."*. These are suggestive (CENTRE is the Circle/Coinbase consortium that originated USDC), but **are self-reported fields, not Tronscan attestation**.
+
+Verdict: **label stays `legacy, ABI-verified, issuer-unconfirmed`.** The `legacy` tag is reinforced (symbol literally "USDCOLD", name "USD Coin Old"). The `issuer-unconfirmed` tag is reinforced: no blue-check / public-tag / vip / issuer-name attestation on Tronscan. The 2026-11-19 reconciliation PR therefore keeps the grant headline at the WITHOUT-Tron-USDC fallback (434/433) and the 519/518 cross-check is used only with the legacy footnote.
+
+A future session with keyed Tronscan access could still look for a `verifiedStatus` / `badgeList` field on an authenticated endpoint; this anonymous `token_trc20` call does not expose one. Promote the label only on explicit attestation, never on self-reported metadata.
 
 **RETRY-2 — Re-derive 30-day stablecoin counts in-repo.** DONE (revision 1) and superseded by the §3 census (revision 2). Evidence: `docs/evidence/watchlist-30d-counts.json`. Finding: **N = 519 events / 518 distinct** (the earlier 400 and intermediate 503 are retracted as undercounts).
 
