@@ -67,6 +67,53 @@ Receipt JSON and on-chain reconciliation: PR #28 (`case1-chain-watch-record`).
 - USD: always with its NOS price date.
 - Credit: "Census data powered by Etherscan".
 
+## Addendum — Binance-hack cross-check (29–30 Oct 2026)
+
+Read-only cross-check against Tether's 29 Oct 2026 press release reporting freezes linked to the Binance hack. Raw rows: `docs/evidence/binance-xref-29oct2026.json`. Census data powered by Etherscan.
+
+**Match is by date and chain only.** Tether's release does not list addresses; we cannot say which wallets are "the hack wallets". The rows below are all USDT freezes in the window — a superset of any hack-related subset.
+
+### 1. How many USDT freezes in the window?
+
+- ETH USDT: 11 `AddedBlackList` events.
+- Tron USDT: 75 `AddedBlackList` events.
+- Combined: 86 across 29–30 Oct 2026 UTC.
+
+### 2. How much frozen value is that?
+
+Sum of `balanceOf(wallet, tag=hex(freeze_block))` across the 11 ETH USDT rows: ≈ **1,382,022,670 USDT (~$1.38B)**. This is the sum of frozen USDT balances across all 29–30 Oct USDT freezes, which contains but is not limited to funds Tether reports freezing from the Binance hack. Tron historical balances are reported `unavailable` (free-tier TronGrid does not serve archive-state `balanceOf`; recorded as a data gap, not a signal to trim rows). A narrower-than-$1.5B headline figure is expected on that basis.
+
+### 3. Do these wallets match our fleet?
+
+- Phase-2 fleet (11,081 twins, `docs/evidence/dormant-fleet-usdt-enriched.json`): 84 of 86 rows matched (**97.7 %**), 11/11 ETH + 73/75 Tron. The two Tron misses are likely post-Phase-2-cutoff adds (Phase 2 enrichment predates the window).
+- Census-seedable set (non-sentinel `currently_frozen`, `docs/evidence/watchlist-30d-counts.json`; 11,484 distinct wallets across 7 contracts, 12,732 counting cross-contract duplicates): same 84/86 match.
+- No sentinel (`address[2:22] == "0"*20`) rows observed in the window.
+
+### 4. Post-freeze wake activity since 29 Oct
+
+Scanning `DestroyedBlackFunds` + `RemovedBlackList` on the same contracts from each freeze block forward to head: **2 wake hits**, both Tron `RemovedBlackList` (unfreeze reversals), no `DestroyedBlackFunds`. Each would have woken exactly 1 twin in the Phase-2 fleet.
+
+### 5. Clustering vs the 30-day baseline (~15 USDT freezes/day combined)
+
+24-hour buckets, UTC, ETH+Tron combined:
+
+| Date | Freezes |
+|---|---|
+| 2026-10-27 | 5 |
+| 2026-10-28 | 39 |
+| 2026-10-29 | 21 |
+| 2026-10-30 | 65 |
+| 2026-11-01 | 2 |
+
+The 28–30 Oct window runs ~2–4× the ~15/day baseline, with the largest bucket on 30 Oct — consistent with Tether announcing freezes on 29 Oct and continuing the action into the following day. Times and counts only; no address lists.
+
+### Scope and disclaimers
+
+- Chains: ETH USDT and Tron USDT only (Tether's release is USDT-specific; other stablecoins out of scope).
+- Decoders pinned in `docs/evidence/decode-fixtures.json`.
+- Historical balance on ETH used `proxy/eth_call balanceOf(wallet)` with `tag=hex(freeze_block)` after a one-call pre-flight test passed; Tron archive state is unavailable on the free tier and is reported as a per-row data gap.
+- Budget: 18 Etherscan V2 calls + 3 TronGrid calls (ceilings 200 / 20).
+
 ## Where to look
 
 - Census, audit and the test-address rule: `docs/watchlist-audit.md`, `docs/evidence/`
