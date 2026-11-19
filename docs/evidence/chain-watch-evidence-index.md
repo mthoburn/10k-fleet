@@ -14,13 +14,13 @@ A second 10k fleet, outside Eden, run against live third-party on-chain data: st
 
 | Figure | Value | Definition |
 | --- | --- | --- |
-| Live-frozen **freeze-positions**, each a potential dormant twin | **12,732** | `(contract, address)` tuples with an active blacklist state across the 7 account-level stablecoin contracts (ETH USDT, ETH USDC, BUSD, USDP, TUSD, Tron USDT, Tron USDC), sentinel-excluded. Raw on-chain total 12,757; 25 near-zero issuer sentinel / test addresses excluded per the rule in `docs/watchlist-audit.md` §3. **A "twin" is per freeze-position**, because each freeze is an independent on-chain gate that can be reversed on its own contract — a wallet frozen on both ETH USDT and ETH USDC is two twins. |
-| Underlying distinct addresses in that set | **11,484** | De-duplicating the 12,732 freeze-positions by address: **1,248** wallets appear on more than one account-level contract (counted once per contract above). Report this number when a sentence specifically needs distinct wallets rather than twins. |
+| **Frozen positions**, each a potential dormant twin | **12,732** | `(contract, address)` tuples with an active blacklist state across the 7 account-level stablecoin contracts (ETH USDT, ETH USDC, BUSD, USDP, TUSD, Tron USDT, Tron USDC), sentinel-excluded. Raw on-chain total 12,757; 25 near-zero issuer sentinel / test addresses excluded per the rule in `docs/watchlist-audit.md` §3. **A "twin" is per frozen position**, because each freeze is an independent on-chain gate reversible on its own contract — a wallet frozen on both ETH USDT and ETH USDC is two twins. Canonical grant-copy phrase: **"12,732 frozen positions across 11,484 distinct wallets."** |
+| Underlying distinct wallets in that set | **11,484** | De-duplicating the 12,732 frozen positions by address: **1,248** wallets appear on more than one account-level contract (counted once per contract above). Report this number only when a sentence specifically needs distinct wallets rather than twins — always paired with the 12,732 position count. |
 | **N — new freezes, headline** | **434 events / 433 distinct accounts** | Freeze-add events in the 30-day window ending 2026-11-16 UTC across **six** account-level stablecoin contracts (ETH USDT, ETH USDC, BUSD, USDP, TUSD, Tron USDT). Excludes Tron USDC (issuer attestation unconfirmed — see §7 and RETRY-1 of `docs/watchlist-audit.md`). |
 | N — cross-check with Tron USDC included | 519 events / 518 distinct accounts | Same window, **seven** account-level contracts (adds Tron USDC, `legacy, ABI-verified, issuer-unconfirmed`). Use only alongside the headline with that footnote. |
 | New freezes per day | **≈ 14.5 / day** | 434 ÷ 30 on the headline definition. The cross-check 519 figure is NOT safe to divide by 30: 71 of the 85 Tron USDC adds in the window fired in a single batch on 2026-11-02 (see §Rate note below). |
 | Oldest live freeze | 9 June 2018 | Ethereum, block 5,758,962, an ordinary user address (not a contract or test address). Span 2018-06-09 to 2026-11-16. Say "frozen as far back as June 2018". |
-| Registered fleet, Phase 2 (live catch) | 11,081 | 2,851 ETH USDT + 8,230 Tron USDT **freeze-positions** (same definition as above); reconciled exactly (11,081 resolved, 0 unresolved), every row with its freeze transaction, block and timestamp. A subset of the 12,732 freeze-position census (USDT on Ethereum and Tron only). |
+| Registered fleet, Phase 2 (live catch) | 11,081 | 2,851 ETH USDT + 8,230 Tron USDT **frozen positions** (same definition as above); reconciled exactly (11,081 resolved, 0 unresolved), every row with its freeze transaction, block and timestamp. A subset of the 12,732 position census (USDT on Ethereum and Tron only). |
 
 Sources: `docs/watchlist-audit.md`, `docs/evidence/watchlist-30d-counts.json`, `docs/evidence/dormant-sample-500*.json`.
 
@@ -36,7 +36,7 @@ A per-day freeze rate is only honest on the headline definition (434/30 ≈ 14.5
 
 ## Pillar B: the loop works, verifiably (Case 1)
 
-- **Fleet in the proof run:** 501 registered twins, one per freeze-position (`docs/evidence/chain-watch-case1-input.json`). The full fleet would be 12,732 freeze-positions.
+- **Fleet in the proof run:** 501 registered twins, one per frozen position (`docs/evidence/chain-watch-case1-input.json`). The full fleet would be **12,732 frozen positions across 11,484 distinct wallets**.
 - **Event:** a real historical on-chain event, **replayed**. The log shows `DestroyedBlackFunds` naming a wallet that had been frozen since 16 May 2024, 886 days before the event (19 Oct 2026).
 - **Wake:** exactly 1 of the 501 twins woke. There was no fan-out.
 - **Assessment:** one Nosana job (vLLM, Llama 3.1 8B).
@@ -56,14 +56,14 @@ Receipt JSON and on-chain reconciliation: PR #28 (`case1-chain-watch-record`).
 ## What it proves, and what it doesn't
 
 **Proves:**
-- Scale: a census of **12,732 freeze-positions** (11,484 distinct underlying addresses).
+- Scale: a census of **12,732 frozen positions across 11,484 distinct wallets**.
 - Selective wake: 1 of 501 twins.
 - Real Nosana compute demand: a verifiable job.
 - The cost model: dormant twins cost almost nothing, and you pay only for the ones that wake.
 
 **Doesn't yet prove:**
 - Live detection. Case 1 replayed a historical event, and its receipt says so. Live detection on new events is next.
-- That the full 12,732 run. Only 501 twins were registered in the proof run.
+- That the full **12,732 frozen positions across 11,484 distinct wallets** run. Only 501 twins were registered in the proof run.
 - That the twin itself slept for 886 days. The 886 days is how long the *wallet* had been frozen. The twin was registered for the proof run.
 
 ## How to cite these figures
@@ -71,7 +71,7 @@ Receipt JSON and on-chain reconciliation: PR #28 (`case1-chain-watch-record`).
 - Say "ran on a verifiable Nosana job, posting transaction on Solana mainnet". Never say "proof of computation": the record proves which job served the inference, not that the computation was correct.
 - Dormancy: "a wallet frozen 886 days earlier". Never "a twin asleep 886 days", and never "a six-year fleet" (the sample is weighted to 2025–26).
 - Wallets: neutral wording only, such as "the log shows DestroyedBlackFunds naming <wallet>". Never an accusation.
-- Fleet size: Phase 1 = "1 of 501 registered twins"; Phase 2 = "1 of 11,081 registered". The census **12,732 is freeze-positions** (`(contract, address)` tuples, 11,484 distinct underlying addresses) — each a potential twin. Never "holds 12,732 agents". When a sentence specifically needs distinct wallets rather than twins, say "11,484 distinct wallets" and keep 12,732 for the twin / freeze-position count.
+- Fleet size: Phase 1 = "1 of 501 registered twins"; Phase 2 = "1 of 11,081 registered". The census is **12,732 frozen positions across 11,484 distinct wallets** (`(contract, address)` tuples; 1,248 wallets are frozen on more than one contract) — each position a potential twin. **Never "holds 12,732 agents"**; never "12,732 wallets" (that collapses the position/wallet distinction the grant copy depends on).
 - Rate: "**434 in 30 days, about 14.5 a day**" (headline). Never divide 519 by 30 — 71 of its 85 Tron USDC events were a single 2026-11-02 batch.
 - Scope words: the headline covers **six** account-level contracts (USDT, USDC, BUSD, USDP, TUSD on ETH + USDT on Tron). The 519 cross-check adds Tron USDC. Say "six account-level stablecoin contracts" not "all contracts" unless the sentence is quoting 519.
 - USD: always with its NOS price date.
@@ -95,8 +95,8 @@ Read-only cross-check against Tether's 29 Oct 2026 press release reporting freez
 
 ### 3. Do these wallets match our fleet?
 
-- Phase-2 fleet (11,081 freeze-position twins, `docs/evidence/dormant-fleet-usdt-enriched.json`): 84 of 86 rows matched (**97.7 %**), 11/11 ETH + 73/75 Tron. The two Tron misses are likely post-Phase-2-cutoff adds (Phase 2 enrichment predates the window).
-- Census-seedable set (non-sentinel `currently_frozen`, `docs/evidence/watchlist-30d-counts.json`): **12,732 freeze-positions = 11,484 distinct underlying addresses** (same definition as the Pillar A table above; 1,248 wallets appear on more than one contract). Match rate against the distinct-address projection is also 84/86 — no window row is a cross-contract duplicate of another.
+- Phase-2 fleet (11,081 frozen-position twins, `docs/evidence/dormant-fleet-usdt-enriched.json`): 84 of 86 rows matched (**97.7 %**), 11/11 ETH + 73/75 Tron. The two Tron misses are likely post-Phase-2-cutoff adds (Phase 2 enrichment predates the window).
+- Census-seedable set (non-sentinel `currently_frozen`, `docs/evidence/watchlist-30d-counts.json`): **12,732 frozen positions across 11,484 distinct wallets** (same definition as the Pillar A table above; 1,248 wallets appear on more than one contract). Match rate against the distinct-wallet projection is also 84/86 — no window row is a cross-contract duplicate of another.
 - No sentinel (`address[2:22] == "0"*20`) rows observed in the window.
 
 ### 4. Post-freeze wake activity since 29 Oct
