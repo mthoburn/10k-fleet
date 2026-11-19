@@ -81,7 +81,7 @@ Read-only cross-check against Tether's 29 Oct 2026 press release reporting freez
 
 ### 2. How much frozen value is that?
 
-Sum of `balanceOf(wallet, tag=hex(freeze_block))` across the 11 ETH USDT rows: ≈ **1,382,022,670 USDT (~$1.38B)**. This is the sum of frozen USDT balances across all 29–30 Oct USDT freezes, which contains but is not limited to funds Tether reports freezing from the Binance hack. Tron historical balances are reported `unavailable` (free-tier TronGrid does not serve archive-state `balanceOf`; recorded as a data gap, not a signal to trim rows). A narrower-than-$1.5B headline figure is expected on that basis.
+**ETH USDT only — a lower bound.** Sum of `balanceOf(wallet, tag=hex(freeze_block))` across the 11 ETH USDT rows: ≈ **1,382,022,670 USDT (~$1.38B)**. This is the ETH-leg sum of frozen USDT balances in the 29–30 Oct window; it does **not** include the 75 Tron USDT freezes, whose archive-state `balanceOf` is unavailable on free-tier TronGrid and is recorded as a per-row data gap. The $1.38B figure is therefore a lower bound on the window's total frozen USDT and is a superset of (but not limited to) the funds Tether reports freezing from the Binance hack. Comparison to the ~$1.5B headline must account for the missing Tron leg.
 
 ### 3. Do these wallets match our fleet?
 
