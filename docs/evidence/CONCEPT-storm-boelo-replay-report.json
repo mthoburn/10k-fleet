@@ -1,0 +1,116 @@
+{
+  "title": "CONCEPT: synthetic policies, real Met Éireann warnings",
+  "label": "CONCEPT: synthetic policies, real Met Éireann warnings",
+  "attribution": "Weather warnings sourced from Met Éireann",
+  "generated_at": "2026-11-19T17:58:01.355Z",
+  "source": "storm-boelo example, coordinator replay",
+  "total_policies": 50000,
+  "broad_rule_policies": 38309,
+  "twins_woken": 8198,
+  "wake_decisions": 10896,
+  "ratio_woken_over_broad": 0.21399671095565012,
+  "wakes_per_county": [
+    {
+      "county": "Donegal",
+      "policies": 1623,
+      "woken_events": 1,
+      "wake_decisions": 1623
+    },
+    {
+      "county": "Galway",
+      "policies": 2698,
+      "woken_events": 2,
+      "wake_decisions": 5396
+    },
+    {
+      "county": "Kerry",
+      "policies": 1520,
+      "woken_events": 1,
+      "wake_decisions": 1520
+    },
+    {
+      "county": "Leitrim",
+      "policies": 342,
+      "woken_events": 1,
+      "wake_decisions": 342
+    },
+    {
+      "county": "Mayo",
+      "policies": 1333,
+      "woken_events": 1,
+      "wake_decisions": 1333
+    },
+    {
+      "county": "Sligo",
+      "policies": 682,
+      "woken_events": 1,
+      "wake_decisions": 682
+    }
+  ],
+  "escalation_rewakes": [
+    {
+      "county": "Galway",
+      "warning_type": "wind",
+      "from": "yellow",
+      "to": "orange",
+      "warning_id": "orange-wind-updated-adds-galway",
+      "event_identity": "[\"Galway\",\"wind\",\"orange\"]",
+      "twins_woken": 2698
+    },
+    {
+      "county": "Galway",
+      "warning_type": "rain",
+      "from": "yellow",
+      "to": "orange",
+      "warning_id": "orange-rain-galway-kerry",
+      "event_identity": "[\"Galway\",\"rain\",\"orange\"]",
+      "twins_woken": 2698
+    },
+    {
+      "county": "Kerry",
+      "warning_type": "rain",
+      "from": "yellow",
+      "to": "orange",
+      "warning_id": "orange-rain-galway-kerry",
+      "event_identity": "[\"Kerry\",\"rain\",\"orange\"]",
+      "twins_woken": 1520
+    }
+  ],
+  "escalation_rewake_decisions": 6916,
+  "repeats_deduplicated": [
+    {
+      "county": "Donegal",
+      "warning_type": "wind",
+      "band": "orange",
+      "warning_id": "orange-wind-updated-adds-galway",
+      "issued_at": "2026-10-23T12:00:00Z"
+    },
+    {
+      "county": "Leitrim",
+      "warning_type": "wind",
+      "band": "orange",
+      "warning_id": "orange-wind-updated-adds-galway",
+      "issued_at": "2026-10-23T12:00:00Z"
+    },
+    {
+      "county": "Mayo",
+      "warning_type": "wind",
+      "band": "orange",
+      "warning_id": "orange-wind-updated-adds-galway",
+      "issued_at": "2026-10-23T12:00:00Z"
+    },
+    {
+      "county": "Sligo",
+      "warning_type": "wind",
+      "band": "orange",
+      "warning_id": "orange-wind-updated-adds-galway",
+      "issued_at": "2026-10-23T12:00:00Z"
+    }
+  ],
+  "repeats_deduplicated_count": 4,
+  "submitted_events": 36,
+  "unique_events": 32,
+  "below_threshold_events": 25,
+  "observed_matches_expected": true,
+  "excluded_non_roi": []
+}
