@@ -12,18 +12,26 @@ A second 10k fleet, outside Eden, run against live third-party on-chain data: st
 
 ## Pillar A: scale and demand (census, keyed direct queries)
 
-| Figure | Value | Note |
+| Figure | Value | Definition |
 | --- | --- | --- |
-| Live-frozen wallets, each a potential dormant twin | 12,732 | Across 7 account-level stablecoin contracts (Ethereum and Tron USDT and USDC, BUSD, USDP). Raw census 12,757; 25 near-zero issuer test addresses excluded, rule in `docs/watchlist-audit.md`. |
-| Freezes in the last 30 days (headline) | 434 | Freeze events emitted by the issuers' own contracts. |
-| Freezes in the last 30 days, all contracts | 519 | Includes a legacy Tron USDC contract whose issuer attestation is pending. Use only with that footnote. |
-| New freezes per day | about 15 | 434 / 30. (About 17 a day matches the 519 figure, so use it only alongside 519.) |
+| Live-frozen wallets, each a potential dormant twin | **12,732** | Distinct addresses with an active blacklist state across the 7 account-level stablecoin contracts (ETH USDT, ETH USDC, BUSD, USDP, TUSD, Tron USDT, Tron USDC). Raw census 12,757; 25 near-zero issuer sentinel / test addresses excluded per the rule in `docs/watchlist-audit.md` §3. |
+| **N — new freezes, headline** | **434 events / 433 distinct accounts** | Freeze-add events in the 30-day window ending 2026-11-16 UTC across **six** account-level stablecoin contracts (ETH USDT, ETH USDC, BUSD, USDP, TUSD, Tron USDT). Excludes Tron USDC (issuer attestation unconfirmed — see §7 and RETRY-1 of `docs/watchlist-audit.md`). |
+| N — cross-check with Tron USDC included | 519 events / 518 distinct accounts | Same window, **seven** account-level contracts (adds Tron USDC, `legacy, ABI-verified, issuer-unconfirmed`). Use only alongside the headline with that footnote. |
+| New freezes per day | **≈ 14.5 / day** | 434 ÷ 30 on the headline definition. The cross-check 519 figure is NOT safe to divide by 30: 71 of the 85 Tron USDC adds in the window fired in a single batch on 2026-11-02 (see §Rate note below). |
 | Oldest live freeze | 9 June 2018 | Ethereum, block 5,758,962, an ordinary user address (not a contract or test address). Span 2018-06-09 to 2026-11-16. Say "frozen as far back as June 2018". |
 | Registered fleet, Phase 2 (live catch) | 11,081 | 2,851 Ethereum USDT + 8,230 Tron USDT; reconciled exactly (11,081 resolved, 0 unresolved), every row with its freeze transaction, block and timestamp. A subset of the 12,732 census (USDT on Ethereum and Tron only). |
 
 Sources: `docs/watchlist-audit.md`, `docs/evidence/watchlist-30d-counts.json`, `docs/evidence/dormant-sample-500*.json`.
 
 Census data powered by Etherscan (free-tier attribution requirement: carry this credit wherever these figures appear).
+
+### Reconciliation — the earlier 400 figure
+
+An earlier Issue C probe reported **N = 400 events** (fallback 347 without Tron USDC). That probe covered only **4 contracts** (USDT and USDC on both chains) AND used incomplete Tron pagination that stopped at the first empty response (the Tron USDT 30d subset returned 237 there vs the full 308 recovered by the fingerprint-walked census). Both effects run in the same direction; **the 400/347 figure is retracted as an undercount** (see `docs/watchlist-audit.md` §3 "Reconciliation of the earlier 237 → 308 figure" and RETRY-2). The headline N (434/433) is derived from the same evidence file on the broader 6-contract set with full pagination.
+
+### Rate note — single-batch warning
+
+A per-day freeze rate is only honest on the headline definition (434/30 ≈ 14.5/day). The 519 cross-check cannot be divided to a per-day figure: 71 of the 85 Tron USDC adds in the 30-day window fired in a **single batch on 2026-11-02** (8 on 10-28, 6 on 11-07, 0 on every other day). Report the Tron USDC leg as a batch event, not a cadence.
 
 ## Pillar B: the loop works, verifiably (Case 1)
 
@@ -63,7 +71,8 @@ Receipt JSON and on-chain reconciliation: PR #28 (`case1-chain-watch-record`).
 - Dormancy: "a wallet frozen 886 days earlier". Never "a twin asleep 886 days", and never "a six-year fleet" (the sample is weighted to 2025–26).
 - Wallets: neutral wording only, such as "the log shows DestroyedBlackFunds naming <wallet>". Never an accusation.
 - Fleet size: Phase 1 = "1 of 501 registered twins"; Phase 2 = "1 of 11,081 registered". The census (12,732) is wallets that could each have a twin. Never "holds 12,732 agents".
-- Rate: "434 in 30 days, about 15 a day".
+- Rate: "**434 in 30 days, about 14.5 a day**" (headline). Never divide 519 by 30 — 71 of its 85 Tron USDC events were a single 2026-11-02 batch.
+- Scope words: the headline covers **six** account-level contracts (USDT, USDC, BUSD, USDP, TUSD on ETH + USDT on Tron). The 519 cross-check adds Tron USDC. Say "six account-level stablecoin contracts" not "all contracts" unless the sentence is quoting 519.
 - USD: always with its NOS price date.
 - Credit: "Census data powered by Etherscan".
 
