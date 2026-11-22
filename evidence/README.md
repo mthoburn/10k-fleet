@@ -1,5 +1,9 @@
 # evidence/
 
+Reference-fleet evidence (rungs 1–5) lives here. Chain-watch and live-round evidence lives in `docs/evidence/`; start at [`docs/evidence/chain-watch-evidence-index.md`](../docs/evidence/chain-watch-evidence-index.md).
+
+---
+
 Evidence for the 10k coordinator Nosana grant application: live pilot data, a production shadow run, a synthetic-at-scale benchmark, the full-fleet registration, Nosana inference measurements and an end-to-end demonstration run. No mocked or concept items; the rung 5 run is labelled DEMONSTRATION because its Readings were not written to production.
 
 **On verification:** the notes below show the exact queries and sources each file was produced from — for transparency. Several require production access reviewers will not have; the team will re-run any of them on request. The GPU receipts in `../examples/` verify independently against the chain.
