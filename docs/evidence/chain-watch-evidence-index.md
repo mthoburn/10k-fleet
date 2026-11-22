@@ -123,9 +123,35 @@ The 28–30 Oct window runs ~2–4× the ~15/day baseline, with the largest buck
 - Historical balance on ETH used `proxy/eth_call balanceOf(wallet)` with `tag=hex(freeze_block)` after a one-call pre-flight test passed; Tron archive state is unavailable on the free tier and is reported as a per-row data gap.
 - Budget: 18 Etherscan V2 calls + 3 TronGrid calls (ceilings 200 / 20).
 
+## Live rounds (Phase 2b)
+
+> **Citation rules for this section:**
+> - "Woke 5 of 11,081 dormant twins" — only for round 2 day 1, with the verification link.
+> - "Detected in real time … ran on a verifiable Nosana job — posting transaction on Solana mainnet."
+> - Assessments ran in that day's batch after live detection, not instantly per event.
+> - Claim the verifiable job, not the content of the model's notes (0.5B model; notes are generic).
+> - Never "proof of computation". Never quote a net cost before its reconciliation is posted.
+
+### Round 1 — 19–20 Nov 2026 (Mac, births + re-wakes, one batch at close)
+
+- **Live catch:** a new Tether freeze on Tron, tx `acedca63e86867d26a55a7e353e026d503c841d6faae07beb4f98411d2695249` (block 88,149,913), detected 17 s after its block and finalised ~51 s later. Independently matched by the chain cross-check on edenbotanical #648.
+- **Honest caveats:** slot A's own job (`CKAF4G7ZioeA4UjFTMhfcXUnvkppXLfiGLhQ6BDtxjcg`) never ran — it auto-picked a gated market with no nodes (fixed in edenbotanical #733 / #744); 0.0072 NOS locked. The detector was paused 22:21–00:01 UTC for a market-pinned restart; events in that gap were not caught live.
+- **Batch:** 11 live-caught freezes assessed in one Nosana job `4QAsPcFAHPPeiFHRcZLNYtetogtL6wiLZe5CbTHQFwNP` (market `Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8`), posting tx `Z4Z4cX45SS4KuZXoZkCCRrGkwPZG4ZyeX5jXkgm35QA7CK4Ey7GB9fSAcqmcP4Eq3AaUZJyYaEhRCVH6LGJywzV`, IPFS result `QmV93Bu4PT7F8HVwzHa9NCx5po2JrzBfoXLBqpp1MHhisK`. Batch net 0.020878 NOS; round total −0.028078 NOS, which matches the wallet delta exactly (closeout on edenbotanical #648, 20 Nov 22:22Z).
+- **No dormant re-wake in round 1.**
+- Pointer to 10k-fleet #46 (round 1 receipts write-up) — **pending** if not yet merged.
+
+### Round 2 — Option A: three back-to-back 24 h windows, one Nosana batch per day (from 20 Nov 22:34Z)
+
+- **Day 1 (window to 21 Nov 22:34Z):** 6 new freezes **+ 5 of 11,081 dormant twins re-woke** on `DestroyedBlackFunds` — 4 on Ethereum in a single block (26,465,143, 21 Nov 18:02:47Z; frozen 647–760 days) and 1 on Tron (block 88,203,147, 17:52:42Z; frozen 163 days); ≈ 12,799,991.60 USDT destroyed. Independently verified on chain: `docs/evidence/r2-rewakes-verification.md`, `docs/evidence/r2-rewakes-verification.json` (10k-fleet #47).
+- **Assessment:** the 11 events ran in one Nosana job `EnNb97z2BwK9VqshukmPfAxRZXQyFBqweDze9XW8EPyS` (market `Dcwz62…sXy8`), 11 receipts, 0 errors, posting tx `21LZLK7w4uU714kAvQyXariUTxG4V6iRzQER4Ue5cvodhXGEoMpMAD6JNnbAog1DBaHKcQFXtxn7xCX82c1TUD26`, run 22 Nov. First attempts failed **before** posting, nothing was spent — a market-check regression, fixed in edenbotanical #744. Stated plainly.
+- **Fleet:** `dormant-fleet-usdt-enriched.json`, sha256 `bcd1edb34c4d5e43ac1a635f92a39d45fc17ce7aca7d7859b6fb5fef3c7038d7`, generated 2026-11-17T19:53:54Z (before round 2 started); pinned and hash-checked at every launch.
+- **Net cost:** PENDING close-out reconciliation (after day 3, ~23 Nov). The 0.021666 wallet movement is **not** to be quoted as a net cost until reconciled.
+- **Days 2–3:** running; results to follow.
+
 ## Where to look
 
 - Census, audit and the test-address rule: `docs/watchlist-audit.md`, `docs/evidence/`
 - Case 1 receipt and reconciliation: PR #28
+- Live rounds (Phase 2b): §"Live rounds (Phase 2b)" above; round 2 day 1 verification in `docs/evidence/r2-rewakes-verification.{md,json}` (10k-fleet #47)
 - Operator API contract: edenbotanical `docs/coordinator/operator-api-v0.md` (#652, #668)
 - Lane history: edenbotanical issue #648
