@@ -1,5 +1,9 @@
 # Chain-watch: evidence index
 
+Chain-watch and live-round evidence lives here. Reference-fleet evidence (rungs 1–5) lives in [`evidence/`](../../evidence/README.md).
+
+---
+
 Single source for every chain-watch figure cited outside this repo. Cite this file; don't restate numbers from memory. As of 17 Nov 2026.
 
 ## What it is
