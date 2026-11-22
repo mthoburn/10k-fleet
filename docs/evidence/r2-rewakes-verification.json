@@ -1,0 +1,110 @@
+{
+  "title": "R2 RE-WAKES — INDEPENDENT VERIFICATION",
+  "generated_at_utc": "2026-11-22",
+  "label": "Census data powered by Etherscan",
+  "sources": {
+    "ledger": "~/eden-local/phase2b-r2/day1/state.json.ledger.jsonl (read-only input)",
+    "enriched_census": "docs/evidence/dormant-fleet-usdt-enriched.json",
+    "enriched_census_sha256": "bcd1edb34c4d5e43ac1a635f92a39d45fc17ce7aca7d7859b6fb5fef3c7038d7",
+    "enriched_census_sha256_verified": true,
+    "enriched_census_generated_at_utc": "2026-11-17T19:53:54.466535Z",
+    "eth_api": "api.etherscan.io v2 (chainid=1), 1 call / 2s",
+    "tron_api": "api.trongrid.io, ≤ 2 calls / s"
+  },
+  "method": "For each tx, fetched the transaction receipt and decoded the USDT DestroyedBlackFunds log (topic0 = 0x61e6e66b0d6339b2980aecc6ccc0039736791f0ccde9ed512e789a7fbdd698c6). Confirmed contract address, event topic, affected wallet (ETH USDT: non-indexed, from data; Tron USDT: indexed, from topic[1]), amount destroyed (data), and block/block-time. Cross-referenced the wallet against the enriched census to derive the original freeze time and dormancy length. Nothing paid; read-only.",
+  "events": [
+    {
+      "chain": "ethereum",
+      "contract": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "contract_ok": true,
+      "event": "DestroyedBlackFunds",
+      "event_ok": true,
+      "tx": "0x9f7d956f2b1a330eb27f0cfab92757b3bcad8efe88b61f6cfcdd46733acec80a",
+      "block": 26465143,
+      "block_time_utc": "2026-11-19T02:14:47Z",
+      "wallet": "0xf322a3328f617b9f3d44a088373d1106b6c5e97e",
+      "amount_raw": 2117677970136,
+      "amount_usdt": 2117677.970136,
+      "in_enriched_census": true,
+      "original_freeze_at_utc": "2025-02-12T15:52:47Z",
+      "dormancy_days": 644.43
+    },
+    {
+      "chain": "ethereum",
+      "contract": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "contract_ok": true,
+      "event": "DestroyedBlackFunds",
+      "event_ok": true,
+      "tx": "0x26a26b8dd1df6f5c6a6d6b00375eda18f97dca5798998d9a3ad08d2412bf2555",
+      "block": 26465143,
+      "block_time_utc": "2026-11-19T02:14:47Z",
+      "wallet": "0x89cf540a89ae0fbdedd4780cd38b3496b65f1da5",
+      "amount_raw": 4242287280000,
+      "amount_usdt": 4242287.28,
+      "in_enriched_census": true,
+      "original_freeze_at_utc": "2024-10-22T14:49:47Z",
+      "dormancy_days": 757.48
+    },
+    {
+      "chain": "ethereum",
+      "contract": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "contract_ok": true,
+      "event": "DestroyedBlackFunds",
+      "event_ok": true,
+      "tx": "0xf799d4e2d6a999a131476624ab058a14c6dd75e7760f2e03eb7c51d301df6748",
+      "block": 26465143,
+      "block_time_utc": "2026-11-19T02:14:47Z",
+      "wallet": "0xe3d1143fccc957186b013fec87c492c31fb15e14",
+      "amount_raw": 5680262520000,
+      "amount_usdt": 5680262.52,
+      "in_enriched_census": true,
+      "original_freeze_at_utc": "2024-12-20T02:25:11Z",
+      "dormancy_days": 698.99
+    },
+    {
+      "chain": "ethereum",
+      "contract": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "contract_ok": true,
+      "event": "DestroyedBlackFunds",
+      "event_ok": true,
+      "tx": "0x78a90586a38d9467b5b2a026e67c00af8556b2e19a174b21c109ab789d4d3583",
+      "block": 26465143,
+      "block_time_utc": "2026-11-19T02:14:47Z",
+      "wallet": "0xca44101abe4c3215f94942ca707248c7aa40a4db",
+      "amount_raw": 482357071069,
+      "amount_usdt": 482357.071069,
+      "in_enriched_census": true,
+      "original_freeze_at_utc": "2025-01-07T17:06:23Z",
+      "dormancy_days": 680.38
+    },
+    {
+      "chain": "tron",
+      "contract_hex": "41a614f803b6fd780986a42c78ec9c7f77e6ded13c",
+      "contract_base58": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+      "contract_ok": true,
+      "event": "DestroyedBlackFunds",
+      "event_ok": true,
+      "tx": "ad05b5e2fae7b0ad6b6c232e08508b9d7462f6d51696f07363ddea63d87cd2fb",
+      "block": 88203147,
+      "block_time_utc": "2026-11-21T17:52:42Z",
+      "wallet": "TJ8tvVijjKrxdnKQWaivnLLNPXnuMZv63p",
+      "wallet_hex_in_log": "0x5996131728b1d8944bdfbf9c0ede43c2d4370093",
+      "amount_raw": 277406754110,
+      "amount_usdt": 277406.75411,
+      "in_enriched_census": false,
+      "original_freeze_at_utc": null,
+      "dormancy_days": null,
+      "notes": "Wallet is NOT present in docs/evidence/dormant-fleet-usdt-enriched.json (census generated 2026-11-17T19:53:54Z). Mismatch reported as-is: either (a) wallet was blacklisted/frozen after the census snapshot, or (b) census omission. Freeze time and dormancy length therefore cannot be derived from the census for this event."
+    }
+  ],
+  "totals": {
+    "eth_events": 4,
+    "tron_events": 1,
+    "eth_amount_usdt": 12522584.841205,
+    "tron_amount_usdt": 277406.75411,
+    "total_amount_usdt": 12799991.595315
+  },
+  "mismatches": [
+    "tron:TJ8tvVijjKrxdnKQWaivnLLNPXnuMZv63p absent from enriched census (dormancy unknown)."
+  ]
+}
