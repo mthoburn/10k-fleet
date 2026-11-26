@@ -13,17 +13,21 @@ Census data powered by Etherscan.
 
 ## Slot A — live catch, posted but never ran
 
-A real USDT `DestroyedBlackFunds` event, detected in real time on Tron, was
-turned into a posted Nosana job within the window. The job did not run because
-the market it landed in was later shown to be gated (fixed by edenbotanical
-#733); it is **held on chain unspent** as of this write-up.
+A real USDT `AddedBlackList` event (a new freeze, not a re-wake), detected in
+real time on Tron, was turned into a posted Nosana job within the window. The
+job **never ran** because the market it landed in was later shown to be gated
+(fixed by edenbotanical #733); it is **held on chain unspent** as of this
+write-up, so the "ran on a verifiable Nosana job" citation does **not** apply
+to slot A. The verifiable-job citation for round 1 is the batch job
+`4QAsPc…` below.
 
 | field | value |
 |---|---|
-| Chain / event | Tron USDT, `DestroyedBlackFunds` |
-| Tron tx | `acedca63…5249` |
+| Chain / event | Tron USDT, **`AddedBlackList`** (new freeze; `kind = birth` in the R1 ledger) |
+| Tron tx | `acedca63e86867d26a55a7e353e026d503c841d6faae07beb4f98411d2695249` |
 | Tron block | 88,149,913 |
-| Affected wallet | `THMgyHT9…UUPS` |
+| Affected wallet | `THMgyHT9BojxSCy1pgzqod9Nz75k3eUUPS` (hex `0x5109611bb05328b2d37c7d56a2e625c1d794e971`) |
+| In pinned dormant fleet? | **No** (`in_fleet = false`). This was a newly frozen wallet; it is not one of the 11,081 pre-registered dormant twins. |
 | Detector latency | ~17 s after block time |
 | Finalisation | ~51 s after detection |
 | Nosana job account | `CKAF4G7ZioeA4UjFTMhfcXUnvkppXLfiGLhQ6BDtxjcg` |
@@ -32,13 +36,14 @@ the market it landed in was later shown to be gated (fixed by edenbotanical
 | Market | `3EWVbggirRpDY2npzPDA7k21yzwz5wgwGxVVv6zCnRpa` (gated — see edenbotanical #733) |
 | Status | **Posted, never ran.** Account owner is the Nosana jobs program. Lamports locked: 1,869,440 (0.00186944 SOL). Signatures on account: **1 total** (the post). Untouched at round-2 closeout per #648. |
 
-Reported as-is: a verifiable on-chain post of the correct wake decision, in a
-market from which it could not proceed.
+Reported as-is: a verifiable on-chain **post** of the correct detection, in a
+market from which the job could not proceed. No assessment was produced.
 
 ## Batch — 11 receipts
 
-The non-slot-A twins that woke in the same window were bundled into a single
-Nosana job and ran to completion.
+The other detected events (freezes) in the same window were assessed in the
+batch — a single Nosana job that ran to completion. This is the verifiable
+Nosana job that carries the round-1 citation.
 
 | field | value |
 |---|---|
@@ -83,8 +88,8 @@ here for narrative clarity, not re-derived from first principles.
 
 ## Wording for citation
 
-- "Detected in real time … ran on a verifiable Nosana job — posting transaction on Solana mainnet." Never "proof of computation".
-- Round 1 is **not** phrased as "woke N of 11,081"; round 1 ran on the registered subset indicated in #46 and separately recorded a posted-but-unrun slot-A catch.
+- "Detected in real time … ran on a verifiable Nosana job — posting transaction on Solana mainnet." Never "proof of computation". **The "ran on a verifiable Nosana job" citation applies to the batch job `4QAsPc…` only; slot A was posted but never ran.**
+- Round 1 is **not** phrased as "woke N of 11,081"; slot A was a new freeze on a non-fleet wallet (`in_fleet = false`), and the batch assessed other detected freezes — neither is a dormant-twin re-wake.
 - The slot-A assessment notes used a 0.5B model and are vague in places (one receipt uses the word "malicious"). **The claim is the verifiable compute, not the note text.**
 
 Census data powered by Etherscan.

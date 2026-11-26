@@ -73,6 +73,7 @@
     ]
   },
   "cost_reconciliation": {
+    "headline": "3 verifiable Nosana jobs carrying 42 assessment receipts",
     "source": "edenbotanical #648 comment 7168113953",
     "per_day": [
       {"day": 1, "deposit_nos": -0.5652, "refund_nos":  0.543534, "net_nos": -0.021666, "sol_fees": -0.00001703},

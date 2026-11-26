@@ -71,9 +71,9 @@ Independent wallet-balance check (chain):
 | SOL | 0.056339192 | 0.056288102 | **−0.00005109** (= 3 × fee) |
 | NOS | 13.892445   | 13.837119   | **−0.055326** |
 
-The −0.055326 NOS total funded **42 verifiable Nosana job receipts**, six of
-them produced by a dormant twin waking on a real `DestroyedBlackFunds` or
-`RemovedBlackList` event.
+The −0.055326 NOS total funded **3 verifiable Nosana jobs carrying 42
+assessment receipts**, six of those receipts produced by a dormant twin waking
+on a real `DestroyedBlackFunds` or `RemovedBlackList` event.
 
 ## Known gap
 
