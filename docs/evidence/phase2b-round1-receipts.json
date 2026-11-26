@@ -1,0 +1,81 @@
+{
+  "round": 1,
+  "window": {
+    "detector_start_utc": "2026-11-19T21:30:00Z",
+    "closeout_utc": "2026-11-20T22:22:00Z",
+    "verified_utc": "2026-11-20T22:28:00Z",
+    "detector_gap_utc": {
+      "stopped": "2026-11-20T22:21:47Z",
+      "restarted": "2026-11-21T00:01:23Z",
+      "note": "Market-pin gap. Nothing processed during the gap. Round-1 known gap."
+    }
+  },
+  "poster_wallet": "CXx2eZ5SGDRGqmKkDBrgDqCp29kVssdgKnUBhR3QzCAg",
+  "slot_a_live_catch": {
+    "chain": "Tron",
+    "contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+    "event": "AddedBlackList",
+    "kind": "birth",
+    "in_fleet": false,
+    "in_fleet_note": "slot A was a new freeze on a wallet not present in the pinned 11,081-twin dormant fleet; not a dormant-twin re-wake",
+    "tron_tx": "acedca63e86867d26a55a7e353e026d503c841d6faae07beb4f98411d2695249",
+    "tron_block": 88149913,
+    "wallet_base58": "THMgyHT9BojxSCy1pgzqod9Nz75k3eUUPS",
+    "wallet_hex": "0x5109611bb05328b2d37c7d56a2e625c1d794e971",
+    "detector_latency_s_approx": 17,
+    "finalisation_s_after_detection_approx": 51,
+    "nosana_job_account": "CKAF4G7ZioeA4UjFTMhfcXUnvkppXLfiGLhQ6BDtxjcg",
+    "post_tx": "4caeCqkCA6mySzG1aRjqdS7nkrASibE5439GwwsjtnYBeRKZ9K3ABKMr4rP3TgC2C9rYwpf3JCv647KrhFTUhjG9",
+    "post_slot": 471487141,
+    "post_time_utc": "2026-11-19T21:31:31Z",
+    "market": "3EWVbggirRpDY2npzPDA7k21yzwz5wgwGxVVv6zCnRpa",
+    "market_note": "Gated market; fixed by edenbotanical #733.",
+    "status": "posted_never_ran",
+    "verifiable_nosana_job_citation_applies": false,
+    "verifiable_nosana_job_citation_note": "slot A was posted but never ran; the 'ran on a verifiable Nosana job' citation applies only to the round-1 batch job 4QAsPc…",
+    "signatures_on_account": 1,
+    "lamports_locked": 1869440,
+    "sol_locked": 0.00186944,
+    "last_verified_untouched_at": "edenbotanical #648 round-2 closeout"
+  },
+  "batch": {
+    "verifiable_nosana_job_citation_applies": true,
+    "description": "Other detected events (freezes) in the window, assessed in one Nosana job that ran to completion.",
+    "job_account": "4QAsPcFAHPPeiFHRcZLNYtetogtL6wiLZe5CbTHQFwNP",
+    "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+    "post_tx": "Z4Z4cX45SS4KuZXoZkCCRrGkwPZG4ZyeX5jXkgm35QA7CK4Ey7GB9fSAcqmcP4Eq3AaUZJyYaEhRCVH6LGJywzV",
+    "post_slot": 471729518,
+    "post_time_utc": "2026-11-20T14:40:24Z",
+    "finish_tx": "23mWgU8LhiZgmY6CvY7CxvJYm8UT5ZKYMpX86ds1rQ9AH9nBJQRkDUu58CEo35gBsqduHgUgKXXKmZ5PXxZB2uQ2",
+    "finish_slot": 471729860,
+    "finish_time_utc": "2026-11-20T14:41:38Z",
+    "close_tx": "3voYeM6MoC7yosNQeLAcg1uVe3pCzzi721BAcK9riahuJDQzif5vdtoXqXgGmD9AuCh77J24uDRE5zkWoyLjiqQn",
+    "close_slot": 471747562,
+    "close_time_utc": "2026-11-20T15:45:03Z",
+    "receipts": 11,
+    "item_errors": 0,
+    "capped": 0,
+    "ipfs_result_cid": "QmV93Bu4PT7F8HVwzHa9NCx5po2JrzBfoXLBqpp1MHhisK"
+  },
+  "re_wakes": {
+    "count": 0,
+    "note": "Round 1 had no dormant re-wakes; new-freeze activity only."
+  },
+  "cost_reconciliation": {
+    "source": "edenbotanical #648 closeout",
+    "wallet_delta_nos": -0.028078,
+    "wallet_delta_sol": -0.001903,
+    "breakdown": [
+      {"item": "slot_a_post_rent_locked_in_CKAF4G7Z", "nos_delta": 0, "sol_delta": -0.00186944, "note": "Rent held in job account; not spent."},
+      {"item": "batch_post_finish_close_net", "nos_delta": -0.028078, "sol_delta_approx": -0.00003, "note": "Fees only; rent recovered at close."}
+    ]
+  },
+  "wording_rules": [
+    "detected in real time … ran on a verifiable Nosana job — posting transaction on Solana mainnet",
+    "never 'proof of computation'",
+    "do not phrase round 1 as 'woke N of 11,081'",
+    "the 'ran on a verifiable Nosana job' citation applies to batch job 4QAsPc… only; slot A was posted but never ran",
+    "0.5B model notes are vague and sometimes wrong; the claim is the verifiable compute, not the note text"
+  ],
+  "attribution": "Census data powered by Etherscan."
+}

@@ -157,5 +157,7 @@ The 28–30 Oct window runs ~2–4× the ~15/day baseline, with the largest buck
 - Census, audit and the test-address rule: `docs/watchlist-audit.md`, `docs/evidence/`
 - Case 1 receipt and reconciliation: PR #28
 - Live rounds (Phase 2b): §"Live rounds (Phase 2b)" above; round 2 day 1 verification in `docs/evidence/r2-rewakes-verification.{md,json}` (10k-fleet #47)
+- Phase 2b round 1 receipts (live, 19–20 Nov 2026): `docs/evidence/phase2b-round1-receipts.{md,json}`
+- Phase 2b round 2 receipts (live, 20–23 Nov 2026): `docs/evidence/phase2b-round2-receipts.{md,json}`
 - Operator API contract: edenbotanical `docs/coordinator/operator-api-v0.md` (#652, #668)
 - Lane history: edenbotanical issue #648

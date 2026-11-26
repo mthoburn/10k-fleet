@@ -1,0 +1,110 @@
+{
+  "round": 2,
+  "window": {
+    "start_utc": "2026-11-20T22:34:41Z",
+    "end_utc":   "2026-11-23T22:35:45Z",
+    "slots": 3,
+    "scheme": "one batch Nosana job per day (Mark's Option A)"
+  },
+  "market": "Dcwz62TisNbWuto6KJM2EGYGVKnHbdZGVGmgLASzsXy8",
+  "image": "eden-oneshot-llm@sha256:976a320a…5c0a",
+  "poster_wallet": "CXx2eZ5SGDRGqmKkDBrgDqCp29kVssdgKnUBhR3QzCAg",
+  "dormant_fleet": {
+    "file": "docs/evidence/dormant-fleet-usdt-enriched.json",
+    "sha256": "bcd1edb34c4d5e43ac1a635f92a39d45fc17ce7aca7d7859b6fb5fef3c7038d7",
+    "rows": 11081
+  },
+  "batches": [
+    {
+      "day": 1,
+      "items": 11,
+      "job_account": "EnNb97z2BwK9VqshukmPfAxRZXQyFBqweDze9XW8EPyS",
+      "post_tx_prefix":   "21LZLK7w4u…c1TUD26",
+      "post_time_utc":    "2026-11-22T14:14:32Z",
+      "finish_tx_prefix": "4XWEpWQBoY…",
+      "finish_time_utc":  "2026-11-22T14:15:40Z",
+      "close_tx_prefix":  "5BohKa5eMP…",
+      "close_time_utc":   "2026-11-22T15:20:01Z",
+      "nos_delta": -0.021666,
+      "sol_delta_fees": -0.00001703,
+      "notes": "Two pre-post failures before edenbotanical #744; no spend; excluded from receipts."
+    },
+    {
+      "day": 2,
+      "items": 3,
+      "job_account": "B6mBjY8YuXVYQDcDe9SXNDnXNCdDFdDTmvm5YQtCRCHK",
+      "post_tx_prefix":   "3Yj2NESZ8S…bsbcd",
+      "post_time_utc":    "2026-11-22T22:35:14Z",
+      "finish_tx_prefix": "36oUP4kq1B…",
+      "finish_time_utc":  "2026-11-22T22:35:30Z",
+      "close_tx_prefix":  "5Vpmy77Kn9…",
+      "close_time_utc":   "2026-11-22T23:40:03Z",
+      "nos_delta": -0.005232,
+      "sol_delta_fees": -0.00001703
+    },
+    {
+      "day": 3,
+      "items": 28,
+      "job_account": "CfVxbNeBiEdw1dAKCdRpKLRdu62sVxtRwhkzhttQYg1a",
+      "post_tx_prefix":   "pjG7vQPezH…YdsAc",
+      "post_time_utc":    "2026-11-23T22:35:49Z",
+      "finish_tx_prefix": "aTvyjb12SB…",
+      "finish_time_utc":  "2026-11-23T22:37:21Z",
+      "close_tx_prefix":  "41C2gAPwTL…",
+      "close_time_utc":   "2026-11-23T23:40:02Z",
+      "nos_delta": -0.028428,
+      "sol_delta_fees": -0.00001703
+    }
+  ],
+  "re_wakes": {
+    "count": 6,
+    "denominator": 11081,
+    "verification_sources": [
+      "docs/evidence/r2-rewakes-verification.md (5 × DestroyedBlackFunds)",
+      "edenbotanical #648 comment 7168113953 §4 (6th: Tron RemovedBlackList)"
+    ],
+    "events": [
+      {"idx": 1, "chain": "Tron", "event": "DestroyedBlackFunds", "tx": "ad05b5e2fae7b0ad6b6c232e08508b9d7462f6d51696f07363ddea63d87cd2fb", "block": 88203147, "block_time_utc": "2026-11-21T17:52:42Z", "wallet_hex": "0x5996131728b1d8944bdfbf9c0ede43c2d4370093", "wallet_base58": "TJ8tvVijjKrxdnKQWaivnLLNPXnuMZv63p", "frozen_at_utc": "2026-06-11T20:43:00Z"},
+      {"idx": 2, "chain": "ETH",  "event": "DestroyedBlackFunds", "tx": "0x9f7d956f2b1a330eb27f0cfab92757b3bcad8efe88b61f6cfcdd46733acec80a", "block": 26465143, "block_time_utc": "2026-11-21T18:02:47Z", "wallet": "0xf322a3328f617b9f3d44a088373d1106b6c5e97e", "frozen_at_utc": "2025-02-12T15:52:47Z"},
+      {"idx": 3, "chain": "ETH",  "event": "DestroyedBlackFunds", "tx": "0x26a26b8dd1df6f5c6a6d6b00375eda18f97dca5798998d9a3ad08d2412bf2555", "block": 26465143, "block_time_utc": "2026-11-21T18:02:47Z", "wallet": "0x89cf540a89ae0fbdedd4780cd38b3496b65f1da5", "frozen_at_utc": "2024-10-22T14:49:47Z"},
+      {"idx": 4, "chain": "ETH",  "event": "DestroyedBlackFunds", "tx": "0xf799d4e2d6a999a131476624ab058a14c6dd75e7760f2e03eb7c51d301df6748", "block": 26465143, "block_time_utc": "2026-11-21T18:02:47Z", "wallet": "0xe3d1143fccc957186b013fec87c492c31fb15e14", "frozen_at_utc": "2024-12-20T02:25:11Z"},
+      {"idx": 5, "chain": "ETH",  "event": "DestroyedBlackFunds", "tx": "0x78a90586a38d9467b5b2a026e67c00af8556b2e19a174b21c109ab789d4d3583", "block": 26465143, "block_time_utc": "2026-11-21T18:02:47Z", "wallet": "0xca44101abe4c3215f94942ca707248c7aa40a4db", "frozen_at_utc": "2025-01-07T17:06:23Z"},
+      {"idx": 6, "chain": "Tron", "event": "RemovedBlackList",   "tx": "8ece0aae69bebb518ea39b6c86b263b7a0d51deff1578dfd3f75c8ef7606cdb2", "block": 88257564, "block_time_utc": "2026-11-23T15:14:21Z", "wallet_hex": "0xfd6bacbb766684f4021a4301b7995e931f6e1a20", "wallet_base58": "TZ5AwxrieGGBivxj2t2p5ttcgYAcSg9GXe", "frozen_at_utc": "2026-08-27T16:57:54Z"}
+    ]
+  },
+  "cost_reconciliation": {
+    "headline": "3 verifiable Nosana jobs carrying 42 assessment receipts",
+    "source": "edenbotanical #648 comment 7168113953",
+    "per_day": [
+      {"day": 1, "deposit_nos": -0.5652, "refund_nos":  0.543534, "net_nos": -0.021666, "sol_fees": -0.00001703},
+      {"day": 2, "deposit_nos": -0.5886, "refund_nos":  0.583368, "net_nos": -0.005232, "sol_fees": -0.00001703},
+      {"day": 3, "deposit_nos": -0.5562, "refund_nos":  0.527772, "net_nos": -0.028428, "sol_fees": -0.00001703}
+    ],
+    "totals": {
+      "items": 42,
+      "deposit_nos": -1.7100,
+      "refund_nos":  1.654674,
+      "net_nos": -0.055326,
+      "sol_fees": -0.00005109
+    },
+    "wallet_balance_check": {
+      "before_sol": 0.056339192,
+      "after_sol":  0.056288102,
+      "delta_sol":  -0.00005109,
+      "before_nos": 13.892445,
+      "after_nos":  13.837119,
+      "delta_nos":  -0.055326,
+      "note": "Row-wise sum of the 9 per-tx deltas equals the wallet delta exactly."
+    }
+  },
+  "gaps": [
+    {"utc": "2026-11-23T20:20Z", "kind": "ethereum_poll_error_transient", "resolution": "recovered next poll", "impact": "none"}
+  ],
+  "wording_rules": [
+    "detected in real time … ran on a verifiable Nosana job — posting transaction on Solana mainnet",
+    "never 'proof of computation'",
+    "'woke 6 of 11,081 dormant twins' permitted because all 6 are verified on chain",
+    "dormancy is a property of the wallet, not the twin"
+  ],
+  "attribution": "Census data powered by Etherscan."
+}
